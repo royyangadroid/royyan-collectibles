@@ -1,0 +1,154 @@
+/* ================================================
+   ROYYAN COLLECTIBLES — GLOBAL STYLES
+   Tema: Dark Luxury Vintage
+   ================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================
+   CSS CUSTOM PROPERTIES
+   ================================================ */
+:root {
+  --navbar-height: 72px;
+  --color-gold: #C9972B;
+  --color-gold-light: #E8B84B;
+  --color-gold-dark: #A37620;
+}
+
+/* ================================================
+   BASE RESET & BODY
+   ================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-inter), 'system-ui', sans-serif;
+  background-color: #09090b; /* zinc-950 */
+  color: #FAF6E8;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================================================
+   TIPOGRAFI
+   ================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), 'Georgia', serif;
+  line-height: 1.2;
+}
+
+/* ================================================
+   REUSABLE COMPONENTS
+   ================================================ */
+@layer components {
+
+  /* Container */
+  .container-vintage {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Divider */
+  .divider-gold {
+    @apply relative flex items-center gap-4 my-8;
+  }
+  .divider-gold::before,
+  .divider-gold::after {
+    content: '';
+    @apply flex-1 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-40;
+  }
+
+  /* Section Label */
+  .section-label {
+    @apply font-sans text-xs font-semibold tracking-[0.25em] uppercase text-gold;
+  }
+
+  /* Section Title */
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl font-bold text-parchment-100;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-8 py-3 font-sans font-semibold text-sm tracking-widest uppercase;
+    @apply bg-gold text-zinc-950 border border-gold-dark rounded-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.2)] hover:-translate-y-0.5;
+    @apply active:translate-y-0;
+    letter-spacing: 0.12em;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-8 py-3 font-sans font-semibold text-sm tracking-widest uppercase;
+    @apply bg-transparent text-parchment-200 border border-parchment-400/30 rounded-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:border-gold hover:text-gold hover:-translate-y-0.5;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ================================================
+   SCROLLBAR
+   ================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C9972B;
+}
+
+/* ================================================
+   SELECTION
+   ================================================ */
+::selection {
+  background-color: rgba(201, 151, 43, 0.3);
+  color: #FAF6E8;
+}
+
+/* ================================================
+   ANIMATIONS
+   ================================================ */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.7s ease-out forwards;
+}
+
+/* ================================================
+   NAV LINK ACTIVE
+   ================================================ */
+.nav-link-active {
+  position: relative;
+}
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
