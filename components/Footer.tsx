@@ -21,7 +21,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="font-sans text-sm text-zinc-500 leading-relaxed">
-              Kurator barang antik dan koleksi langka sejak 2015.
+              Kurator barang antik dan koleksi langka terpercaya.
               Setiap item adalah sebuah cerita yang menunggu pemilik barunya.
             </p>
             <p className="font-serif italic text-gold/40 text-sm">
