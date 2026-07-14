@@ -28,7 +28,7 @@ export default function ContactPage() {
 
             <div className="mb-8">
               <p className="font-sans text-xs font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">WhatsApp Kami</p>
-              <p className="font-serif font-bold text-3xl text-gold tracking-wider">+6281295173689</p>
+              <p className="font-serif font-bold text-3xl text-gold tracking-wider">+62 812-9517-3689</p>
             </div>
 
             <a
