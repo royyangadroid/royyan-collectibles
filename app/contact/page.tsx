@@ -28,11 +28,11 @@ export default function ContactPage() {
 
             <div className="mb-8">
               <p className="font-sans text-xs font-bold tracking-[0.2em] uppercase text-zinc-500 mb-2">WhatsApp Kami</p>
-              <p className="font-serif font-bold text-3xl text-gold tracking-wider">+62 823-1297-0359</p>
+              <p className="font-serif font-bold text-3xl text-gold tracking-wider">+6281295173689</p>
             </div>
 
             <a
-              href="https://wa.me/6282312970359"
+              href="https://wa.me/6281295173689"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-gold hover:bg-gold-light text-zinc-950 py-5 px-10 font-sans text-sm font-bold tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(201,151,43,0.3)] rounded-sm"

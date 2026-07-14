@@ -88,7 +88,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             {/* CTA */}
             {!isSold && (
               <a
-                href={`https://wa.me/6282312970359?text=${encodeURIComponent(`Halo, saya tertarik dengan koleksi: ${item.title} (${item.collectionNumber})`)}`}
+                href={`https://wa.me/6281295173689?text=${encodeURIComponent(`Halo, saya tertarik dengan koleksi: ${item.title} (${item.collectionNumber})`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 w-full px-8 py-4 bg-gold text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.3)] transition-all duration-300"
