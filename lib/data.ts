@@ -104,7 +104,7 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-006/cover.jpg',
     description: 'Buku Early Views of Indonesia karya Annabel Teh Gallop menghadirkan perjalanan ke masa silam, ketika kepulauan yang kini disebut Indonesia masih dipandang sebagai wilayah yang beragam dan belum menyatu dalam satu identitas bangsa. Melalui sudut pandang para pelancong dan pengamat asing, buku ini mengabadikan lanskap alam serta kehidupan masyarakat yang menjadi saksi awal perjalanan sejarah Nusantara.',
-  }
+  },
   {
     id: 'ryc-007',
     slug: 'RC-007',
@@ -112,8 +112,8 @@ export const collectibles: CollectibleItem[] = [
     title: 'Wiro - Anak Rimba Indonesia',
     price: 6500000,
     category: 'Komik Indonesia',
-    condition: 'Excellent',
-    badge: 'Rare',
+    condition: 'Mint',
+    badge: 'Limited',
     status: 'Available',
     image: '/catalog/RC-007/cover.jpg',
     description: 'Komik legendaris karya Lie Djonliem dengan ilustrasi khas Kwik Inghoo yang mengisahkan petualangan Wiro, seorang anak rimba.'
