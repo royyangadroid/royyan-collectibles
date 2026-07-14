@@ -187,7 +187,7 @@ export default function HomePage() {
             {/* Label */}
             <div className="flex items-center gap-3 mb-8 animate-fade-up">
               <div className="w-10 h-px bg-gold/60" aria-hidden="true" />
-              <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/80">Est. 2015 — Jakarta</p>
+              <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/80">Est. 2026 — Jakarta</p>
             </div>
 
             {/* Headline */}
