@@ -78,6 +78,19 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-004/cover.jpg',
     description: 'Wolfenstein: The New Order merupakan salah satu judul FPS modern yang masih banyak dicari hingga saat ini.',
+  },
+  {
+    id: 'ryc-005',
+    slug: 'RC-005',
+    collectionNumber: 'RC-005',
+    title: 'Kisah Dewi Lanjar',
+    price: 465000,
+    category: 'Komik',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-005/cover.jpg',
+    description: 'Komik legendaris MAN',
   }
 ];
 
