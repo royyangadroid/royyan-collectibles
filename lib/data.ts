@@ -91,6 +91,19 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-005/cover.jpg',
     description: 'Komik legendaris MAN',
+  },
+  {
+    id: 'ryc-006',
+    slug: 'RC-006',
+    collectionNumber: 'RC-006',
+    title: 'Pemandangan Indonesia Masa Lampau - Annabel Teh Gallop',
+    price: 800000,
+    category: 'Buku Sejarah',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-006/cover.jpg',
+    description: 'Buku Early Views of Indonesia karya Annabel Teh Gallop menghadirkan perjalanan ke masa silam, ketika kepulauan yang kini disebut Indonesia masih dipandang sebagai wilayah yang beragam dan belum menyatu dalam satu identitas bangsa. Melalui sudut pandang para pelancong dan pengamat asing, buku ini mengabadikan lanskap alam serta kehidupan masyarakat yang menjadi saksi awal perjalanan sejarah Nusantara.',
   }
 ];
 
