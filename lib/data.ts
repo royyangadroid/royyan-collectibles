@@ -117,7 +117,20 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-007/cover.jpg',
     description: 'Komik legendaris karya Lie Djonliem dengan ilustrasi khas Kwik Inghoo yang mengisahkan petualangan Wiro, seorang anak rimba.'
-  }
+  },
+  {
+    id: 'ryc-008',
+    slug: 'RC-008',
+    collectionNumber: 'RC-008',
+    title: 'Tambusa',
+    price: 845000,
+    category: 'Komik Indonesia',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-008/cover.jpg',
+    description: 'Komik petualangan klasik karya Teguh Santosa, cetakan asli tahun 1970 dalam bundel 3 jilid (A–J Tamat). Menghadirkan kisah penuh petualangan, pelayaran, pertarungan, dan perjuangan dengan gaya bahasa serta ejaan lama khas komik Indonesia era klasik. Set lengkap ini menjadi salah satu collectible yang semakin sulit ditemukan dan memiliki nilai sejarah serta nostalgia yang tinggi bagi para kolektor.'
+  },
 ];
 
 // =============================================
