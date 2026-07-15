@@ -131,6 +131,58 @@ export const collectibles: CollectibleItem[] = [
     image: '/catalog/RC-008/cover.jpg',
     description: 'Komik petualangan klasik karya Teguh Santosa, cetakan asli tahun 1970 dalam bundel 3 jilid (A–J Tamat). Menghadirkan kisah penuh petualangan, pelayaran, pertarungan, dan perjuangan dengan gaya bahasa serta ejaan lama khas komik Indonesia era klasik. Set lengkap ini menjadi salah satu collectible yang semakin sulit ditemukan dan memiliki nilai sejarah serta nostalgia yang tinggi bagi para kolektor.'
   },
+  {
+    id: 'ryc-009',
+    slug: 'RC-009',
+    collectionNumber: 'RC-009',
+    title: 'The Godfather 1800',
+    price: 565000,
+    category: 'Komik Indonesia',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-009/cover.jpg',
+    description: 'Karya klasik Teguh Santosa yang terbit pertama kali pada tahun 1976. Set lengkap 10 jilid (A-B & 3-10) dengan cerita tamat, menghadirkan kisah kolosal penuh intrik keluarga, perebutan kekuasaan, ambisi, dan balas dendam. Salah satu komik Indonesia lawas yang semakin sulit ditemukan dalam kondisi set lengkap dan menjadi collectible item yang diburu kolektor.'
+  },
+  {
+    id: 'ryc-010',
+    slug: 'RC-010',
+    collectionNumber: 'RC-010',
+    title: 'Si Buta Dari Gua Hantu - Sorga Yang Hilang',
+    price: 690000,
+    category: 'Komik Indonesia',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-010/cover.jpg',
+    description: 'Komik silat legendaris Indonesia dengan kisah penuh aksi, petualangan, dan nilai kehidupan yang melekat pada karakter Si Buta Dari Gua Hantu. Koleksi ini terdiri dari 16 jilid tamat dengan isi lengkap dan masih nyaman dibaca, menjadikannya pilihan menarik bagi kolektor komik silat klasik dan pecinta nostalgia.'
+  },
+  {
+    id: 'ryc-011',
+    slug: 'RC-011',
+    collectionNumber: 'RC-011',
+    title: 'Kolokasi Sistem Malaysia 2000',
+    price: 900000,
+    category: 'Perangko',
+    condition: 'Mint',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-011/cover.jpg',
+    description: 'Lembar perangko resmi Malaysia tahun 2000 yang diterbitkan dalam era Wawasan 2020 di bawah pemerintahan Mahathir Mohamad. Terhubung dengan program pendidikan dan pembangunan nasional melalui Kementerian Pendidikan Malaysia, MARA, dan RIDA. Koleksi filateli yang merepresentasikan periode penting sejarah Malaysia modern dan semakin sulit ditemukan dalam kondisi sempurna.'
+  },
+  {
+    id: 'ryc-012',
+    slug: 'RC-012',
+    collectionNumber: 'RC-012',
+    title: 'Sie Jin Koei Ceng Tang',
+    price: 690000,
+    category: 'Komik Klasik Tiongkok',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-012/cover.jpg',
+    description: 'Komik klasik Tiongkok yang mengangkat kisah epik peperangan pada masa Dinasti Tang di bawah pemerintahan Kaisar Thai Cong. Mengisahkan Sie Jin Koei, seorang jenderal tangguh yang memimpin ekspedisi ke Timur dalam cerita yang sarat strategi perang, keberanian, dan heroisme. Terdiri dari 6 jilid tamat dan menjadi salah satu komik kuno yang semakin langka di pasaran.'
+  }
 ];
 
 // =============================================
