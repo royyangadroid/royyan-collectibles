@@ -248,6 +248,19 @@ export const collectibles: CollectibleItem[] = [
     image: '/catalog/RC-017/cover.jpg',
     description: 'Komik klasik karya Hergé cetakan pertama Penerbit Indira tahun 1978. Salah satu kisah paling penting dalam serial Tintin karena memperkenalkan Kapten Haddock untuk pertama kalinya. Edisi lawas yang memiliki nilai historis dan semakin langka di kalangan kolektor.',
   },
+  {
+    id: 'ryc-018',
+    slug: 'RC-018',
+    collectionNumber: 'RC-018',
+    title: "'08 Viper SRT10 ACR",
+    price: 114000,
+    category: 'Hot Wheels',
+    condition: 'Mint',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-018/cover.jpg',
+    description: "Hot Wheels '08 Viper SRT10 ACR dari seri 2010 HW Premiere. Menghadirkan desain agresif khas Dodge Viper yang dikenal sebagai salah satu mobil sport legendaris Amerika. Rilisan awal HW Premiere ini menjadi collectible item yang semakin sulit ditemukan dan cocok untuk melengkapi koleksi diecast bertema sport car maupun HW Premiere."
+  }
 ];
 
 // =============================================
