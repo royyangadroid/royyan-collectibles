@@ -1,3 +1,5 @@
+"use client";
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Shield, Star, Award, Sparkles } from 'lucide-react';
@@ -59,8 +61,8 @@ function CollectionSection() {
         {items.length === 0 ? (
           <p className="text-center font-sans text-sm text-zinc-500 py-16">Belum ada koleksi.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {items.map((item) => (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+            {items.slice(0, 4).map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
           </div>
@@ -123,11 +125,195 @@ function WhyUsSection() {
 }
 
 // =============================================
+// Testimonial Section (Slider Geser Kanan + Titik Nyala)
+// =============================================
+function TestimonialSection() {
+  // 1. Ini "mesin" penggeraknya
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 2. Sensor buat ngecek lagi di slide mana pas digeser tangan/mouse
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const firstChild = sliderRef.current.children[0] as HTMLElement;
+    if (!firstChild) return;
+
+    // 32px adalah jarak (gap-8) antar kotak
+    const itemWidth = firstChild.clientWidth + 32;
+    const scrollPosition = sliderRef.current.scrollLeft;
+
+    // Nentuin titik mana yang nyala berdasarkan posisi geser
+    const index = Math.round(scrollPosition / itemWidth);
+    setActiveIndex(index);
+  };
+
+  // 3. Fungsi biar titiknya bisa diklik dan otomatis geser
+  const scrollToSlide = (index: number) => {
+    if (!sliderRef.current) return;
+    const firstChild = sliderRef.current.children[0] as HTMLElement;
+    if (!firstChild) return;
+
+    const itemWidth = firstChild.clientWidth + 32;
+    sliderRef.current.scrollTo({
+      left: itemWidth * index,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <section className="py-24 bg-zinc-950 border-t border-gold/10" aria-label="Testimonials">
+      <div className="container-vintage">
+        {/* Header Testimoni */}
+        <div className="text-center mb-16">
+          <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">Testimonials</p>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-parchment-100">
+            Apa Kata <span className="italic text-gold">Kolektor</span>
+          </h2>
+          <p className="font-sans text-sm text-zinc-400 mt-4">
+            Pelanggan yang telah merasakan layanan terbaik dari kami
+          </p>
+        </div>
+
+        {/* Slider Container (Udah dipasangin sensor onScroll dan ref) */}
+        <div
+          ref={sliderRef}
+          onScroll={handleScroll}
+          className="grid grid-flow-col auto-cols-[100%] md:auto-cols-[calc(33.333%-1.35rem)] gap-8 overflow-x-auto snap-x snap-mandatory pb-8 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        >
+
+          {/* Testimoni 1 - Clara */}
+          <div className="snap-start p-8 bg-zinc-900 border border-gold/15 rounded-sm hover:border-gold/40 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex gap-1 mb-6 text-gold">
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+              </div>
+              <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
+                "Royyan Collectibles has become our trusted partner. Koleksi buku sejarah dan komik lawasnya sangat terawat, proses pengiriman juga sangat cepat dan aman."
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1680127499432-d93494c09eb0?q=80&w=903&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Clara Pramestin"
+                className="w-12 h-12 rounded-full object-cover border border-gold/30 bg-zinc-800"
+              />
+              <div>
+                <p className="font-sans font-bold text-sm text-parchment-200">Clara Pramestin</p>
+                <p className="font-sans text-xs text-zinc-500">Kolektor Komik</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimoni 2 - Ray */}
+          <div className="snap-start p-8 bg-zinc-900 border border-gold/15 rounded-sm hover:border-gold/40 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex gap-1 mb-6 text-gold">
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+              </div>
+              <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
+                "Sangat membantu dalam mencari barang langka. Terutama ketika kita butuh kurasi spesifik untuk diecast edisi terbatas yang sulit dicari di pasaran."
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1676288869178-1761f567ea91?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Ray John Putra Soekanto"
+                className="w-12 h-12 rounded-full object-cover border border-gold/30 bg-zinc-800"
+              />
+              <div>
+                <p className="font-sans font-bold text-sm text-parchment-200">Ray John Putra Soekanto</p>
+                <p className="font-sans text-xs text-zinc-500">Kolektor Diecast</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimoni 3 - Deni */}
+          <div className="snap-start p-8 bg-zinc-900 border border-gold/15 rounded-sm hover:border-gold/40 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex gap-1 mb-6 text-gold">
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+              </div>
+              <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
+                "Pelayanan selama bertransaksi sangat memuaskan. Saat mengambil atau mengirim barang koleksi bernilai tinggi, mereka selalu tepat waktu dan profesional."
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1729821729331-fa121af38b32?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Deni Febrian Saputro"
+                className="w-12 h-12 rounded-full object-cover border border-gold/30 bg-zinc-800"
+              />
+              <div>
+                <p className="font-sans font-bold text-sm text-parchment-200">Deni Febrian Saputro</p>
+                <p className="font-sans text-xs text-zinc-500">Pecinta Sejarah</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimoni 4 - Dudung */}
+          <div className="snap-start p-8 bg-zinc-900 border border-gold/15 rounded-sm hover:border-gold/40 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex gap-1 mb-6 text-gold">
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+                <Star className="w-4 h-4 fill-current" />
+              </div>
+              <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
+                "Kualitas barangnya bener-bener di luar ekspektasi. Packing super tebal dan aman banget buat action figure vintage. Nggak nyesel langganan di Royyan Collectibles!"
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1618593706014-06782cd3bb3b?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Dudung Sumpena"
+                className="w-12 h-12 rounded-full object-cover border border-gold/30 bg-zinc-800"
+              />
+              <div>
+                <p className="font-sans font-bold text-sm text-parchment-200">Dudung Sumpena</p>
+                <p className="font-sans text-xs text-zinc-500">Kolektor Action Figure</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bullet Points / Pagination Dots (Sekarang Otomatis Nyala & Bisa Diklik!) */}
+        <div className="flex justify-center items-center gap-2 mt-4" aria-hidden="true">
+          {[0, 1].map((index) => (
+            <div
+              key={index}
+              onClick={() => scrollToSlide(index)}
+              className={`w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ${activeIndex === index ? 'bg-gold' : 'bg-zinc-700 hover:bg-zinc-500'
+                }`}
+            />
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// =============================================
 // CTA Section (before footer)
 // =============================================
 function CtaSection() {
   return (
-    <section className="py-24 bg-zinc-950 border-t border-gold/10" aria-label="Call to action">
+    <section className="py-24 bg-zinc-900 border-t border-gold/10" aria-label="Call to action">
       <div className="container-vintage text-center">
         <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/70 mb-6">Mulai Koleksi Anda</p>
         <h2 className="font-serif font-bold text-3xl md:text-4xl text-parchment-100 mb-6 max-w-2xl mx-auto leading-tight">
@@ -229,6 +415,7 @@ export default function HomePage() {
 
       <CollectionSection />
       <WhyUsSection />
+      <TestimonialSection />
       <CtaSection />
     </>
   );

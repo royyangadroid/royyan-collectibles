@@ -53,28 +53,31 @@ export default function ProductCard({ item }: { item: CollectibleItem }) {
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      {/* Tambahkan p-4 md:p-6 agar di HP lebih lega tapi tetap ringkas */}
+      <div className="p-4 md:p-6">
         {/* Category & Condition */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-gold/70">{item.category}</span>
-          <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-zinc-500">{item.condition}</span>
+        <div className="flex items-center justify-between mb-2 md:mb-3">
+          <span className="font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-gold/70">{item.category}</span>
+          <span className="font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-zinc-500">{item.condition}</span>
         </div>
 
-        {/* Title */}
-        <h3 className="font-serif font-semibold text-parchment-100 text-base mb-2 line-clamp-2 leading-snug group-hover:text-gold transition-colors duration-300">
+        {/* Title: Gunakan text-sm di HP agar tidak terlalu makan tempat */}
+        <h3 className="font-serif font-semibold text-parchment-100 text-sm md:text-base mb-2 line-clamp-2 leading-snug group-hover:text-gold transition-colors duration-300">
           {item.title}
         </h3>
 
-        {/* Description */}
-        <p className="font-sans text-xs text-zinc-500 line-clamp-2 mb-5 leading-relaxed">{item.description}</p>
+        {/* Description: Sembunyikan di HP kalau mau lebih bersih, atau kecilkan font-nya */}
+        <p className="font-sans text-[11px] md:text-xs text-zinc-500 line-clamp-2 mb-4 md:mb-5 leading-relaxed">{item.description}</p>
 
         {/* Price & CTA */}
-        <div className="flex items-center justify-between pt-4 border-t border-gold/10">
+        <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-gold/10 mt-auto">
           <div>
-            <p className="font-sans text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Harga</p>
-            <p className="font-serif font-bold text-lg text-gold">{formatPrice(item.price)}</p>
+            <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Harga</p>
+            <p className="font-serif font-bold text-base md:text-lg text-gold">{formatPrice(item.price)}</p>
           </div>
-          <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-gold/60 border border-gold/30 px-4 py-2 rounded-sm group-hover:bg-gold group-hover:text-zinc-950 transition-all duration-300">
+
+          {/* Tombol Detail: Dikasih ml-auto biar dia "dorong" diri sendiri ke kanan */}
+          <span className="ml-2 font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-gold/60 border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-sm group-hover:bg-gold group-hover:text-zinc-950 transition-all duration-300">
             Detail
           </span>
         </div>
