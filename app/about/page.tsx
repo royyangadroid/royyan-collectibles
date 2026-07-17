@@ -31,7 +31,7 @@ export default function AboutPage() {
           <span className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold/40 z-10" aria-hidden="true" />
           <span className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold/40 z-10" aria-hidden="true" />
           <Image
-            src="https://images.unsplash.com/photo-1531604250646-2f0e818c4f06?w=1200&q=80"
+            src="https://images.unsplash.com/photo-1681912818492-35c55f33fb25?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Koleksi Barang Antik"
             fill
             className="object-cover opacity-80"
