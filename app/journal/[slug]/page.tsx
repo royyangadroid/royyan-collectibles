@@ -11,6 +11,9 @@ function getArticle(slug: string) {
   return DUMMY_ARTICLES.find((a) => a.slug === slug);
 }
 
+const slugify = (text: string) => 
+  text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const article = getArticle(params.slug);
 
@@ -41,16 +44,24 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
 
   const relatedArticles = DUMMY_ARTICLES.filter((a) => a.slug !== article.slug).slice(0, 3);
 
+  const headings = article.content
+    .filter((block) => block.type === 'h2' || block.type === 'h3')
+    .map((block: any) => ({
+      text: block.text,
+      id: slugify(block.text),
+      level: block.type
+    }));
+
   const renderContentBlock = (block: ContentBlock, index: number) => {
     switch (block.type) {
       case 'h1':
         return <h2 key={index} className="font-serif text-3xl md:text-4xl text-gold mt-12 mb-6">{block.text}</h2>;
       case 'h2':
-        return <h2 key={index} className="font-serif text-2xl md:text-3xl text-gold mt-10 mb-5 border-b border-gold/10 pb-3">{block.text}</h2>;
+        return <h2 key={index} id={slugify(block.text)} className="font-serif text-2xl md:text-3xl text-gold mt-10 mb-5 border-b border-gold/10 pb-3 scroll-mt-28">{block.text}</h2>;
       case 'h3':
-        return <h3 key={index} className="font-serif text-xl md:text-2xl text-parchment-200 mt-8 mb-4">{block.text}</h3>;
+        return <h3 key={index} id={slugify(block.text)} className="font-serif text-xl md:text-2xl text-parchment-200 mt-8 mb-4 scroll-mt-28">{block.text}</h3>;
       case 'p':
-        return <p key={index} className="mb-6 text-zinc-300">{block.text}</p>;
+        return <p key={index} className="mb-6 text-zinc-300 text-justify">{block.text}</p>;
       case 'ul':
         return (
           <ul key={index} className="list-disc list-outside ml-6 space-y-3 mb-8 text-zinc-400">
@@ -124,7 +135,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
 
       {/* Hero Image */}
       <div className="w-full max-w-6xl mx-auto px-4 md:px-8 -mt-6 relative z-10">
-        <div className="aspect-[21/9] md:aspect-[2.5/1] w-full overflow-hidden rounded-sm border border-gold/20 shadow-2xl bg-zinc-900">
+        <div className="aspect-[16/9] md:aspect-[2.5/1] w-full overflow-hidden rounded-sm border border-gold/20 shadow-2xl bg-zinc-900">
           <img
             src={article.coverImage}
             alt={article.title}
@@ -137,11 +148,11 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
       <section className="container-vintage max-w-5xl mt-16 md:mt-24 flex flex-col lg:flex-row gap-12 lg:gap-20">
 
         {/* Table of Contents (Sidebar) */}
-        <TableOfContents />
+        <TableOfContents headings={headings} />
 
         {/* Article Body */}
         <article className="lg:w-3/4 order-1 lg:order-2 font-sans text-zinc-300 leading-relaxed md:text-lg">
-          <p className="text-xl md:text-2xl font-serif text-parchment-200 mb-10 leading-snug">
+          <p className="text-xl md:text-2xl font-serif text-parchment-200 mb-10 leading-snug text-justify">
             {article.excerpt}
           </p>
 

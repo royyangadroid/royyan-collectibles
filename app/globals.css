@@ -20,7 +20,9 @@
 /* ================================================
    BASE RESET & BODY
    ================================================ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -33,7 +35,8 @@ html {
 
 body {
   font-family: var(--font-inter), 'system-ui', sans-serif;
-  background-color: #09090b; /* zinc-950 */
+  background-color: #09090b;
+  /* zinc-950 */
   color: #FAF6E8;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -43,7 +46,12 @@ body {
 /* ================================================
    TIPOGRAFI
    ================================================ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-playfair), 'Georgia', serif;
   line-height: 1.2;
 }
@@ -62,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
   .divider-gold {
     @apply relative flex items-center gap-4 my-8;
   }
+
   .divider-gold::before,
   .divider-gold::after {
     content: '';
@@ -83,7 +92,8 @@ h1, h2, h3, h4, h5, h6 {
     @apply inline-flex items-center gap-2 px-8 py-3 font-sans font-semibold text-sm tracking-widest uppercase;
     @apply bg-gold text-zinc-950 border border-gold-dark rounded-sm;
     @apply transition-all duration-300 ease-out;
-    @apply hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.2)] hover:-translate-y-0.5;
+    /* prettier-ignore */
+    @apply hover:bg-gold-light hover:shadow-[0_0_30px_#c9972b33] hover:-translate-y-0.5;
     @apply active:translate-y-0;
     letter-spacing: 0.12em;
   }
@@ -104,13 +114,16 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #09090b;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #C9972B;
 }
@@ -126,11 +139,25 @@ h1, h2, h3, h4, h5, h6 {
 /* ================================================
    ANIMATIONS
    ================================================ */
-.animate-delay-100 { animation-delay: 100ms; }
-.animate-delay-200 { animation-delay: 200ms; }
-.animate-delay-300 { animation-delay: 300ms; }
-.animate-delay-400 { animation-delay: 400ms; }
-.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
 
 .animate-fade-up {
   opacity: 0;
@@ -143,6 +170,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-link-active {
   position: relative;
 }
+
 .nav-link-active::after {
   content: '';
   position: absolute;
@@ -151,4 +179,36 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* ================================================
+   GOOGLE TRANSLATE OVERRIDES
+   ================================================ */
+body {
+  top: 0 !important;
+}
+
+.skiptranslate iframe {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+#google_translate_element {
+  display: none !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Hide "Rate this translation" popup and hover highlight */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }

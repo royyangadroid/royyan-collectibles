@@ -31,7 +31,8 @@ function FeatureCard({ icon: Icon, title, desc }: { icon: React.ElementType; tit
 // Collection Section
 // =============================================
 function CollectionSection() {
-  const items = getAllCollectibles().slice(0, 6);
+  // Mengambil semua item, dibalik (terbaru di atas), lalu ambil 3
+  const items = [...getAllCollectibles()].reverse().slice(0, 3);
 
   return (
     <section className="py-28 bg-zinc-950" aria-label="Koleksi terkini" id="collection">
@@ -61,8 +62,8 @@ function CollectionSection() {
         {items.length === 0 ? (
           <p className="text-center font-sans text-sm text-zinc-500 py-16">Belum ada koleksi.</p>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-            {items.slice(0, 4).map((item) => (
+          <div className="grid grid-cols-3 gap-2 sm:gap-8">
+            {items.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
           </div>
@@ -293,7 +294,7 @@ function TestimonialSection() {
 
         {/* Bullet Points / Pagination Dots (Sekarang Otomatis Nyala & Bisa Diklik!) */}
         <div className="flex justify-center items-center gap-2 mt-4" aria-hidden="true">
-          {[0, 1].map((index) => (
+          {[0, 1, 2, 3].map((index) => (
             <div
               key={index}
               onClick={() => scrollToSlide(index)}

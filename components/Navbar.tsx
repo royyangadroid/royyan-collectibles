@@ -20,14 +20,27 @@ const navLinks: NavLink[] = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentLang, setCurrentLang] = useState('id');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    const match = document.cookie.match(/googtrans=\/id\/([a-z]{2})/);
+    if (match && match[1]) {
+      setCurrentLang(match[1]);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const switchLanguage = (lang: string) => {
+    document.cookie = `googtrans=/id/${lang}; path=/;`;
+    document.cookie = `googtrans=/id/${lang}; path=/; domain=` + window.location.hostname;
+    window.location.reload();
+  };
 
   return (
     <>
@@ -78,6 +91,46 @@ export default function Navbar() {
 
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
+            
+            {/* Language Switcher */}
+            <div className="flex items-center gap-2 border border-gold/20 rounded-sm p-1">
+              <button 
+                onClick={() => switchLanguage('id')} 
+                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'id' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
+                title="Indonesian"
+              >
+                <img src="https://flagcdn.com/id.svg" alt="ID" className="w-full h-full object-cover" />
+              </button>
+              <button 
+                onClick={() => switchLanguage('en')} 
+                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'en' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
+                title="English"
+              >
+                <img src="https://flagcdn.com/gb.svg" alt="UK" className="w-full h-full object-cover" />
+              </button>
+              <button 
+                onClick={() => switchLanguage('es')} 
+                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'es' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
+                title="Spanish"
+              >
+                <img src="https://flagcdn.com/es.svg" alt="ES" className="w-full h-full object-cover" />
+              </button>
+              <button 
+                onClick={() => switchLanguage('it')} 
+                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'it' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
+                title="Italian"
+              >
+                <img src="https://flagcdn.com/it.svg" alt="IT" className="w-full h-full object-cover" />
+              </button>
+              <button 
+                onClick={() => switchLanguage('ja')} 
+                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'ja' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
+                title="Japanese"
+              >
+                <img src="https://flagcdn.com/jp.svg" alt="JP" className="w-full h-full object-cover" />
+              </button>
+            </div>
+
             <Link href="/catalog" className="hidden md:inline-flex items-center gap-2 btn-primary text-xs" id="navbar-browse-btn">
               <ShoppingBag className="w-3.5 h-3.5" />
               Browse

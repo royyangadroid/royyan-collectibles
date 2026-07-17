@@ -37,7 +37,12 @@ export const metadata: Metadata = {
     title: 'Royyan Collectibles — Rare & Vintage Collectibles',
     description: 'Kurasi eksklusif barang antik dan koleksi langka untuk para kolektor sejati.',
   },
+  icons: {
+    icon: '/icon.png',
+  },
 };
+
+import Script from 'next/script';
 
 // --- Root Layout ---
 export default function RootLayout({
@@ -48,6 +53,22 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${playfair.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
+        <div id="google_translate_element" style={{ display: 'none' }}></div>
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
+        <Script id="google-translate-init" strategy="afterInteractive">
+          {`
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({
+                pageLanguage: 'id',
+                includedLanguages: 'en,id,es,it,ja',
+                autoDisplay: false
+              }, 'google_translate_element');
+            }
+          `}
+        </Script>
         <Navbar />
         <main className="flex-1 pt-[var(--navbar-height)]">
           {children}

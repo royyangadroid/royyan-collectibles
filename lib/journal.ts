@@ -195,5 +195,33 @@ export const DUMMY_ARTICLES: Article[] = [
       { type: 'h2', text: 'Kesimpulan' },
       { type: 'p', text: 'Mengoleksi replika mobil klasik Indonesia bukan sekadar memiliki miniatur kendaraan. Hobi ini juga menjadi bentuk apresiasi terhadap sejarah transportasi Indonesia sekaligus cara melestarikan warisan otomotif nasional. Dengan memilih produk berkualitas dan merawatnya dengan baik, koleksi tersebut dapat menjadi kebanggaan sekaligus memiliki nilai koleksi yang terus berkembang seiring waktu.' }
     ]
+  },
+  {
+    slug: 'indonesian-classic-comics-history',
+    title: 'Menelusuri Jejak Komik Klasik Indonesia yang Menjadi Incaran Kolektor',
+    excerpt: 'Komik klasik Indonesia menyimpan nilai sejarah, budaya, dan nostalgia yang tinggi. Dari kisah wayang hingga silat, karya-karya legendaris ini terus menjadi incaran para kolektor di seluruh Indonesia.',
+    coverImage: 'https://cdn.antaranews.com/cache/1200x800/2017/03/20170329P_20170329_124620_1.jpg.webp',
+    category: 'History',
+    readingTime: '6 Min Read',
+    publishedDate: 'Jul 17, 2026',
+    author: 'Royyanga',
+    content: [
+      { type: 'h1', text: 'Menelusuri Jejak Komik Klasik Indonesia yang Menjadi Incaran Kolektor' },
+      { type: 'p', text: 'Sebelum era komik digital dan novel grafis modern, Indonesia pernah mengalami masa keemasan komik cetak yang melahirkan banyak karya legendaris. Bagi para kolektor buku dan memorabilia, komik-komik klasik Indonesia tidak hanya memiliki nilai nostalgia, tetapi juga menjadi bagian penting dari sejarah literasi visual dan perkembangan industri kreatif nasional.' },
+      { type: 'h2', text: 'Era Keemasan Komik Indonesia' },
+      { type: 'p', text: 'Pada periode sekitar tahun 1950-an hingga 1980-an, industri komik Indonesia berkembang pesat dengan hadirnya berbagai genre, mulai dari cerita wayang, silat, petualangan, hingga superhero lokal. Banyak karya pada masa tersebut terinspirasi oleh budaya Nusantara dan menjadi bacaan favorit lintas generasi.' },
+      { type: 'ul', items: ['Cerita wayang yang mengadaptasi kisah Mahabharata dan Ramayana dalam gaya ilustrasi khas Indonesia.', 'Komik silat dengan tokoh-tokoh pendekar Nusantara yang menjadi ikon pada masanya.', 'Karya-karya ilustrator lokal yang membentuk identitas visual komik Indonesia sebelum era modern.'] },
+      { type: 'h2', text: 'Mengapa Komik Klasik Indonesia Layak Dikoleksi?' },
+      { type: 'ol', items: ['Kelangkaan fisik karena banyak cetakan asli sudah tidak diproduksi ulang.', 'Gaya ilustrasi khas yang mencerminkan perkembangan seni gambar Indonesia pada zamannya.', 'Nilai budaya lokal yang mengangkat legenda, cerita rakyat, dan nilai-nilai tradisional Indonesia.'] },
+      { type: 'quote', text: 'Classic comics preserve not only stories, but also the artistic and cultural identity of their era.', author: 'Journal Collectibles' },
+      { type: 'note', text: 'Komik dengan cetakan pertama, kondisi lengkap, dan sampul asli umumnya memiliki nilai koleksi yang lebih tinggi dibandingkan cetakan ulang.' },
+      { type: 'image', src: 'https://cdn.antaranews.com/cache/1200x800/2017/03/20170329P_20170329_124620_1.jpg.webp', caption: 'Classic Indonesian comics remain an important part of the nation’s literary and artistic heritage.' },
+      { type: 'h2', text: 'Tantangan dalam Mengoleksi Komik Klasik' },
+      { type: 'p', text: 'Mengoleksi komik lawas memiliki tantangan tersendiri. Kondisi kertas yang mudah menguning, sulitnya membedakan cetakan pertama dengan cetakan ulang, serta terbatasnya dokumentasi resmi membuat kolektor perlu lebih teliti sebelum membeli sebuah koleksi.' },
+      { type: 'h2', text: 'Tips Memulai Koleksi Komik Klasik Indonesia' },
+      { type: 'ul', items: ['Bergabung dengan komunitas kolektor komik lawas untuk memperoleh informasi mengenai judul, penerbit, dan tahun cetak.', 'Gunakan plastik pelindung bebas asam (acid-free) agar kondisi kertas tetap terjaga.', 'Prioritaskan komik dengan halaman lengkap dan kondisi fisik yang masih baik karena sangat memengaruhi nilai koleksi.'] },
+      { type: 'h2', text: 'Kesimpulan' },
+      { type: 'p', text: 'Mengoleksi komik klasik Indonesia bukan sekadar mengumpulkan buku lama, tetapi juga menjadi cara melestarikan sejarah literasi visual bangsa. Setiap komik menyimpan kisah, nilai budaya, dan jejak perkembangan seni ilustrasi Indonesia yang patut diwariskan kepada generasi mendatang.' }
+    ]
   }
 ];

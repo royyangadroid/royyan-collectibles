@@ -70,14 +70,13 @@ export default function ProductCard({ item }: { item: CollectibleItem }) {
         <p className="font-sans text-[11px] md:text-xs text-zinc-500 line-clamp-2 mb-4 md:mb-5 leading-relaxed">{item.description}</p>
 
         {/* Price & CTA */}
-        <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-gold/10 mt-auto">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 md:pt-4 border-t border-gold/10 mt-auto gap-3 sm:gap-0">
           <div>
             <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Harga</p>
-            <p className="font-serif font-bold text-base md:text-lg text-gold">{formatPrice(item.price)}</p>
+            <p className="font-serif font-bold text-sm sm:text-base md:text-lg text-gold whitespace-nowrap">{formatPrice(item.price)}</p>
           </div>
 
-          {/* Tombol Detail: Dikasih ml-auto biar dia "dorong" diri sendiri ke kanan */}
-          <span className="ml-2 font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-gold/60 border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-sm group-hover:bg-gold group-hover:text-zinc-950 transition-all duration-300">
+          <span className="font-sans w-full sm:w-auto text-center text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-gold/60 border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-sm group-hover:bg-gold group-hover:text-zinc-950 transition-all duration-300">
             Detail
           </span>
         </div>

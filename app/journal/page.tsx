@@ -39,7 +39,7 @@ export default function JournalPage() {
             <div className="h-px bg-gold/20 flex-grow"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {latestArticles.map((article) => (
               <JournalCard key={article.slug} article={article} />
             ))}

@@ -31,7 +31,7 @@ export default function CatalogClient({ items }: { items: CollectibleItem[] }) {
     return sorted;
   }, [items, search, category, sort]);
 
-  const selectClass = 'font-sans text-xs bg-zinc-900 text-parchment-200 border border-gold/20 px-4 py-2.5 focus:outline-none focus:border-gold rounded-sm';
+  const selectClass = 'font-sans text-xs bg-zinc-900 text-parchment-200 border border-gold/20 px-4 py-2.5 focus:outline-none focus:border-gold rounded-sm w-full sm:w-auto flex-1 sm:flex-none';
 
   return (
     <div>
@@ -62,7 +62,7 @@ export default function CatalogClient({ items }: { items: CollectibleItem[] }) {
       {filtered.length === 0 ? (
         <p className="text-center font-sans text-sm text-zinc-500 py-20">Tidak ada koleksi yang cocok.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
           {filtered.map((item) => <ProductCard key={item.id} item={item} />)}
         </div>
       )}
