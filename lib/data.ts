@@ -260,7 +260,20 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-018/cover.jpg',
     description: "Hot Wheels '08 Viper SRT10 ACR dari seri 2010 HW Premiere. Menghadirkan desain agresif khas Dodge Viper yang dikenal sebagai salah satu mobil sport legendaris Amerika. Rilisan awal HW Premiere ini menjadi collectible item yang semakin sulit ditemukan dan cocok untuk melengkapi koleksi diecast bertema sport car maupun HW Premiere."
-  }
+  },
+  {
+    id: 'ryc-019',
+    slug: 'RC-019',
+    collectionNumber: 'RC-019',
+    title: 'Rahasia Setan Catur',
+    price: 465000,
+    category: 'Komik Indonesia',
+    condition: 'Fair',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-019/cover.jpg',
+    description: 'Komik silat legendaris karya MAN, cetakan asli tahun 1985, dalam set lengkap 14 jilid tamat. Menghadirkan kisah penuh intrik, pertarungan sengit, dan misteri dunia persilatan yang menjadi favorit pembaca komik silat era 80-an. Koleksi klasik yang semakin sulit ditemukan dalam kondisi lengkap.'
+  },
 ];
 
 // =============================================
