@@ -274,6 +274,19 @@ export const collectibles: CollectibleItem[] = [
     image: '/catalog/RC-019/cover.jpg',
     description: 'Komik silat legendaris karya MAN, cetakan asli tahun 1985, dalam set lengkap 14 jilid tamat. Menghadirkan kisah penuh intrik, pertarungan sengit, dan misteri dunia persilatan yang menjadi favorit pembaca komik silat era 80-an. Koleksi klasik yang semakin sulit ditemukan dalam kondisi lengkap.'
   },
+  {
+    id: 'ryc-020',
+    slug: 'RC-020',
+    collectionNumber: 'RC-020',
+    title: '2009 Ford F-150',
+    price: 115000,
+    category: 'Hot Wheels',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-020/cover.jpg',
+    description: 'Hot Wheels 2009 Ford F-150 dari seri HW Premiere yang menampilkan karakter khas pickup Amerika. Unit masih berada dalam blister asli dengan kondisi diecast tetap terawat dan cocok untuk display koleksi. Salah satu collectible item yang semakin sulit ditemukan bagi kolektor Hot Wheels maupun penggemar Ford.'
+  }
 ];
 
 // =============================================
