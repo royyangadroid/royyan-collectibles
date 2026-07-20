@@ -286,6 +286,19 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-020/cover.jpg',
     description: 'Hot Wheels 2009 Ford F-150 dari seri HW Premiere yang menampilkan karakter khas pickup Amerika. Unit masih berada dalam blister asli dengan kondisi diecast tetap terawat dan cocok untuk display koleksi. Salah satu collectible item yang semakin sulit ditemukan bagi kolektor Hot Wheels maupun penggemar Ford.'
+  },
+  {
+    id: 'ryc-021',
+    slug: 'RC-021',
+    collectionNumber: 'RC-021',
+    title: 'Sien Koei Tjeng See',
+    price: 1115000,
+    category: 'Komik Indonesia',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-021/cover.jpg',
+    description: 'Komik klasik karya maestro Siauw Tik Kwie, cetakan asli sekitar tahun 1959. Terdiri dari 9 jilid tamat yang mengisahkan kepahlawanan Sie Djin Koei (Xue Rengui), jenderal legendaris Dinasti Tang. Menggunakan bahasa Indonesia ejaan lama dengan ilustrasi khas era komik Tionghoa-Indonesia, menjadikannya salah satu collectible yang semakin langka dan bernilai sejarah tinggi.'
   }
 ];
 
