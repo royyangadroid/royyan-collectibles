@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Menu, X, BookOpen, ShoppingBag } from 'lucide-react';
+import { Menu, X, BookOpen, ShoppingBag, Info, ChevronDown } from 'lucide-react';
+import { useSettings, Currency } from './providers/SettingsProvider';
 
 interface NavLink {
   href: string;
@@ -21,6 +22,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [currentLang, setCurrentLang] = useState('id');
+  
+  const { currency, setCurrency, ratesDate } = useSettings();
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const currencyDropdownRef = useRef<HTMLDivElement>(null);
+
+  const [showLangDropdown, setShowLangDropdown] = useState(false);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,8 +40,22 @@ export default function Navbar() {
     if (match && match[1]) {
       setCurrentLang(match[1]);
     }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (currencyDropdownRef.current && !currencyDropdownRef.current.contains(target)) {
+        setShowCurrencyDropdown(false);
+      }
+      if (langDropdownRef.current && !langDropdownRef.current.contains(target)) {
+        setShowLangDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const switchLanguage = (lang: string) => {
@@ -92,43 +114,87 @@ export default function Navbar() {
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
             
-            {/* Language Switcher */}
-            <div className="flex items-center gap-2 border border-gold/20 rounded-sm p-1">
+            {/* Language Selector Dropdown */}
+            <div className="relative flex items-center" ref={langDropdownRef}>
               <button 
-                onClick={() => switchLanguage('id')} 
-                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'id' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
-                title="Indonesian"
+                onClick={() => setShowLangDropdown(!showLangDropdown)}
+                className="flex items-center gap-1.5 px-2 py-1 text-xs font-sans font-medium text-zinc-300 border border-gold/20 rounded-sm hover:border-gold/50 hover:text-gold transition-colors"
+                title="Select Language"
               >
-                <img src="https://flagcdn.com/id.svg" alt="ID" className="w-full h-full object-cover" />
+                <div className="w-4 h-3 rounded-sm overflow-hidden flex items-center justify-center">
+                  <img 
+                    src={`https://flagcdn.com/${currentLang === 'en' ? 'gb' : currentLang === 'ja' ? 'jp' : currentLang}.svg`} 
+                    alt={currentLang} 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+                <span className="uppercase">{currentLang}</span>
+                <ChevronDown className="w-3 h-3" />
               </button>
+              
+              {showLangDropdown && (
+                <div className="absolute top-full mt-2 right-0 w-32 bg-zinc-900 border border-gold/20 rounded-sm shadow-xl p-1 z-50">
+                  {[
+                    { code: 'id', flag: 'id', label: 'Indonesian' },
+                    { code: 'en', flag: 'gb', label: 'English' },
+                    { code: 'es', flag: 'es', label: 'Spanish' },
+                    { code: 'it', flag: 'it', label: 'Italian' },
+                    { code: 'ja', flag: 'jp', label: 'Japanese' },
+                  ].map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        switchLanguage(lang.code);
+                        setShowLangDropdown(false);
+                      }}
+                      className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-sans rounded-sm transition-colors ${currentLang === lang.code ? 'bg-gold/20 text-gold' : 'text-zinc-300 hover:bg-zinc-800'}`}
+                    >
+                      <div className="w-4 h-3 rounded-sm overflow-hidden flex items-center justify-center flex-shrink-0">
+                        <img src={`https://flagcdn.com/${lang.flag}.svg`} alt={lang.code} className="w-full h-full object-cover" />
+                      </div>
+                      {lang.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Currency Selector */}
+            <div className="relative flex items-center" ref={currencyDropdownRef}>
               <button 
-                onClick={() => switchLanguage('en')} 
-                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'en' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
-                title="English"
+                onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                className="flex items-center gap-1.5 px-2 py-1 text-xs font-sans font-medium text-zinc-300 border border-gold/20 rounded-sm hover:border-gold/50 hover:text-gold transition-colors"
+                title="Select Currency"
               >
-                <img src="https://flagcdn.com/gb.svg" alt="UK" className="w-full h-full object-cover" />
+                {currency}
+                <ChevronDown className="w-3 h-3" />
               </button>
-              <button 
-                onClick={() => switchLanguage('es')} 
-                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'es' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
-                title="Spanish"
-              >
-                <img src="https://flagcdn.com/es.svg" alt="ES" className="w-full h-full object-cover" />
-              </button>
-              <button 
-                onClick={() => switchLanguage('it')} 
-                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'it' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
-                title="Italian"
-              >
-                <img src="https://flagcdn.com/it.svg" alt="IT" className="w-full h-full object-cover" />
-              </button>
-              <button 
-                onClick={() => switchLanguage('ja')} 
-                className={`w-6 h-6 rounded-sm overflow-hidden flex items-center justify-center transition-all ${currentLang === 'ja' ? 'ring-1 ring-gold opacity-100' : 'opacity-50 hover:opacity-100'}`}
-                title="Japanese"
-              >
-                <img src="https://flagcdn.com/jp.svg" alt="JP" className="w-full h-full object-cover" />
-              </button>
+              
+              {showCurrencyDropdown && (
+                <div className="absolute top-full mt-2 right-0 w-36 max-h-64 overflow-y-auto bg-zinc-900 border border-gold/20 rounded-sm shadow-xl p-1 z-50">
+                  {(['IDR', 'USD', 'MYR', 'SGD', 'JPY', 'CNY', 'EUR', 'BHD'] as Currency[]).map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => {
+                        setCurrency(c);
+                        setShowCurrencyDropdown(false);
+                      }}
+                      className={`block w-full text-left px-3 py-2 text-xs font-sans rounded-sm transition-colors ${currency === c ? 'bg-gold/20 text-gold' : 'text-zinc-300 hover:bg-zinc-800'}`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                  
+                  <div className="mt-1 pt-2 border-t border-zinc-800 px-2 pb-1 group/tooltip">
+                    <div className="flex items-start gap-1.5 text-[10px] text-zinc-500">
+                      <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gold/60" />
+                      <p className="leading-tight">
+                        Kurs diperbarui otomatis setiap jam ({ratesDate}). Transaksi tetap IDR.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <Link href="/catalog" className="hidden md:inline-flex items-center gap-2 btn-primary text-xs" id="navbar-browse-btn">
@@ -137,7 +203,7 @@ export default function Navbar() {
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 text-parchment-200 hover:text-gold transition-colors duration-200"
+              className="md:hidden p-2 text-parchment-200 hover:text-gold transition-colors duration-200 flex-shrink-0"
               aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'}
               aria-expanded={mobileOpen}
             >
@@ -186,6 +252,8 @@ export default function Navbar() {
                 <span className="text-gold/40 text-xs">›</span>
               </Link>
             ))}
+            
+
             <div className="mt-4 pt-4 border-t border-zinc-800">
               <Link href="/catalog" onClick={() => setMobileOpen(false)} className="btn-primary w-full justify-center text-xs" id="mobile-browse-btn">
                 <ShoppingBag className="w-3.5 h-3.5" />

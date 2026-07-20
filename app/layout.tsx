@@ -3,6 +3,8 @@ import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { getExchangeRates } from '@/lib/exchangeRate';
+import { SettingsProvider } from '@/components/providers/SettingsProvider';
 
 // --- Font Configuration ---
 const playfair = Playfair_Display({
@@ -45,11 +47,13 @@ export const metadata: Metadata = {
 import Script from 'next/script';
 
 // --- Root Layout ---
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { date, rates } = await getExchangeRates();
+
   return (
     <html lang="id" className={`${playfair.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
@@ -69,11 +73,13 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <Navbar />
-        <main className="flex-1 pt-[var(--navbar-height)]">
-          {children}
-        </main>
-        <Footer />
+        <SettingsProvider initialRates={rates} initialDate={date}>
+          <Navbar />
+          <main className="flex-1 pt-[var(--navbar-height)]">
+            {children}
+          </main>
+          <Footer />
+        </SettingsProvider>
       </body>
     </html>
   );

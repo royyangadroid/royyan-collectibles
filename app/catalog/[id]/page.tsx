@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, MessageCircle, ShieldCheck } from 'lucide-react';
-import { getAllCollectibles, getCollectibleBySlug, formatPrice } from '@/lib/data';
+import { getAllCollectibles, getCollectibleBySlug } from '@/lib/data';
+import { PriceDisplay } from '@/components/PriceDisplay';
 
 export function generateStaticParams() {
   return getAllCollectibles().map((item) => ({ id: item.slug }));
@@ -81,7 +82,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             {/* Price */}
             <div className="mb-8 p-6 border border-gold/15 bg-zinc-900/50 rounded-sm">
               <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-2">Harga</p>
-              <p className="font-serif font-bold text-4xl text-gold">{formatPrice(item.price)}</p>
+              <p className="font-serif font-bold text-4xl text-gold"><PriceDisplay price={item.price} /></p>
               <p className="font-sans text-xs text-zinc-600 mt-1">Belum termasuk ongkir</p>
             </div>
 
