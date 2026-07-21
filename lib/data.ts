@@ -299,6 +299,39 @@ export const collectibles: CollectibleItem[] = [
     status: 'Available',
     image: '/catalog/RC-021/cover.jpg',
     description: 'Komik klasik karya maestro Siauw Tik Kwie, cetakan asli sekitar tahun 1959. Terdiri dari 9 jilid tamat yang mengisahkan kepahlawanan Sie Djin Koei (Xue Rengui), jenderal legendaris Dinasti Tang. Menggunakan bahasa Indonesia ejaan lama dengan ilustrasi khas era komik Tionghoa-Indonesia, menjadikannya salah satu collectible yang semakin langka dan bernilai sejarah tinggi.'
+  },
+  {
+    id: 'ryc-022',
+    slug: 'RC-022',
+    collectionNumber: 'RC-022',
+    title: 'Jodoh di Grojogan Sewu',
+    price: 465000,
+    category: 'Komik',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-022/cover.jpg',
+    description: 'Komik silat klasik karya MAN, cetakan asli tahun 1983. Terdiri dari 15 jilid tamat dalam satu set lengkap yang menghadirkan kisah petualangan, intrik, dan pertarungan khas komik silat Indonesia era 1980-an. Salah satu karya legendaris yang semakin sulit ditemukan dan menjadi collectible bagi para kolektor komik Indonesia.'
+  },
+  {
+    id: 'ryc-023',
+    slug: 'RC-023',
+    collectionNumber: 'RC-023',
+    title: 'Zimbabwe 2 Dollars (1983)',
+    price: 125000,
+    category: 'Uang Kuno & Perangko',
+    condition: 'Near Mint',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-023/cover.jpg',
+    description: 'Uang kertas Zimbabwe nominal 2 Dollars yang diterbitkan oleh Reserve Bank of Zimbabwe pada tahun 1983. Menampilkan ilustrasi Balancing Rocks dan Cape Buffalo pada sisi depan serta Bendungan Kariba pada sisi belakang. Salah satu koleksi numismatik yang merepresentasikan periode awal sejarah modern Zimbabwe dan menjadi collectible menarik bagi kolektor uang kertas dunia.',
+    featured: false,
+    tags: [
+      'Zimbabwe',
+      'Uang Kertas',
+      'Numismatik',
+      'Original'
+    ]
   }
 ];
 
@@ -324,7 +357,7 @@ export function getAllCategories(): string[] {
 
 export function formatPrice(price: number, currency: string = 'IDR', rate: number = 1): string {
   const convertedPrice = price * rate;
-  
+
   if (currency === 'USD') {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(convertedPrice);
   } else if (currency === 'MYR') {
