@@ -324,15 +324,8 @@ export const collectibles: CollectibleItem[] = [
     badge: 'Limited',
     status: 'Available',
     image: '/catalog/RC-023/cover.jpg',
-    description: 'Uang kertas Zimbabwe nominal 2 Dollars yang diterbitkan oleh Reserve Bank of Zimbabwe pada tahun 1983. Menampilkan ilustrasi Balancing Rocks dan Cape Buffalo pada sisi depan serta Bendungan Kariba pada sisi belakang. Salah satu koleksi numismatik yang merepresentasikan periode awal sejarah modern Zimbabwe dan menjadi collectible menarik bagi kolektor uang kertas dunia.',
-    featured: false,
-    tags: [
-      'Zimbabwe',
-      'Uang Kertas',
-      'Numismatik',
-      'Original'
-    ]
-  }
+    description: 'Uang kertas Zimbabwe nominal 2 Dollars yang diterbitkan oleh Reserve Bank of Zimbabwe pada tahun 1983. Menampilkan ilustrasi Balancing Rocks dan Cape Buffalo pada sisi depan serta Bendungan Kariba pada sisi belakang. Salah satu koleksi numismatik yang merepresentasikan periode awal sejarah modern Zimbabwe dan menjadi collectible menarik bagi kolektor uang kertas dunia.'
+  },
 ];
 
 // =============================================
