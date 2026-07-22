@@ -326,6 +326,32 @@ export const collectibles: CollectibleItem[] = [
     image: '/catalog/RC-023/cover.jpg',
     description: 'Uang kertas Zimbabwe nominal 2 Dollars yang diterbitkan oleh Reserve Bank of Zimbabwe pada tahun 1983. Menampilkan ilustrasi Balancing Rocks dan Cape Buffalo pada sisi depan serta Bendungan Kariba pada sisi belakang. Salah satu koleksi numismatik yang merepresentasikan periode awal sejarah modern Zimbabwe dan menjadi collectible menarik bagi kolektor uang kertas dunia.'
   },
+  {
+    id: 'ryc-024',
+    slug: 'RC-024',
+    collectionNumber: 'RC-024',
+    title: 'Ratu Pantai Utara',
+    price: 465000,
+    category: 'Komik',
+    condition: 'Good',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-024/cover.jpg',
+    description: 'Komik silat klasik karya MAN, cetakan asli tahun 1983. Terdiri dari 15 jilid tamat dalam satu set lengkap yang menghadirkan kisah penuh misteri, intrik persilatan, dan pertarungan khas komik Indonesia era 1980-an. Salah satu collectible yang semakin sulit ditemukan dan menjadi incaran kolektor komik silat klasik.'
+  },
+  {
+    id: 'ryc-025',
+    slug: 'RC-025',
+    collectionNumber: 'RC-025',
+    title: 'Hong Kong 20 Dollars (2018)',
+    price: 95000,
+    category: 'Uang Kuno & Perangko',
+    condition: 'Near Mint',
+    badge: 'Limited',
+    status: 'Available',
+    image: '/catalog/RC-025/cover.jpg',
+    description: 'Uang kertas Hong Kong nominal 20 Dollars emisi 2018 yang diterbitkan oleh Bank of China (Hong Kong). Menampilkan desain modern dengan fitur keamanan canggih dan kualitas cetak yang sangat baik. Masih berlaku sebagai alat pembayaran di Hong Kong sekaligus menjadi collectible menarik bagi kolektor uang kertas dunia dan pecinta numismatik.',
+  }
 ];
 
 // =============================================
