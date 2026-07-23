@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/sync-data.js",
     "dev": "next dev",
+    "prebuild": "node scripts/sync-data.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync-data": "node scripts/sync-data.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.2",
