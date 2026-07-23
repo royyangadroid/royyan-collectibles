@@ -34,16 +34,16 @@ for (const dir of dirs) {
 
       const item = {
         id: data.id,
-        slug: data.collectionNumber,
-        collectionNumber: data.collectionNumber,
-        title: data.title,
+        slug: data.collectionNumber ? data.collectionNumber.trim() : '',
+        collectionNumber: data.collectionNumber ? data.collectionNumber.trim() : '',
+        title: data.title ? data.title.trim() : '',
         price: data.price,
-        category: data.category,
-        condition: data.condition,
-        badge: data.badge || null,
-        status: data.status,
+        category: data.category ? data.category.trim() : '',
+        condition: data.condition ? data.condition.trim() : '',
+        badge: data.badge ? data.badge.trim() : null,
+        status: data.status ? data.status.trim() : '',
         image: `/catalog/${dir}/cover${coverExt}`,
-        description: data.description,
+        description: data.description ? data.description.trim() : '',
       };
 
       items.push(item);

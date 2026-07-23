@@ -75,7 +75,7 @@ export const collectibles: CollectibleItem[] = [
     "title": "Pemandangan Indonesia Masa Lampau - Annabel Teh Gallop",
     "price": 800000,
     "category": "Buku Sejarah",
-    "condition": "Good ",
+    "condition": "Good",
     "badge": "Limited",
     "status": "Available",
     "image": "/catalog/RC-006/cover.jpg",
