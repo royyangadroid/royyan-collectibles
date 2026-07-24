@@ -366,5 +366,18 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-028/cover.jpg",
     "description": "Uang kertas Sri Lanka nominal 10 Rupees emisi tahun 1991 dengan desain klasik yang menampilkan ikon patung singa khas Sri Lanka serta tulisan dalam beberapa bahasa. Kondisi kertas masih kaku dan keras, menjadikannya pilihan menarik bagi kolektor uang kertas dunia, numismatik, maupun koleksi edukasi internasional."
+  },
+  {
+    "id": "ryc-029",
+    "slug": "RC-029",
+    "collectionNumber": "RC-029",
+    "title": "'88 Mitsubishi Starion",
+    "price": 73000,
+    "category": "Hot Wheels",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-029/cover.png",
+    "description": "Hot Wheels '88 Mitsubishi Starion dari seri J'Series yang menampilkan livery rally klasik bernomor 88 dengan dominasi warna putih dan aksen merah. Salah satu casting bertema JDM yang menarik untuk melengkapi koleksi diecast maupun dipajang sebagai collectible item."
   }
 ];
