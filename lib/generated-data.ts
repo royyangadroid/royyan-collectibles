@@ -43,9 +43,9 @@ export const collectibles: CollectibleItem[] = [
     "description": "Mata Uang Barbados 2 Dolar"
   },
   {
-    "id": "ryc-003",
-    "slug": "RC-003",
-    "collectionNumber": "RC-003",
+    "id": "ryc-004",
+    "slug": "RC-004",
+    "collectionNumber": "RC-004",
     "title": "2 Barbados Dollar",
     "price": 80000,
     "category": "Mata Uang Asing",
@@ -290,9 +290,9 @@ export const collectibles: CollectibleItem[] = [
     "description": "Komik silat klasik karya MAN, cetakan asli tahun 1983. Terdiri dari 15 jilid tamat dalam satu set lengkap yang menghadirkan kisah petualangan, intrik, dan pertarungan khas komik silat Indonesia era 1980-an. Salah satu karya legendaris yang semakin sulit ditemukan dan menjadi collectible bagi para kolektor komik Indonesia."
   },
   {
-    "id": "ryc-022",
-    "slug": "RC-022",
-    "collectionNumber": "RC-022",
+    "id": "ryc-023",
+    "slug": "RC-023",
+    "collectionNumber": "RC-023",
     "title": "Jodoh di Grojogan Sewu",
     "price": 465000,
     "category": "Komik",
@@ -340,5 +340,31 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-026/cover.jpg",
     "description": "Hot Wheels '82 Toyota Supra dari seri J-Imports yang menghadirkan salah satu ikon JDM legendaris dengan balutan warna silver dan livery klasik khas era 1980-an. Masih dalam kondisi blister dan card yang terawat sehingga cocok untuk koleksi, display, maupun investasi diecast."
+  },
+  {
+    "id": "ryc-027",
+    "slug": "RC-027",
+    "collectionNumber": "RC-027",
+    "title": "South Africa 10 Rand",
+    "price": 60000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-027/cover.jpg",
+    "description": "Uang kertas Afrika Selatan nominal 10 Rand yang diterbitkan oleh South African Reserve Bank. Menampilkan desain elegan dengan ilustrasi bunga matahari sebagai salah satu elemen visual khasnya. Kondisi masih sangat baik dengan kertas yang relatif keras dan segar, menjadikannya pilihan menarik bagi kolektor uang kertas dunia maupun pecinta numismatik."
+  },
+  {
+    "id": "ryc-028",
+    "slug": "RC-028",
+    "collectionNumber": "RC-028",
+    "title": "Sri Lanka 10 Rupees (1991)",
+    "price": 55000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-028/cover.jpg",
+    "description": "Uang kertas Sri Lanka nominal 10 Rupees emisi tahun 1991 dengan desain klasik yang menampilkan ikon patung singa khas Sri Lanka serta tulisan dalam beberapa bahasa. Kondisi kertas masih kaku dan keras, menjadikannya pilihan menarik bagi kolektor uang kertas dunia, numismatik, maupun koleksi edukasi internasional."
   }
 ];
