@@ -46,14 +46,14 @@ export const collectibles: CollectibleItem[] = [
     "id": "ryc-004",
     "slug": "RC-004",
     "collectionNumber": "RC-004",
-    "title": "2 Barbados Dollar",
-    "price": 80000,
-    "category": "Mata Uang Asing",
-    "condition": "Mint",
+    "title": "Wolfenstein: The New Order",
+    "price": 165000,
+    "category": "Playstation",
+    "condition": "Near Mint",
     "badge": "Limited",
     "status": "Available",
     "image": "/catalog/RC-004/cover.jpg",
-    "description": "Mata Uang Barbados 2 Dolar"
+    "description": "Game original PlayStation 4 berjudul Wolfenstein: The New Order, dikembangkan oleh MachineGames dan diterbitkan oleh Bethesda. Paket koleksi dilengkapi box original, disc PS4 original, dan manual book. Seluruh komponen berada dalam kondisi sangat baik sehingga cocok untuk dimainkan maupun melengkapi koleksi game original PlayStation."
   },
   {
     "id": "ryc-005",
