@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sold Items List",
+  "description": "Daftar nomor koleksi yang sudah terjual. Format fleksibel: 'RC-021', 'rc021', 'rc 21', atau cukup angka '21'.",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "description": "Nomor koleksi, contoh: \"RC-021\" atau \"rc 21\" atau \"21\""
+  },
+  "examples": [
+    ["RC-001", "RC-012", "RC-021"],
+    ["rc001", "rc 12"],
+    ["1", "5", "21"]
+  ]
+}

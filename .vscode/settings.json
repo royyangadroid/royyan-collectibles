@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["public/sold.json", "*/public/sold.json"],
+      "url": "./public/sold.schema.json"
+    }
+  ]
+}
