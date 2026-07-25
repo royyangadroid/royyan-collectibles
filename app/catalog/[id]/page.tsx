@@ -35,15 +35,36 @@ export default function DetailPage({ params }: { params: { id: string } }) {
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className={`object-cover ${isSold ? 'grayscale opacity-60' : ''}`}
+              className={`object-cover ${isSold ? 'brightness-[0.35]' : ''}`}
             />
+
+            {/* ===== CONCEPT 3: Diagonal Sold Ribbon (Detail Page) ===== */}
             {isSold && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                <span className="border-2 border-red-500/60 px-8 py-3 font-serif font-black text-3xl text-red-400 tracking-[0.3em] uppercase rotate-[-8deg]">
-                  SOLD
-                </span>
+              <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-black/40" />
+                {/* Diagonal ribbon */}
+                <div
+                  className="absolute flex flex-col items-center justify-center gap-1 py-4 sm:py-5"
+                  style={{
+                    width: '150%',
+                    transform: 'rotate(-35deg)',
+                    background: 'linear-gradient(90deg, #450a0a 0%, #991b1b 30%, #b91c1c 50%, #991b1b 70%, #450a0a 100%)',
+                    borderTop: '2px solid rgba(217, 169, 60, 0.45)',
+                    borderBottom: '2px solid rgba(217, 169, 60, 0.45)',
+                    boxShadow: '0 4px 30px rgba(0,0,0,0.6), 0 0 20px rgba(153,27,27,0.3)',
+                  }}
+                >
+                  <span className="font-serif font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-[0.25em] uppercase drop-shadow-lg leading-none">
+                    SOLD OUT
+                  </span>
+                  <span className="font-sans text-xs sm:text-sm text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-1">
+                    TERIMA KASIH
+                  </span>
+                </div>
               </div>
             )}
+
             {/* Collection Number tag */}
             <span className="absolute top-4 left-4 px-3 py-1.5 text-[10px] font-mono bg-black/70 text-gold/80 tracking-widest border border-gold/20 rounded-sm">
               {item.collectionNumber}
@@ -59,7 +80,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             </div>
 
             {/* Badge */}
-            {item.badge && (
+            {item.badge && !isSold && (
               <span className="inline-block w-fit px-3 py-1 text-[10px] font-sans font-bold tracking-[0.15em] uppercase bg-red-900/60 text-red-200 rounded-sm mb-4">
                 {item.badge}
               </span>
@@ -82,12 +103,23 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             {/* Price */}
             <div className="mb-8 p-6 border border-gold/15 bg-zinc-900/50 rounded-sm">
               <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-2">Harga</p>
-              <p className="font-serif font-bold text-4xl text-gold"><PriceDisplay price={item.price} /></p>
+              <p className={`font-serif font-bold text-4xl ${isSold ? 'text-zinc-600 line-through decoration-red-500/60' : 'text-gold'}`}>
+                <PriceDisplay price={item.price} />
+              </p>
               <p className="font-sans text-xs text-zinc-600 mt-1">Belum termasuk ongkir</p>
             </div>
 
-            {/* CTA */}
-            {!isSold && (
+            {/* CTA or Sold Out Box */}
+            {isSold ? (
+              <div className="flex flex-col items-center justify-center gap-2 py-5 px-6 rounded-sm bg-gradient-to-r from-red-950/80 via-red-900/50 to-red-950/80 border border-red-800/40">
+                <span className="font-serif font-black text-xl md:text-2xl text-red-400 tracking-[0.2em] uppercase">
+                  SOLD OUT
+                </span>
+                <span className="font-sans text-sm text-zinc-400 text-center leading-snug">
+                  Produk ini sudah telak tersedia.
+                </span>
+              </div>
+            ) : (
               <a
                 href={`https://wa.me/6281295173689?text=${encodeURIComponent(`Halo, saya tertarik dengan koleksi: ${item.title} (${item.collectionNumber})`)}`}
                 target="_blank"

@@ -155,7 +155,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-012/cover.jpg",
     "description": "Komik klasik Tiongkok yang mengangkat kisah epik peperangan pada masa Dinasti Tang di bawah pemerintahan Kaisar Thai Cong. Mengisahkan Sie Jin Koei, seorang jenderal tangguh yang memimpin ekspedisi ke Timur dalam cerita yang sarat strategi perang, keberanian, dan heroisme. Terdiri dari 6 jilid tamat dan menjadi salah satu komik kuno yang semakin langka di pasaran."
   },
