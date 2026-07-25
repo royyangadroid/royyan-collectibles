@@ -155,7 +155,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Sold",
+    "status": "Available",
     "image": "/catalog/RC-012/cover.jpg",
     "description": "Komik klasik Tiongkok yang mengangkat kisah epik peperangan pada masa Dinasti Tang di bawah pemerintahan Kaisar Thai Cong. Mengisahkan Sie Jin Koei, seorang jenderal tangguh yang memimpin ekspedisi ke Timur dalam cerita yang sarat strategi perang, keberanian, dan heroisme. Terdiri dari 6 jilid tamat dan menjadi salah satu komik kuno yang semakin langka di pasaran."
   },
@@ -272,7 +272,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-021/cover.jpg",
     "description": "Komik klasik karya maestro Siauw Tik Kwie, cetakan asli sekitar tahun 1959. Terdiri dari 9 jilid tamat yang mengisahkan kepahlawanan Sie Djin Koei (Xue Rengui), jenderal legendaris Dinasti Tang. Menggunakan bahasa Indonesia ejaan lama dengan ilustrasi khas era komik Tionghoa-Indonesia, menjadikannya salah satu collectible yang semakin langka dan bernilai sejarah tinggi."
   },
