@@ -379,5 +379,31 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-029/cover.png",
     "description": "Hot Wheels '88 Mitsubishi Starion dari seri J'Series yang menampilkan livery rally klasik bernomor 88 dengan dominasi warna putih dan aksen merah. Salah satu casting bertema JDM yang menarik untuk melengkapi koleksi diecast maupun dipajang sebagai collectible item."
+  },
+  {
+    "id": "ryc-030",
+    "slug": "RC-030",
+    "collectionNumber": "RC-030",
+    "title": "1995 Mitsubishi Eclipse",
+    "price": 89000,
+    "category": "Hot Wheels",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-030/cover.jpg",
+    "description": "Hot Wheels 1995 Mitsubishi Eclipse yang terinspirasi dari mobil ikonik dalam franchise Fast & Furious. Masih dalam kondisi MOC (Mint on Card) dengan blister dan card yang terawat, menjadikannya collectible menarik bagi kolektor Hot Wheels, penggemar JDM, maupun pecinta diecast bertema film."
+  },
+  {
+    "id": "ryc-031",
+    "slug": "RC-031",
+    "collectionNumber": "RC-031",
+    "title": "Venezuela 2 Bolívares",
+    "price": 75000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-031/cover.jpg",
+    "description": "Uang kertas asli Venezuela nominal 2 Bolívares dengan desain khas Republik Bolivarian Venezuela. Menampilkan potret tokoh bersejarah pada sisi depan serta ilustrasi satwa pada sisi belakang. Kondisi kertas masih kaku dan keras dengan warna cetakan yang jelas, menjadikannya collectible menarik bagi kolektor uang kertas dunia dan pecinta numismatik."
   }
 ];
