@@ -159,7 +159,7 @@ export const DUMMY_ARTICLES: Article[] = [
     slug: 'indonesian-classic-diecast',
     title: 'Mobil Klasik Indonesia yang Menjadi Incaran Kolektor Die-Cast',
     excerpt: 'Replika mobil klasik Indonesia menawarkan nilai nostalgia dan sejarah yang unik. Dari Bemo hingga Toyota Kijang generasi awal, model-model ini menjadi incaran kolektor karena kelangkaan dan nilai budayanya.',
-    coverImage: 'https://scontent-cgk2-1.xx.fbcdn.net/v/t39.30808-6/307463811_428135496083182_8976639038396682291_n.jpg?stp=dst-jpg_tt6&cstp=mx780x520&ctp=s780x520&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=_LFDWy5NNIIQ7kNvwFmrvJ_&_nc_oc=Adq3a35sngo59FKFFyDHiZaxr0CmEMpKhBFv6jTM0fZ58p9PQoQJ_KG3hrQJj3BZVpI&_nc_zt=23&_nc_ht=scontent-cgk2-1.xx&_nc_gid=Y0sV0GP6oKdqrrXvXu6JnA&_nc_ss=7b289&oh=00_AQAtd_K4WDrDHMnvDu0E_yhSGhP8YkHegbNJAJqflIDupw&oe=6A5FA290',
+    coverImage: 'https://i.pinimg.com/vwebp/1200x/9b/80/e7/9b80e79cd4ff7649eeea907bcc0e77c2.webp',
     category: 'Collecting Guide',
     readingTime: '5 Min Read',
     publishedDate: 'Jul 17, 2026',
