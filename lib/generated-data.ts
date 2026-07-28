@@ -220,7 +220,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-017/cover.jpg",
     "description": "Komik klasik karya Hergé cetakan pertama Penerbit Indira tahun 1978. Salah satu kisah paling penting dalam serial Tintin karena memperkenalkan Kapten Haddock untuk pertama kalinya. Edisi lawas yang memiliki nilai historis dan semakin langka di kalangan kolektor."
   },
