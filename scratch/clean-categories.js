@@ -10,17 +10,17 @@ const mapping = {
   'Komik Klasik Tiongkok': 'Komik',
   'Komik Tintin': 'Komik',
   'Komik Star Wars': 'Komik',
-  
+
   'Buku Sejarah': 'Buku',
   'Buku Budaya': 'Buku',
-  
+
   'Mata Uang Asing': 'Uang Kuno & Perangko',
   'Perangko': 'Uang Kuno & Perangko',
   'Uang Kuno & Perangko': 'Uang Kuno & Perangko',
-  
+
   'Playstation': 'PlayStation',
   'PlayStation': 'PlayStation',
-  
+
   'Hot Wheels': 'Hot Wheels'
 };
 
@@ -37,7 +37,7 @@ for (const dir of dirs) {
       const dataStr = fs.readFileSync(dataPath, 'utf-8');
       const data = JSON.parse(dataStr);
       const oldCategory = data.category;
-      
+
       if (oldCategory && mapping[oldCategory]) {
         const newCategory = mapping[oldCategory];
         if (oldCategory !== newCategory) {

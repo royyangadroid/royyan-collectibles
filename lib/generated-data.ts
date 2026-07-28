@@ -405,5 +405,31 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-031/cover.jpg",
     "description": "Uang kertas asli Venezuela nominal 2 Bolívares dengan desain khas Republik Bolivarian Venezuela. Menampilkan potret tokoh bersejarah pada sisi depan serta ilustrasi satwa pada sisi belakang. Kondisi kertas masih kaku dan keras dengan warna cetakan yang jelas, menjadikannya collectible menarik bagi kolektor uang kertas dunia dan pecinta numismatik."
+  },
+  {
+    "id": "ryc-032",
+    "slug": "RC-032",
+    "collectionNumber": "RC-032",
+    "title": "Trinidad & Tobago 1 Dollar",
+    "price": 75000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-032/cover.jpg",
+    "description": "Uang kertas asli Trinidad & Tobago nominal 1 Dollar dengan desain khas negara kepulauan Karibia yang menampilkan ilustrasi burung eksotis serta lambang negara. Menjadi collectible menarik bagi kolektor uang kertas dunia, pecinta numismatik, maupun koleksi mata uang internasional."
+  },
+  {
+    "id": "ryc-033",
+    "slug": "RC-033",
+    "collectionNumber": "RC-033",
+    "title": "'66 Batmobile",
+    "price": 175000,
+    "category": "Hot Wheels",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-033/cover.jpg",
+    "description": "Hot Wheels '66 Batmobile dari seri Batman yang terinspirasi dari kendaraan ikonik dalam serial televisi Batman tahun 1966. Hadir dengan desain klasik berwarna hitam dan detail khas Batmobile. Masih dalam blister dan card original sehingga cocok untuk koleksi, display, maupun investasi diecast."
   }
 ];
