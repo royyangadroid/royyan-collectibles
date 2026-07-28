@@ -97,13 +97,12 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className="
-                  relative font-sans text-sm font-medium tracking-wider uppercase
-                  text-zinc-400 hover:text-gold
-                  transition-colors duration-250
-                  after:absolute after:bottom-[-4px] after:left-0 after:right-0
-                  after:h-px after:bg-gold
-                  after:scale-x-0 hover:after:scale-x-100
-                  after:transition-transform after:duration-300 after:origin-center
+                  relative font-serif text-[13px] font-medium tracking-[0.2em] uppercase
+                  text-zinc-300 hover:text-gold
+                  transition-colors duration-300
+                  after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-0
+                  after:h-px after:bg-gold hover:after:w-full
+                  after:transition-all after:duration-300 after:ease-out
                 "
               >
                 {link.label}
@@ -123,7 +122,7 @@ export default function Navbar() {
               >
                 <div className="w-4 h-3 rounded-sm overflow-hidden flex items-center justify-center">
                   <img 
-                    src={`https://flagcdn.com/${currentLang === 'en' ? 'gb' : currentLang === 'ja' ? 'jp' : currentLang}.svg`} 
+                    src={`https://flagcdn.com/${currentLang === 'en' ? 'gb' : currentLang === 'ja' ? 'jp' : currentLang === 'ar' ? 'sa' : currentLang === 'zh-CN' ? 'cn' : currentLang === 'ko' ? 'kr' : currentLang}.svg`} 
                     alt={currentLang} 
                     className="w-full h-full object-cover" 
                   />
@@ -137,6 +136,10 @@ export default function Navbar() {
                   {[
                     { code: 'id', flag: 'id', label: 'Indonesian' },
                     { code: 'en', flag: 'gb', label: 'English' },
+                    { code: 'zh-CN', flag: 'cn', label: 'Chinese' },
+                    { code: 'ko', flag: 'kr', label: 'Korean' },
+                    { code: 'ar', flag: 'sa', label: 'Arabic' },
+                    { code: 'fr', flag: 'fr', label: 'French' },
                     { code: 'es', flag: 'es', label: 'Spanish' },
                     { code: 'it', flag: 'it', label: 'Italian' },
                     { code: 'ja', flag: 'jp', label: 'Japanese' },
@@ -172,7 +175,7 @@ export default function Navbar() {
               
               {showCurrencyDropdown && (
                 <div className="absolute top-full mt-2 right-0 w-36 max-h-64 overflow-y-auto bg-zinc-900 border border-gold/20 rounded-sm shadow-xl p-1 z-50">
-                  {(['IDR', 'USD', 'MYR', 'SGD', 'JPY', 'CNY', 'EUR', 'BHD'] as Currency[]).map((c) => (
+                  {(['IDR', 'USD', 'MYR', 'SGD', 'JPY', 'CNY', 'EUR', 'BHD', 'KRW'] as Currency[]).map((c) => (
                     <button
                       key={c}
                       onClick={() => {

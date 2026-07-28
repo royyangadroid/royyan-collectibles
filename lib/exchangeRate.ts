@@ -7,6 +7,7 @@ export type Rates = {
   cny: number;
   eur: number;
   bhd: number;
+  krw: number;
 };
 
 export type ExchangeData = {
@@ -39,6 +40,7 @@ export async function getExchangeRates(): Promise<ExchangeData> {
         cny: data.idr.cny || 0.00045,
         eur: data.idr.eur || 0.000057,
         bhd: data.idr.bhd || 0.000023,
+        krw: data.idr.krw || 0.085,
       }
     };
   } catch (error) {
@@ -55,6 +57,7 @@ export async function getExchangeRates(): Promise<ExchangeData> {
         cny: 0.00045,
         eur: 0.000057,
         bhd: 0.000023,
+        krw: 0.085,
       }
     };
   }

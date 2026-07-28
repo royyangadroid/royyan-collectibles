@@ -2,12 +2,12 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Currency = 'IDR' | 'USD' | 'MYR' | 'SGD' | 'JPY' | 'CNY' | 'EUR' | 'BHD';
+export type Currency = 'IDR' | 'USD' | 'MYR' | 'SGD' | 'JPY' | 'CNY' | 'EUR' | 'BHD' | 'KRW';
 
 interface SettingsContextType {
   currency: Currency;
   setCurrency: (curr: Currency) => void;
-  rates: { idr: number; usd: number; myr: number; sgd: number; jpy: number; cny: number; eur: number; bhd: number; };
+  rates: { idr: number; usd: number; myr: number; sgd: number; jpy: number; cny: number; eur: number; bhd: number; krw: number; };
   ratesDate: string;
 }
 
@@ -19,7 +19,7 @@ export function SettingsProvider({
   initialDate 
 }: { 
   children: React.ReactNode;
-  initialRates: { idr: number; usd: number; myr: number; sgd: number; jpy: number; cny: number; eur: number; bhd: number; };
+  initialRates: { idr: number; usd: number; myr: number; sgd: number; jpy: number; cny: number; eur: number; bhd: number; krw: number; };
   initialDate: string;
 }) {
   const [currency, setCurrencyState] = useState<Currency>('IDR');
@@ -27,7 +27,7 @@ export function SettingsProvider({
   useEffect(() => {
     // Load from localStorage on mount
     const savedCurrency = localStorage.getItem('royyan_currency') as Currency;
-    if (savedCurrency && ['IDR', 'USD', 'MYR', 'SGD', 'JPY', 'CNY', 'EUR', 'BHD'].includes(savedCurrency)) {
+    if (savedCurrency && ['IDR', 'USD', 'MYR', 'SGD', 'JPY', 'CNY', 'EUR', 'BHD', 'KRW'].includes(savedCurrency)) {
       setCurrencyState(savedCurrency);
     }
   }, []);
