@@ -431,5 +431,18 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-033/cover.jpg",
     "description": "Hot Wheels '66 Batmobile dari seri Batman yang terinspirasi dari kendaraan ikonik dalam serial televisi Batman tahun 1966. Hadir dengan desain klasik berwarna hitam dan detail khas Batmobile. Masih dalam blister dan card original sehingga cocok untuk koleksi, display, maupun investasi diecast."
+  },
+  {
+    "id": "ryc-034",
+    "slug": "RC-034",
+    "collectionNumber": "RC-034",
+    "title": "Trinidad & Tobago 5 Dollars",
+    "price": 75000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Rare Find",
+    "status": "Available",
+    "image": "/catalog/RC-034/cover.jpg",
+    "description": "Uang kertas asli Trinidad & Tobago nominal 5 Dollars dengan desain khas negara kepulauan Karibia yang menampilkan ilustrasi burung eksotis serta lambang negara. Salah satu collectible menarik bagi kolektor uang kertas dunia, pecinta numismatik, maupun koleksi mata uang internasional."
   }
 ];
