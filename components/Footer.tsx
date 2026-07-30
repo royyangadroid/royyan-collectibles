@@ -1,8 +1,14 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { BookOpen, MapPin, Instagram } from 'lucide-react';
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+
+  if (pathname.startsWith('/rcpanel7x')) return null;
 
   return (
     <footer className="bg-zinc-950 border-t border-gold/10">

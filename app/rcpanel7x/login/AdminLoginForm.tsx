@@ -1,12 +1,18 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { LockKeyhole, ShieldCheck } from 'lucide-react';
+import { LockKeyhole, ShieldCheck, User } from 'lucide-react';
 
-function AdminLoginForm() {
+interface AdminLoginFormProps {
+  accessKey?: string;
+  redirectTo?: string;
+}
+
+export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,10 +23,11 @@ function AdminLoginForm() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/admin/login', {
+      const response = await fetch('/api/rcpanel7x/login', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password, accessKey }),
       });
 
       if (!response.ok) {
@@ -28,9 +35,8 @@ function AdminLoginForm() {
         throw new Error(data.error || 'Login gagal');
       }
 
-      const redirectTo = searchParams.get('redirect') || '/admin';
-      router.push(redirectTo);
-      router.refresh();
+      const fallbackRedirect = redirectTo || searchParams.get('redirect') || '/rcpanel7x';
+      await router.push(fallbackRedirect);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login gagal');
     } finally {
@@ -52,6 +58,20 @@ function AdminLoginForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block text-sm text-zinc-300">
+            Username
+            <div className="mt-2 flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950/70 px-3 py-3">
+              <User className="h-4 w-4 text-gold" />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Ketik username"
+                className="w-full bg-transparent text-sm outline-none"
+                required
+              />
+            </div>
+          </label>
+          <label className="block text-sm text-zinc-300">
             Password
             <div className="mt-2 flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950/70 px-3 py-3">
               <LockKeyhole className="h-4 w-4 text-gold" />
@@ -71,22 +91,12 @@ function AdminLoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-gold px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-gold/90 disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full rounded-lg bg-gold px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-gold/90 disabled:cursor-not-allowed disabled:opacity-70 mt-6"
           >
             {loading ? 'Memproses...' : 'Masuk ke Admin'}
           </button>
         </form>
-
-        <p className="mt-6 text-center text-xs text-zinc-500">Password default: royyan-admin-2026</p>
       </div>
     </div>
-  );
-}
-
-export default function AdminLoginPage() {
-  return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-300">Loading...</div>}>
-      <AdminLoginForm />
-    </Suspense>
   );
 }

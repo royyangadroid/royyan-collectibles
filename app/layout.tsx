@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 import Script from 'next/script';
+import GoogleTranslate from '@/components/GoogleTranslate';
 
 // --- Root Layout ---
 export default async function RootLayout({
@@ -57,22 +58,7 @@ export default async function RootLayout({
   return (
     <html lang="id" className={`${playfair.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
-        <div id="google_translate_element" style={{ display: 'none' }}></div>
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
-        <Script id="google-translate-init" strategy="afterInteractive">
-          {`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'id',
-                includedLanguages: 'en,id,es,it,ja,ar,fr,zh-CN,ko',
-                autoDisplay: false
-              }, 'google_translate_element');
-            }
-          `}
-        </Script>
+        <GoogleTranslate />
         <SettingsProvider initialRates={rates} initialDate={date}>
           <Navbar />
           <main className="flex-1 pt-[var(--navbar-height)]">

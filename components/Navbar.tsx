@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, BookOpen, ShoppingBag, Info, ChevronDown } from 'lucide-react';
 import { useSettings, Currency } from './providers/SettingsProvider';
 
@@ -19,9 +20,12 @@ const navLinks: NavLink[] = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [currentLang, setCurrentLang] = useState('id');
+
+  if (pathname.startsWith('/rcpanel7x')) return null;
   
   const { currency, setCurrency, ratesDate } = useSettings();
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);

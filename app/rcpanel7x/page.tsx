@@ -11,12 +11,12 @@ export default function AdminPage() {
   const report = getInventoryReport(getAllCollectibles());
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Admin Overview</p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-parchment-100">Dashboard Internal</h1>
         <p className="mt-3 max-w-2xl text-sm text-zinc-400">
-          Halaman ini hanya bisa diakses setelah login. Anda bisa memantau status produk, sold item, nilai inventory, dan mengakses invoice generator internal.
+          Halaman ini bersifat internal. Anda bisa memantau status produk, sold item, nilai inventory, dan mengakses invoice generator.
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default function AdminPage() {
             <p className="text-sm font-medium text-zinc-400">Quick Action</p>
             <DollarSign className="h-5 w-5 text-gold" />
           </div>
-          <Link href="/admin/invoices" className="inline-flex w-full items-center justify-center rounded-lg bg-gold px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-gold/90">
+          <Link href="/rcpanel7x/invoices" className="inline-flex w-full items-center justify-center rounded-lg bg-gold px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-gold/90">
             Buka Invoice Generator
           </Link>
         </div>
@@ -103,7 +103,7 @@ export default function AdminPage() {
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
           <h2 className="mb-4 text-xl font-semibold text-parchment-100">Aksi Cepat</h2>
           <div className="space-y-3">
-            <Link href="/admin/invoices" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
+            <Link href="/rcpanel7x/invoices" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
               <span>Open Invoice Generator</span>
               <ArrowRight className="h-4 w-4" />
             </Link>

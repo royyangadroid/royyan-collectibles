@@ -188,13 +188,26 @@ body {
   top: 0 !important;
 }
 
-.skiptranslate iframe {
+.skiptranslate,
+.skiptranslate iframe,
+.skiptranslate .goog-te-gadget,
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.goog-te-gadget,
+.goog-te-menu-frame,
+.goog-te-menu-value,
+.goog-te-combo,
+.goog-logo-link,
+#google_translate_element,
+#goog-gt-tt,
+iframe.goog-te-banner-frame,
+iframe.goog-te-menu-frame {
   display: none !important;
   visibility: hidden !important;
-}
-
-#google_translate_element {
-  display: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 font {
@@ -240,6 +253,22 @@ font {
   .print-hidden,
   .print-hidden * {
     display: none !important;
+  }
+
+  .goog-te-gadget,
+  .goog-te-banner-frame,
+  .goog-te-balloon-frame,
+  .goog-logo-link,
+  .goog-te-combo,
+  .goog-te-menu-value,
+  iframe.goog-te-banner-frame,
+  #google_translate_element {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 
   .invoice-print {
