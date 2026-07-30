@@ -212,3 +212,43 @@ font {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-block,
+  .invoice-print {
+    display: block !important;
+  }
+
+  .print-hidden,
+  .print-hidden * {
+    display: none !important;
+  }
+
+  .invoice-print {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+}

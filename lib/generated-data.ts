@@ -444,5 +444,31 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-034/cover.jpg",
     "description": "Uang kertas asli Trinidad & Tobago nominal 5 Dollars dengan desain khas negara kepulauan Karibia yang menampilkan ilustrasi burung eksotis serta lambang negara. Salah satu collectible menarik bagi kolektor uang kertas dunia, pecinta numismatik, maupun koleksi mata uang internasional."
+  },
+  {
+    "id": "ryc-035",
+    "slug": "RC-035",
+    "collectionNumber": "RC-035",
+    "title": "Venezuela 10.000 Bolívares",
+    "price": 125000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Near Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-035/cover.png",
+    "description": "Uang kertas asli Venezuela nominal 10.000 Bolívares yang menampilkan potret tokoh nasional Venezuela pada sisi depan. Salah satu collectible menarik bagi kolektor uang kertas dunia dan pecinta numismatik, dengan desain khas mata uang Venezuela yang semakin sulit ditemukan di pasaran."
+  },
+  {
+    "id": "ryc-036",
+    "slug": "RC-036",
+    "collectionNumber": "RC-036",
+    "title": "Dodge Charger SRT 8",
+    "price": 145000,
+    "category": "Hot Wheels",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-036/cover.png",
+    "description": "Hot Wheels Dodge Charger SRT 8 dengan tampilan berwarna hitam dan grafis biru yang agresif, menghadirkan karakter khas muscle car Amerika. Salah satu collectible item yang semakin sulit ditemukan dan cocok untuk melengkapi koleksi, display, maupun investasi diecast."
   }
 ];
