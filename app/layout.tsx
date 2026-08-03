@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import PageTransition from '@/components/ui/PageTransition';
 import Footer from '@/components/Footer';
 import { getExchangeRates } from '@/lib/exchangeRate';
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
@@ -57,12 +58,17 @@ export default async function RootLayout({
 
   return (
     <html lang="id" className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://wallpapercave.com" />
+        <link rel="preconnect" href="https://as1.ftcdn.net" />
+      </head>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
         <GoogleTranslate />
         <SettingsProvider initialRates={rates} initialDate={date}>
           <Navbar />
           <main className="flex-1 pt-[var(--navbar-height)]">
-            {children}
+            <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
         </SettingsProvider>

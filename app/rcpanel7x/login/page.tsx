@@ -1,6 +1,8 @@
 import AdminLoginForm from './AdminLoginForm';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 interface LoginPageProps {
   searchParams: { key?: string; redirect?: string };
 }

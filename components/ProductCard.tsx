@@ -25,6 +25,8 @@ export default function ProductCard({ item }: { item: CollectibleItem }) {
           alt={item.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading="eager"
+          fetchPriority="high"
           className={`object-cover transition-transform duration-700 group-hover:scale-105 ${isSold ? 'brightness-[0.35]' : ''}`}
         />
         {/* Gradient overlay */}

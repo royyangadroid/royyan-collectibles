@@ -1,14 +1,26 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { CollectibleItem } from '@/lib/data';
 import ProductCard from './ProductCard';
 
 type SortOption = 'newest' | 'price-low' | 'price-high' | 'az';
 
 export default function CatalogClient({ items }: { items: CollectibleItem[] }) {
+  const searchParams = useSearchParams();
+  const initialCategory = useMemo(() => searchParams.get('category') || 'all', [searchParams]);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<string>('all');
+  const [category, setCategory] = useState<string>(initialCategory);
   const [sort, setSort] = useState<SortOption>('newest');
+
+  useEffect(() => {
+    const param = searchParams.get('category');
+    if (param) {
+      setCategory(param);
+    } else {
+      setCategory('all');
+    }
+  }, [searchParams]);
 
   const categories = useMemo(() => Array.from(new Set(items.map((i) => i.category))).sort(), [items]);
 
