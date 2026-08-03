@@ -27,7 +27,7 @@ function getJwtSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-function getPinHash(): string {
+export function getPinHash(): string {
   const rawHash = process.env.ADMIN_PIN_HASH;
   if (!rawHash) {
     throw new Error(
