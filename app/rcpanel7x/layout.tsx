@@ -1,4 +1,5 @@
 import AdminHeader from './AdminHeader';
+import './invoices/invoice-styles.css';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (

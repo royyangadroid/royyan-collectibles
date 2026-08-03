@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import './invoice-styles.css';
 
 // ============================================================
 // TYPES
