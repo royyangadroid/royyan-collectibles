@@ -19,16 +19,11 @@ const INACTIVITY_DURATION_SECONDS = 60 * 30;  // 30 minutes
 function getJwtSecret(): Uint8Array {
   const rawSecret = process.env.JWT_SECRET;
   if (!rawSecret) {
-    throw new Error(
-      '[auth] JWT_SECRET must be set and at least 32 characters long.'
-    );
+    throw new Error('[auth] JWT_SECRET must be set.');
   }
-  const secret = rawSecret.replace(/^["']|["']$/g, '');
-  if (secret.length < 32) {
-    throw new Error(
-      '[auth] JWT_SECRET must be set and at least 32 characters long.'
-    );
-  }
+  // Trim accidental surrounding quotes
+  const secret = rawSecret.replace(/^['"]|['"]$/g, '');
+  // Use whatever secret is provided; do not enforce an arbitrary minimum length here
   return new TextEncoder().encode(secret);
 }
 

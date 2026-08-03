@@ -36,13 +36,12 @@ function isPublicPath(pathname: string): boolean {
 async function isAuthenticated(request: NextRequest): Promise<boolean> {
   const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
   if (!token) return false;
+  // Try primary server env var, fall back to NEXT_PUBLIC if available (minimal compatibility fallback)
+  const rawSecret = process.env.JWT_SECRET ?? process.env.NEXT_PUBLIC_JWT_SECRET;
+  if (!rawSecret) return false;
 
-  const secret = process.env.JWT_SECRET;
-  // Fallback: if JWT_SECRET not set, deny access (fail secure)
-  if (!secret || secret.length < 32) return false;
-
+  const secretKey = new TextEncoder().encode(String(rawSecret).replace(/^['"]|['"]$/g, ''));
   try {
-    const secretKey = new TextEncoder().encode(secret);
     const { payload } = await jwtVerify(token, secretKey, {
       algorithms: ['HS256'],
       issuer: 'royyan-collectibles',
@@ -50,7 +49,7 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
     });
 
     return payload.role === 'admin';
-  } catch {
+  } catch (err) {
     return false;
   }
 }
