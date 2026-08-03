@@ -14,16 +14,16 @@ export default function AdminPage() {
     <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">Admin Overview</p>
-        <h1 className="mt-2 font-serif text-3xl font-semibold text-parchment-100">Dashboard Internal</h1>
+        <h1 className="mt-2 font-serif text-3xl font-semibold text-parchment-100">Internal Dashboard</h1>
         <p className="mt-3 max-w-2xl text-sm text-zinc-400">
-          Halaman ini bersifat internal. Anda bisa memantau status produk, sold item, nilai inventory, dan mengakses invoice generator.
+          This page is for internal use only. Monitor product status, sold items, inventory value, and access the invoice generator here.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/80 p-6">
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-sm font-medium text-zinc-400">Total Produk</p>
+            <p className="text-sm font-medium text-zinc-400">Total Products</p>
             <PackageOpen className="h-5 w-5 text-gold" />
           </div>
           <p className="text-3xl font-semibold text-parchment-100">{report.totalProducts}</p>
@@ -70,7 +70,7 @@ export default function AdminPage() {
             <DollarSign className="h-5 w-5 text-gold" />
           </div>
           <Link href="/rcpanel7x/invoices" className="inline-flex w-full items-center justify-center rounded-lg bg-gold px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-gold/90">
-            Buka Invoice Generator
+            Open Invoice Generator
           </Link>
         </div>
       </div>
@@ -78,10 +78,10 @@ export default function AdminPage() {
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-parchment-100">Per Kategori</h2>
+            <h2 className="text-xl font-semibold text-parchment-100">By Category</h2>
             <div className="flex items-center gap-2 text-sm text-zinc-400">
               <TrendingUp className="h-4 w-4 text-gold" />
-              Ringkasan stok
+              Stock summary
             </div>
           </div>
           <div className="space-y-4">
@@ -101,14 +101,14 @@ export default function AdminPage() {
         </div>
 
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
-          <h2 className="mb-4 text-xl font-semibold text-parchment-100">Aksi Cepat</h2>
+          <h2 className="mb-4 text-xl font-semibold text-parchment-100">Quick Actions</h2>
           <div className="space-y-3">
             <Link href="/rcpanel7x/invoices" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
               <span>Open Invoice Generator</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/catalog" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
-              <span>Lihat Katalog Publik</span>
+              <span>View Public Catalog</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

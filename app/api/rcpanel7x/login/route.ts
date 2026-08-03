@@ -50,7 +50,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const response = NextResponse.json(
         {
           ok: false,
-          error: 'Terlalu banyak percobaan. Coba lagi dalam beberapa menit.',
+          error: 'Too many attempts. Try again in a few minutes.',
           blockedFor: rateResult.retryAfterSeconds,
         },
         { status: 429 }
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       body = await request.json();
     } catch {
       return secureHeaders(
-        NextResponse.json({ ok: false, error: 'Request tidak valid' }, { status: 400 })
+        NextResponse.json({ ok: false, error: 'Invalid request' }, { status: 400 })
       );
     }
 
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         NextResponse.json(
           {
             ok: false,
-            error: 'PIN harus 6 digit angka.',
+            error: 'PIN must be 6 digits.',
             remainingAttempts: failResult.remainingAttempts,
           },
           { status: 400 }
@@ -117,8 +117,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const failResult = recordFailedAttempt(ip);
       const message =
         failResult.remainingAttempts === 0
-          ? 'Akun dikunci. Coba lagi dalam 15 menit.'
-          : `PIN salah. ${failResult.remainingAttempts} percobaan tersisa.`;
+          ? 'Account locked. Try again in 15 minutes.'
+          : `Incorrect PIN. ${failResult.remainingAttempts} attempts remaining.`;
 
       return secureHeaders(
         NextResponse.json(
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const token = await createAdminJWT();
 
-    const response = NextResponse.json({ ok: true, message: 'Login berhasil' });
+    const response = NextResponse.json({ ok: true, message: 'Login successful' });
     response.cookies.set({
       name: ADMIN_COOKIE_NAME,
       value: token,
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (err) {
     console.error('[login] Unexpected error:', err);
     return secureHeaders(
-      NextResponse.json({ ok: false, error: 'Terjadi kesalahan server.' }, { status: 500 })
+      NextResponse.json({ ok: false, error: 'An internal server error occurred.' }, { status: 500 })
     );
   }
 }

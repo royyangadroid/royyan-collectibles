@@ -46,7 +46,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
     fetch('/api/rcpanel7x/csrf', { credentials: 'same-origin' })
       .then((r) => r.json())
       .then((data) => setCsrfToken(data.csrfToken ?? ''))
-      .catch(() => setError('Gagal memuat sesi. Refresh halaman.'));
+      .catch(() => setError('Failed to load session. Please refresh the page.'));
   }, []);
 
   // ── Blocked countdown timer ─────────────────────────────
@@ -119,7 +119,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
   const handleSubmit = useCallback(
     async (pinValue: string) => {
       if (!csrfToken) {
-        setError('Sesi tidak valid. Refresh halaman.');
+        setError('Invalid session. Please refresh the page.');
         setPin([]);
         submittedRef.current = false;
         return;
@@ -157,13 +157,13 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
           if (data.blockedFor) {
             setBlockedFor(data.blockedFor);
           }
-          throw new Error(data.error || 'Login gagal');
+            throw new Error(data.error || 'Login failed');
         }
 
         setSuccess(true);
         await router.push(fallbackRedirect);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Login gagal');
+        setError(err instanceof Error ? err.message : 'Login failed');
         setPin([]);
         submittedRef.current = false;
       } finally {
@@ -209,7 +209,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
               Admin Panel
             </h1>
             <p className="mt-2 text-xs text-zinc-500">
-              Masukkan 6-digit PIN untuk melanjutkan
+              Enter the 6-digit PIN to continue
             </p>
           </div>
 
@@ -240,18 +240,18 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
           {/* Status Messages */}
           <div className="mb-5 min-h-[40px] flex items-center justify-center">
             {loading && (
-              <div className="flex items-center gap-2 text-sm text-zinc-400">
+                <div className="flex items-center gap-2 text-sm text-zinc-400">
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-600 border-t-gold" />
-                Memverifikasi...
+                Verifying...
               </div>
             )}
             {success && (
-              <p className="text-sm font-medium text-emerald-400">✓ Akses diberikan</p>
+              <p className="text-sm font-medium text-emerald-400">✓ Access granted</p>
             )}
             {blockedFor && blockedCountdown !== null && (
               <div className="flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-sm text-rose-400">
                 <Clock className="h-4 w-4 flex-shrink-0" />
-                <span>Dikunci — coba lagi dalam {formatCountdown(blockedCountdown)}</span>
+                <span>Locked — try again in {formatCountdown(blockedCountdown)}</span>
               </div>
             )}
             {error && !blockedFor && (
@@ -262,7 +262,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
             )}
             {!loading && !error && !blockedFor && !success && remainingAttempts !== null && (
               <p className="text-xs text-amber-400">
-                {remainingAttempts} percobaan tersisa
+                {remainingAttempts} attempts remaining
               </p>
             )}
           </div>
@@ -284,7 +284,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
                       type="button"
                       onClick={() => handlePadPress(key)}
                       disabled={disabled}
-                      aria-label={isBackspace ? 'Hapus digit' : `Digit ${key}`}
+                      aria-label={isBackspace ? 'Delete digit' : `Digit ${key}`}
                       className={`
                         group relative flex h-14 items-center justify-center rounded-xl
                         border text-base font-medium
@@ -317,7 +317,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
           {/* Footer hint */}
           <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-zinc-600">
             <KeyRound className="h-3 w-3" />
-            <span>Anda juga bisa mengetik PIN dari keyboard</span>
+            <span>You can also type the PIN using your keyboard</span>
           </div>
         </div>
 
