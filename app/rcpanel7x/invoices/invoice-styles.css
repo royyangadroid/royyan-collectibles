@@ -251,6 +251,44 @@
   background: rgba(30, 41, 59, 0.6);
 }
 
+.inv-history-tracker {
+  margin-top: 14px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 14px;
+}
+
+.inv-history-tracker-header {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.inv-history-tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.inv-history-label {
+  font-size: 10px;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.inv-history-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.4;
+}
+
 .inv-item-card .inv-item-number {
   position: absolute;
   top: 12px;

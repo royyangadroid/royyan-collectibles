@@ -38,8 +38,8 @@ interface GlobalData {
 // ============================================================
 // CONFIGURATION — Same keys as original RC INVOICES
 // ============================================================
-const JSONBIN_API_KEY = '$2a$10$hHr99Fi2urp1SDkjQKf5wO8ZikjAKMDu4mH5TCB/.D6z9boGQ2mWG';
-const JSONBIN_BIN_ID = '6a6995bef5f4af5e29cffbfe';
+const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY ?? '$2a$10$hHr99Fi2urp1SDkjQKf5wO8ZikjAKMDu4mH5TCB/.D6z9boGQ2mWG';
+const JSONBIN_BIN_ID = process.env.JSONBIN_BIN_ID ?? '6a6995bef5f4af5e29cffbfe';
 
 // ============================================================
 // CURRENCY FORMATTING — Intl.NumberFormat (same as original)
@@ -99,6 +99,16 @@ function formatDate(dateStr: string): string {
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
+function formatDateTime(dateStr: string): string {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr);
+  const months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${hours}:${minutes}`;
+}
+
 // ============================================================
 // STATUS OPTIONS
 // ============================================================
@@ -140,6 +150,7 @@ export default function InvoiceGenerator() {
   const [toastVisible, setToastVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [viewingHistoryInvNo, setViewingHistoryInvNo] = useState<string | null>(null);
+  const [currentHistoryEntry, setCurrentHistoryEntry] = useState<HistoryEntry | null>(null);
 
   const itemCountRef = useRef(0);
   const globalDataRef = useRef(globalData);
@@ -164,8 +175,8 @@ export default function InvoiceGenerator() {
   // ============================================================
   const fetchGlobalData = useCallback(async (): Promise<GlobalData> => {
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-        headers: { 'X-Master-Key': JSONBIN_API_KEY },
+      const res = await fetch(`/api/rcpanel7x/invoices`, {
+        method: 'GET',
       });
       const data = await res.json();
       if (data.record) {
@@ -185,11 +196,10 @@ export default function InvoiceGenerator() {
 
   const saveGlobalData = useCallback(async (data: GlobalData) => {
     try {
-      await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+      await fetch(`/api/rcpanel7x/invoices`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'X-Master-Key': JSONBIN_API_KEY,
         },
         body: JSON.stringify(data),
       });
@@ -356,6 +366,7 @@ export default function InvoiceGenerator() {
 
     setGlobalData(updatedData);
     globalDataRef.current = updatedData;
+    setCurrentHistoryEntry(entry);
     await saveGlobalData(updatedData);
 
     return updatedData;
@@ -389,6 +400,7 @@ export default function InvoiceGenerator() {
     setItems(newItems.length > 0 ? newItems : [{ id: ++itemCountRef.current, desc: '', qty: 1, unit: 'Pcs', price: 0 }]);
 
     setViewingHistoryInvNo(invNo);
+    setCurrentHistoryEntry(inv);
     showToast('📋 Loaded invoice ' + invNo, '#6366f1');
   }, [globalData, showToast]);
 
@@ -455,6 +467,7 @@ export default function InvoiceGenerator() {
     itemCountRef.current = 0;
     setItems([]);
     setViewingHistoryInvNo(null);
+    setCurrentHistoryEntry(null);
     setTimeout(() => addItem(), 0);
     showToast('🔄 Form reset — ready for new invoice', '#3b82f6');
   }, [addItem, showToast]);
@@ -463,6 +476,13 @@ export default function InvoiceGenerator() {
   // RENDER
   // ============================================================
   const history = globalData.history || [];
+  const matchedHistoryEntry = currentHistoryEntry || (viewingHistoryInvNo ? history.find(h => h.invNo === viewingHistoryInvNo) || null : null);
+  const historyStatusLabel = matchedHistoryEntry
+    ? STATUS_OPTIONS.find(opt => opt.value === matchedHistoryEntry.status)?.label || matchedHistoryEntry.status
+    : 'Draft';
+  const historySubtitle = matchedHistoryEntry
+    ? `Saved on ${formatDateTime(matchedHistoryEntry.createdAt)}`
+    : 'This invoice has not been archived yet.';
 
   return (
     <div className="inv-app">
@@ -794,6 +814,24 @@ export default function InvoiceGenerator() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="inv-history-tracker">
+                <div className="inv-history-tracker-header">Invoice History Tracker</div>
+                <div className="inv-history-tracker-grid">
+                  <div>
+                    <div className="inv-history-label">Record Status</div>
+                    <div className="inv-history-value">{historyStatusLabel}</div>
+                  </div>
+                  <div>
+                    <div className="inv-history-label">Record Created</div>
+                    <div className="inv-history-value">{matchedHistoryEntry ? formatDateTime(matchedHistoryEntry.createdAt) : historySubtitle}</div>
+                  </div>
+                  <div>
+                    <div className="inv-history-label">History Count</div>
+                    <div className="inv-history-value">{history.length}</div>
+                  </div>
+                </div>
               </div>
 
               <div className="inv-in-words">

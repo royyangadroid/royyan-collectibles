@@ -106,10 +106,10 @@ export function resetRateLimit(ip: string): void {
 /** Periodic cleanup of expired records (call from long-running processes) */
 export function pruneExpiredRecords(): void {
   const now = Date.now();
-  for (const [key, record] of store.entries()) {
+  store.forEach((record, key) => {
     const expired =
       (record.blockedUntil !== null && now > record.blockedUntil) ||
       (record.blockedUntil === null && now - record.firstAttemptAt > WINDOW_MS);
     if (expired) store.delete(key);
-  }
+  });
 }

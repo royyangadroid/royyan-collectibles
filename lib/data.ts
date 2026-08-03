@@ -24,7 +24,6 @@ export interface CollectibleItem {
   description: string;
 }
 
-import { cache } from 'react';
 import { collectibles as generatedCollectibles } from './generated-data';
 
 export const collectibles: CollectibleItem[] = generatedCollectibles;
@@ -34,12 +33,12 @@ export const collectibles: CollectibleItem[] = generatedCollectibles;
 // =============================================
 
 /**
- * Returns all collectibles, deduplicated per request with React.cache().
- * Safe for Server Components — no async needed since data is static.
+ * Returns all collectibles for static pages and client views.
+ * No caching is required because the data is already bundled as static JSON.
  */
-export const getAllCollectibles = cache((): CollectibleItem[] => {
+export function getAllCollectibles(): CollectibleItem[] {
   return collectibles;
-});
+}
 
 export function getCollectibleBySlug(slug: string): CollectibleItem | undefined {
   return collectibles.find((item) => item.slug === slug);
