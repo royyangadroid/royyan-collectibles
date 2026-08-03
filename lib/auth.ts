@@ -41,7 +41,8 @@ function getPinHash(): string {
     );
   }
   // Remove any surrounding quotes that might be accidentally preserved by the env loader
-  return rawHash.replace(/^["']|["']$/g, '');
+  // and unescape dollar signs (\$) which often happens when pasting into Vercel
+  return rawHash.replace(/^["']|["']$/g, '').replace(/\\\$/g, '$');
 }
 
 // ─── PIN Verification ─────────────────────────
