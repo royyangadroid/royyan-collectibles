@@ -47,8 +47,6 @@ export default function Navbar() {
   const navRef              = useRef<HTMLElement>(null);
   const closeTimer          = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  if (pathname.startsWith('/rcpanel7x')) return null;
-
   // ── Scroll listener ─────────────────────────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -106,6 +104,8 @@ export default function Navbar() {
   const flagCode = (lang: string) =>
     lang === 'en' ? 'gb' : lang === 'ja' ? 'jp' : lang === 'ar' ? 'sa' : lang === 'zh-CN' ? 'cn' : lang === 'ko' ? 'kr' : lang;
 
+  if (pathname.startsWith('/rcpanel7x')) return null;
+
   return (
     <>
       {/* ── Overlay ──────────────────────────────────────────────────────────── */}
@@ -144,7 +144,7 @@ export default function Navbar() {
 
           {/* ── Desktop Nav ──────────────────────────────────────────────────── */}
           <nav
-            className="hidden md:flex items-center gap-8 relative"
+            className="hidden md:flex items-center gap-8 relative h-full"
             aria-label="Navigasi utama"
             onMouseLeave={scheduleMegaClose}
           >
@@ -154,7 +154,7 @@ export default function Navbar() {
               return (
                 <div
                   key={link.href}
-                  className="relative"
+                  className="relative h-full flex items-center"
                   onMouseEnter={() => link.megaMenu ? openMega(link.megaMenu) : openMega(null)}
                 >
                   {link.megaMenu ? (
