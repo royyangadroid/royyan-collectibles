@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, BookMarked, Lightbulb, Clock, Star } from 'lucide-react';
+import { ArrowRight, BookOpen, Lightbulb, Landmark, Star } from 'lucide-react';
 import { DUMMY_ARTICLES } from '@/lib/journal';
 
 interface JournalMegaMenuProps {
@@ -10,10 +10,30 @@ interface JournalMegaMenuProps {
 }
 
 const quickLinks = [
-  { label: 'Guide', href: '/journal', icon: BookMarked },
-  { label: 'Collecting Tips', href: '/journal', icon: Lightbulb },
-  { label: 'History', href: '/journal', icon: Clock },
-  { label: 'Featured Story', href: '/journal', icon: Star },
+  {
+    label: 'Guide',
+    description: 'Complete guides for starting, building, and maintaining a collectible collection.',
+    href: '/journal/category/guide',
+    icon: BookOpen,
+  },
+  {
+    label: 'Collecting Tips',
+    description: 'Practical tips for storing, displaying, cleaning, and preserving collectibles.',
+    href: '/journal/category/tips',
+    icon: Lightbulb,
+  },
+  {
+    label: 'History',
+    description: 'Stories behind legendary comics, vintage books, die-cast, banknotes, and rare collectibles.',
+    href: '/journal/category/history',
+    icon: Landmark,
+  },
+  {
+    label: 'Featured Stories',
+    description: "Editor's picks featuring the most interesting stories and collector insights.",
+    href: '/journal/featured',
+    icon: Star,
+  },
 ];
 
 const menuVariants = {
@@ -42,7 +62,7 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 w-[720px] max-w-[calc(100vw-2rem)] z-40"
+          className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[calc(100vw-2rem)] z-40"
         >
           {/* Top connector line */}
           <div className="h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
@@ -112,10 +132,11 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
               {/* Divider */}
               <div className="w-px bg-gold/10 my-4" />
 
-              {/* Right: Quick Links */}
-              <div className="w-48 flex-shrink-0 p-6">
+              {/* Right: Quick Links — Premium Navigation Panel */}
+              <div className="w-64 flex-shrink-0 p-6 flex flex-col">
                 <p className="section-label mb-4">Quick Links</p>
-                <div className="flex flex-col gap-1">
+
+                <div className="flex flex-col gap-2 flex-1">
                   {quickLinks.map((link, i) => {
                     const Icon = link.icon;
                     return (
@@ -128,25 +149,50 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
                       >
                         <Link
                           href={link.href}
-                          className="group flex items-center gap-2.5 px-3 py-2.5 rounded-sm border border-transparent hover:border-gold/20 hover:bg-zinc-900 transition-all duration-200 card-lift hover-lift"
+                          className={[
+                            'group flex items-start gap-3 px-3 py-3 rounded-sm',
+                            'border border-transparent',
+                            'hover:border-gold/30 hover:bg-zinc-900/80',
+                            'transition-all duration-250 ease-out',
+                            'hover:-translate-y-px',
+                            'cursor-pointer',
+                          ].join(' ')}
                         >
-                          <Icon className="w-3.5 h-3.5 text-gold/50 group-hover:text-gold transition-colors duration-200 flex-shrink-0" />
-                          <span className="font-sans text-sm text-zinc-400 group-hover:text-parchment-100 transition-colors duration-200">
-                            {link.label}
-                          </span>
+                          {/* Icon container */}
+                          <div className="mt-0.5 flex-shrink-0 w-7 h-7 rounded-sm flex items-center justify-center bg-zinc-900 border border-zinc-800 group-hover:border-gold/30 transition-colors duration-250">
+                            <Icon className="w-3.5 h-3.5 text-zinc-500 group-hover:text-gold transition-colors duration-250" />
+                          </div>
+
+                          {/* Text */}
+                          <div className="flex-1 min-w-0">
+                            <p className="font-sans text-[13px] font-semibold text-zinc-300 group-hover:text-gold transition-colors duration-250 leading-tight mb-0.5">
+                              {link.label}
+                            </p>
+                            <p className="font-sans text-[11px] text-zinc-600 group-hover:text-zinc-500 transition-colors duration-250 leading-snug line-clamp-2">
+                              {link.description}
+                            </p>
+                          </div>
                         </Link>
                       </motion.div>
                     );
                   })}
                 </div>
 
-                {/* Decorative gold accent */}
-                <div className="mt-6 pt-4 border-t border-zinc-800/60">
-                  <div className="px-1">
-                    <p className="font-sans text-[10px] text-zinc-600 leading-relaxed">
-                      Panduan dan cerita untuk para kolektor sejati.
-                    </p>
-                  </div>
+                {/* Need Help? Footer */}
+                <div className="mt-4 pt-4 border-t border-zinc-800/60">
+                  <p className="font-sans text-[10px] tracking-[0.12em] uppercase text-zinc-600 mb-1.5">
+                    Need Help?
+                  </p>
+                  <p className="font-sans text-[11px] text-zinc-600 leading-relaxed mb-3">
+                    Explore all Journal categories and discover curated stories from Royyan Collectibles.
+                  </p>
+                  <Link
+                    href="/journal"
+                    className="inline-flex items-center gap-1.5 font-sans text-[11px] font-semibold tracking-[0.1em] uppercase text-gold/80 hover:text-gold transition-colors duration-200 group"
+                  >
+                    Browse All Articles
+                    <ArrowRight className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </Link>
                 </div>
               </div>
             </div>
