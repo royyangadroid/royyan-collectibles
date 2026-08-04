@@ -32,7 +32,7 @@ export default function Navbar() {
 
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [scrolled, setScrolled]       = useState(false);
-  const [currentLang, setCurrentLang] = useState('fr');
+  const [currentLang, setCurrentLang] = useState('id');
   const [activeMega, setActiveMega]   = useState<MegaMenuId>(null);
 
   // Mobile accordion state
@@ -52,9 +52,10 @@ export default function Navbar() {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Fix: use [a-zA-Z-] to correctly match codes like zh-CN (uppercase letters)
+    // Read current language from cookie (handles zh-CN with uppercase letters)
     const match = document.cookie.match(/googtrans=\/id\/([a-zA-Z-]+)/);
-    if (match?.[1]) setCurrentLang(match[1]);
+    const cookieLang = match?.[1];
+    if (cookieLang && cookieLang !== 'id') setCurrentLang(cookieLang);
 
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
@@ -97,26 +98,40 @@ export default function Navbar() {
 
   // ── Language ─────────────────────────────────────────────────────────────────
   const switchLanguage = (lang: string) => {
-    // Step 1: Expire ALL existing googtrans cookies across every possible
-    // domain/path combination so none of the old values linger.
-    const expired = 'Thu, 01 Jan 1970 00:00:01 UTC';
     const hostname = window.location.hostname;
-    [
-      `googtrans=; expires=${expired}; path=/`,
-      `googtrans=; expires=${expired}; path=/; domain=${hostname}`,
-      `googtrans=; expires=${expired}; path=/; domain=.${hostname}`,
-      // Also clear the /id sub-path Google Translate sometimes uses
-      `googtrans=; expires=${expired}; path=/id`,
-      `googtrans=; expires=${expired}; path=/id; domain=${hostname}`,
-    ].forEach((c) => { document.cookie = c; });
 
-    // Step 2: Set the new language (skip for the base language 'id')
+    // ─ 1. Update navbar display immediately (no waiting for reload) ───────────
+    setCurrentLang(lang);
+    setShowLangDropdown(false);
+
+    // ─ 2. Persist language via cookie (for full page reloads & navigation) ───
+    const expired = 'Thu, 01 Jan 1970 00:00:01 UTC';
+    // Expire every possible variant so no old cookie lingers
+    document.cookie = `googtrans=; expires=${expired}; path=/`;
+    document.cookie = `googtrans=; expires=${expired}; path=/; domain=${hostname}`;
+    document.cookie = `googtrans=; expires=${expired}; path=/; domain=.${hostname}`;
+
     if (lang !== 'id') {
+      // Set the new language cookie
       document.cookie = `googtrans=/id/${lang}; path=/`;
       document.cookie = `googtrans=/id/${lang}; path=/; domain=${hostname}`;
     }
 
-    window.location.reload();
+    // ─ 3. Apply translation via GT's native select element ──────────────────
+    // This is more reliable than cookie+reload because GT won't re-set the
+    // old cookie during widget initialization.
+    const selectEl = document.querySelector(
+      '#google_translate_element select'
+    ) as HTMLSelectElement | null;
+
+    if (selectEl) {
+      // '' restores the original (Indonesian); any other code triggers translation
+      selectEl.value = lang === 'id' ? '' : lang;
+      selectEl.dispatchEvent(new Event('change'));
+    } else {
+      // GT widget not yet initialized — fall back to cookie + page reload
+      window.location.reload();
+    }
   };
 
   const flagCode = (lang: string) =>
