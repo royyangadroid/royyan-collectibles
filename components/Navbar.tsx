@@ -102,7 +102,7 @@ export default function Navbar() {
   };
 
   const flagCode = (lang: string) =>
-    lang === 'en' ? 'gb' : lang === 'ja' ? 'jp' : lang === 'ar' ? 'sa' : lang === 'zh-CN' ? 'cn' : lang === 'ko' ? 'kr' : lang;
+    lang === 'en' ? 'gb' : lang === 'ja' ? 'jp' : lang === 'ar' ? 'sa' : (lang === 'zh-CN' || lang === 'zh') ? 'cn' : lang === 'ko' ? 'kr' : lang;
 
   if (pathname.startsWith('/rcpanel7x')) return null;
 

@@ -29,7 +29,7 @@ export const DUMMY_ARTICLES: Article[] = [
     slug: 'collector-story-royyanga',
     title: 'Perjalanan 10 Tahun Mengoleksi: Dari Hot Wheels Pertama Hingga Koleksi Ratusan Piece',
     excerpt: 'Setiap kolektor memiliki cerita pertamanya. Di sini, pendiri Royyan Collectibles berbagi perjalanan personal membangun koleksi selama satu dekade — penuh pelajaran, kejutan, dan kebanggaan.',
-    coverImage: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1200&q=80&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?w=1200&q=80&auto=format&fit=crop',
     category: 'Featured Stories',
     categorySlug: 'featured',
     isFeatured: true,
@@ -54,7 +54,7 @@ export const DUMMY_ARTICLES: Article[] = [
         ]
       },
       { type: 'note', text: 'Beberapa pembelian terbaik saya tidak pernah saya rencanakan. Mereka hadir ketika saya sudah cukup berpengetahuan untuk mengenali nilainya dalam sekejap.' },
-      { type: 'image', src: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1200&q=80&auto=format&fit=crop', caption: 'A decade of collecting — each piece carries a memory and a story of its own.' },
+      { type: 'image', src: 'https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?w=1200&q=80&auto=format&fit=crop', caption: 'A decade of collecting — each piece carries a memory and a story of its own.' },
       { type: 'h2', text: 'Pelajaran Paling Berharga' },
       {
         type: 'ol',
@@ -72,7 +72,7 @@ export const DUMMY_ARTICLES: Article[] = [
     slug: 'rare-finds-2026',
     title: 'Temuan Langka 2026: Koleksi Die-Cast dan Numismatik yang Mengguncang Pasar',
     excerpt: 'Editor Royyan Collectibles merangkum temuan-temuan koleksi paling mengesankan di tahun 2026 — dari Super Treasure Hunt ultralangka hingga uang kertas kolonial yang muncul kembali ke pasar setelah puluhan tahun.',
-    coverImage: 'https://images.unsplash.com/photo-1628744448839-a475cc0e90a4?w=1200&q=80&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=1200&q=80&auto=format&fit=crop',
     category: 'Featured Stories',
     categorySlug: 'featured',
     isFeatured: true,
@@ -96,7 +96,7 @@ export const DUMMY_ARTICLES: Article[] = [
       { type: 'p', text: 'Di sisi numismatik, sebuah uang kertas 10 Rupiah seri Soekarno 1964 dalam kondisi Gem Uncirculated terjual di platform lelang dengan harga yang jauh melampaui estimasi awal. Ini menjadi bukti bahwa pasar koleksi uang kertas Indonesia semakin matang dan diakui.' },
       { type: 'quote', text: 'The rarest finds always come to those who have the patience to wait and the knowledge to recognize them.', author: 'Journal Collectibles' },
       { type: 'note', text: 'Jika Anda menemukan koleksi lama di rumah atau garasi keluarga, jangan terburu-buru menjual. Konsultasikan dulu dengan komunitas atau appraiser terpercaya untuk mengetahui nilai sebenarnya.' },
-      { type: 'image', src: 'https://images.unsplash.com/photo-1628744448839-a475cc0e90a4?w=1200&q=80&auto=format&fit=crop', caption: 'Rare discoveries remind us that extraordinary collectibles can still be found in unexpected places.' },
+      { type: 'image', src: 'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=1200&q=80&auto=format&fit=crop', caption: 'Rare discoveries remind us that extraordinary collectibles can still be found in unexpected places.' },
       { type: 'h2', text: 'Prediksi untuk Sisa 2026' },
       { type: 'p', text: 'Dengan semakin berkembangnya komunitas kolektor Indonesia dan meningkatnya akses ke pasar internasional, kami memprediksi akan ada lebih banyak temuan luar biasa yang muncul sebelum akhir tahun. Tetap terhubung dengan Royyan Collectibles untuk mendapatkan update terbaru.' }
     ]
@@ -281,7 +281,7 @@ export const DUMMY_ARTICLES: Article[] = [
     slug: 'hotwheels-treasure-hunt-guide',
     title: 'Cara Membedakan Hot Wheels Treasure Hunt Asli dan Palsu',
     excerpt: 'Treasure Hunt dan Super Treasure Hunt merupakan seri paling dicari oleh kolektor Hot Wheels. Kenali ciri-ciri unit asli agar terhindar dari produk palsu maupun hasil modifikasi yang beredar di pasaran.',
-    coverImage: 'https://plus.unsplash.com/premium_photo-1736291279761-e7b402ffc1ce?q=80&w=1129&auto=format&fit=crop',
+    coverImage: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=80&auto=format&fit=crop',
     category: 'Collecting Tips',
     categorySlug: 'tips',
     readingTime: '5 Min Read',
@@ -297,7 +297,7 @@ export const DUMMY_ARTICLES: Article[] = [
       { type: 'ol', items: ['Bandingkan foto produk dengan referensi dari komunitas atau database resmi Hot Wheels.', 'Periksa berat, tekstur bodi, dan kualitas finishing karena produk palsu sering menggunakan material yang berbeda.', 'Belilah dari penjual yang memiliki reputasi baik dan riwayat transaksi yang jelas.', 'Waspadai harga yang jauh di bawah harga pasar karena dapat menjadi indikasi produk tidak orisinal.'] },
       { type: 'quote', text: 'The smallest details often separate a genuine collectible from an imitation.', author: 'Journal Collectibles' },
       { type: 'note', text: 'Jangan hanya berpatokan pada logo Treasure Hunt. Selalu periksa detail casting, kemasan, roda, dan finishing sebelum memutuskan membeli.' },
-      { type: 'image', src: 'https://plus.unsplash.com/premium_photo-1736291279761-e7b402ffc1ce?q=80&w=1129&auto=format&fit=crop', caption: 'Authentic Treasure Hunt models feature unique details that distinguish them from regular releases.' },
+      { type: 'image', src: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=80&auto=format&fit=crop', caption: 'Authentic Treasure Hunt models feature unique details that distinguish them from regular releases.' },
       { type: 'h2', text: 'Kesimpulan' },
       { type: 'p', text: 'Ketelitian dalam memeriksa detail-detail kecil akan membantu kolektor menghindari produk palsu maupun hasil modifikasi yang menyesatkan. Dengan memahami ciri-ciri Treasure Hunt asli serta membeli dari sumber terpercaya, Anda dapat membangun koleksi Hot Wheels yang autentik dan memiliki nilai koleksi yang tetap terjaga seiring waktu.' }
     ]
