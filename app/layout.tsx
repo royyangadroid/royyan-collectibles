@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { getExchangeRates } from '@/lib/exchangeRate';
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
 import { TranslationProvider } from '@/components/providers/TranslationProvider';
+import GoogleTranslate from '@/components/GoogleTranslate';
 
 // --- Font Configuration ---
 const playfair = Playfair_Display({
@@ -62,6 +63,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://as1.ftcdn.net" />
       </head>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
+        <GoogleTranslate />
         <SettingsProvider initialRates={rates} initialDate={date}>
           <TranslationProvider>
             <Navbar />
