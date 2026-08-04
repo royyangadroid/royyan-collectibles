@@ -34,13 +34,19 @@ const TranslationContext = createContext<TranslationContextType>({
   t: (key) => key,
 });
 
+// Daftar bahasa yang memiliki file JSON manual di folder locales
+const SUPPORTED_DICTS = ['id', 'en', 'zh', 'zh-CN'];
+
 // ── Baca bahasa dari cookie googtrans ────────────────────────────────────────
 function readLangFromCookie(): string {
   if (typeof document === 'undefined') return 'id';
   const match = document.cookie.match(/googtrans=\/id\/([a-zA-Z-]+)/);
   const cookieLang = match?.[1];
-  // Jika ada cookie dan bukan 'id' → gunakan cookie
-  return cookieLang && cookieLang !== 'id' ? cookieLang : 'id';
+  
+  // Jika bahasa didukung oleh kamus lokal kita, gunakan bahasanya.
+  // Jika tidak (misal: ko, ar, es), kembalikan 'id' sebagai base agar Google Translate 
+  // widget bisa menerjemahkannya secara otomatis dari teks dasar.
+  return cookieLang && SUPPORTED_DICTS.includes(cookieLang) ? cookieLang : 'id';
 }
 
 // ── Provider ─────────────────────────────────────────────────────────────────
@@ -52,10 +58,17 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
     setLang(readLangFromCookie());
 
     // Dengarkan event 'lang-change' yang di-dispatch oleh switchLanguage di Navbar
-    // Ini menghindari keharusan mengubah struktur Navbar secara drastis
     const handleLangChange = (e: Event) => {
       const newLang = (e as CustomEvent<string>).detail;
-      setLang(newLang);
+      
+      // Jika bahasa tidak ada di kamus lokal (seperti Arab, Korea, Spanyol),
+      // kita set state kembali ke 'id'. Google Translate widget akan meng-handle 
+      // terjemahannya dari teks 'id' ke bahasa target secara otomatis.
+      if (SUPPORTED_DICTS.includes(newLang)) {
+        setLang(newLang);
+      } else {
+        setLang('id');
+      }
     };
 
     window.addEventListener('lang-change', handleLangChange);
