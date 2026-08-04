@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "journal": "Journal",
+    "about": "About",
+    "contact": "Contact",
+    "browse": "Browse"
+  },
+  "hero": {
+    "est": "EST. 2025 — JAKARTA",
+    "tagline1": "Where Rare Stories",
+    "tagline2": "Find New Homes",
+    "desc": "Exclusive curated antiques and rare collectibles. Vintage comics, Hot Wheels, Diecast, classic Video Games, and much more.",
+    "cta_browse": "Browse Catalog",
+    "cta_journal": "Read Journal"
+  },
+  "collection": {
+    "label": "Latest Collection",
+    "title1": "Latest",
+    "title2": "Acquisitions",
+    "desc": "Every item here has gone through our team's strict curation process. Collection updated weekly — don't miss out.",
+    "cta": "View Full Catalog",
+    "empty": "No collection yet."
+  },
+  "whyus": {
+    "label": "Our Excellence",
+    "title1": "Why",
+    "title2": "Royyan Collectibles",
+    "auth_title": "Authenticity Guaranteed",
+    "auth_desc": "Every item is 100% authenticity guaranteed. We conduct thorough checks of authenticity, condition, and provenance before listing.",
+    "rare_title": "Rare Collection",
+    "rare_desc": "We curate only the rarest and most valuable items. From first-edition comics to limited run diecast — only the finest.",
+    "trusted_title": "Trusted Seller",
+    "trusted_desc": "Reputation is everything. With hundreds of successful transactions and positive reviews, we are a trusted partner for serious collectors."
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title1": "What",
+    "title2": "Collectors Say",
+    "subtitle": "Customers who have experienced our best service"
+  },
+  "footer": {
+    "tagline": "Curator of selected antiques and rare collectibles.",
+    "nav_title": "Navigation",
+    "info_title": "Information",
+    "contact_title": "Contact",
+    "rights": "All rights reserved."
+  },
+  "catalog": {
+    "title": "Collectibles Catalog",
+    "search_placeholder": "Search collection...",
+    "filter_all": "All",
+    "sort_newest": "Newest",
+    "sort_price_asc": "Lowest Price",
+    "sort_price_desc": "Highest Price",
+    "no_results": "No matching collectibles found.",
+    "view_detail": "View Detail"
+  },
+  "journal": {
+    "title": "Collector's Journal",
+    "subtitle": "Guides, stories, and insights from the world of collectibles.",
+    "read_more": "Read More",
+    "min_read": "Min Read",
+    "all_articles": "All Articles"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "主页",
+    "catalog": "目录",
+    "journal": "日志",
+    "about": "关于",
+    "contact": "联系",
+    "browse": "浏览"
+  },
+  "hero": {
+    "est": "创立于 2025 — 雅加达",
+    "tagline1": "珍稀故事",
+    "tagline2": "寻得归宿",
+    "desc": "精心策划的古董与稀有收藏品。经典漫画、风火轮、压铸车、经典电子游戏等应有尽有。",
+    "cta_browse": "浏览目录",
+    "cta_journal": "阅读日志"
+  },
+  "collection": {
+    "label": "最新藏品",
+    "title1": "最新",
+    "title2": "藏品入库",
+    "desc": "这里的每件商品都经过我们团队严格的筛选。每周更新藏品 — 不要错过。",
+    "cta": "查看完整目录",
+    "empty": "暂无藏品。"
+  },
+  "whyus": {
+    "label": "我们的优势",
+    "title1": "为什么选择",
+    "title2": "Royyan Collectibles",
+    "auth_title": "真品保证",
+    "auth_desc": "每件商品均保证100%真品。我们对每件藏品的真实性、品相和来源进行全面核查后方可入库。",
+    "rare_title": "稀有收藏",
+    "rare_desc": "我们只精选最稀有、最有价值的商品。从初版漫画到限量压铸车 — 只有最优质的藏品。",
+    "trusted_title": "信誉卖家",
+    "trusted_desc": "信誉是一切的根本。凭借数百次成功交易和积极评价，我们是资深收藏家的可信赖伙伴。"
+  },
+  "testimonials": {
+    "label": "客户评价",
+    "title1": "收藏家",
+    "title2": "怎么说",
+    "subtitle": "体验过我们优质服务的顾客"
+  },
+  "footer": {
+    "tagline": "精选古董与稀有收藏品的策展人。",
+    "nav_title": "导航",
+    "info_title": "信息",
+    "contact_title": "联系方式",
+    "rights": "版权所有。"
+  },
+  "catalog": {
+    "title": "收藏品目录",
+    "search_placeholder": "搜索藏品...",
+    "filter_all": "全部",
+    "sort_newest": "最新",
+    "sort_price_asc": "价格最低",
+    "sort_price_desc": "价格最高",
+    "no_results": "未找到符合条件的藏品。",
+    "view_detail": "查看详情"
+  },
+  "journal": {
+    "title": "收藏家日志",
+    "subtitle": "来自收藏世界的指南、故事与见解。",
+    "read_more": "阅读更多",
+    "min_read": "分钟阅读",
+    "all_articles": "所有文章"
+  }
+}

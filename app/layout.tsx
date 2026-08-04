@@ -6,6 +6,7 @@ import PageTransition from '@/components/ui/PageTransition';
 import Footer from '@/components/Footer';
 import { getExchangeRates } from '@/lib/exchangeRate';
 import { SettingsProvider } from '@/components/providers/SettingsProvider';
+import { TranslationProvider } from '@/components/providers/TranslationProvider';
 
 // --- Font Configuration ---
 const playfair = Playfair_Display({
@@ -62,11 +63,13 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
         <SettingsProvider initialRates={rates} initialDate={date}>
-          <Navbar />
-          <main className="flex-1 pt-[var(--navbar-height)]">
-            <PageTransition>{children}</PageTransition>
-          </main>
-          <Footer />
+          <TranslationProvider>
+            <Navbar />
+            <main className="flex-1 pt-[var(--navbar-height)]">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </TranslationProvider>
         </SettingsProvider>
       </body>
     </html>

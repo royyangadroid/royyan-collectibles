@@ -132,6 +132,10 @@ export default function Navbar() {
       // GT widget not yet initialized — fall back to cookie + page reload
       window.location.reload();
     }
+
+    // ─ 4. Notify TranslationProvider so dictionary-based strings update too ─
+    // Custom event: zero coupling, zero structural changes to other components
+    window.dispatchEvent(new CustomEvent('lang-change', { detail: lang }));
   };
 
   const flagCode = (lang: string) =>
