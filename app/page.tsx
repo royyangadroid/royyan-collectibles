@@ -193,7 +193,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                "Royyan Collectibles has become our trusted partner. Koleksi buku sejarah dan komik lawasnya sangat terawat, proses pengiriman juga sangat cepat dan aman."
+                &quot;Royyan Collectibles has become our trusted partner. Koleksi buku sejarah dan komik lawasnya sangat terawat, proses pengiriman juga sangat cepat dan aman.&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -220,7 +220,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                "Sangat membantu dalam mencari barang langka. Terutama ketika kita butuh kurasi spesifik untuk diecast edisi terbatas yang sulit dicari di pasaran."
+                &quot;Sangat membantu dalam mencari barang langka. Terutama ketika kita butuh kurasi spesifik untuk diecast edisi terbatas yang sulit dicari di pasaran.&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -247,7 +247,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                "Pelayanan selama bertransaksi sangat memuaskan. Saat mengambil atau mengirim barang koleksi bernilai tinggi, mereka selalu tepat waktu dan profesional."
+                &quot;Pelayanan selama bertransaksi sangat memuaskan. Saat mengambil atau mengirim barang koleksi bernilai tinggi, mereka selalu tepat waktu dan profesional.&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -274,7 +274,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                "Kualitas barangnya bener-bener di luar ekspektasi. Packing super tebal dan aman banget buat action figure vintage. Nggak nyesel langganan di Royyan Collectibles!"
+                &quot;Kualitas barangnya bener-bener di luar ekspektasi. Packing super tebal dan aman banget buat action figure vintage. Nggak nyesel langganan di Royyan Collectibles!&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">

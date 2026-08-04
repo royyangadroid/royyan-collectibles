@@ -41,13 +41,20 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
   const [success, setSuccess] = useState(false);
   const submittedRef = useRef(false);
 
+  const loadCsrfToken = useCallback(async () => {
+    try {
+      const response = await fetch('/api/rcpanel7x/csrf', { credentials: 'include' });
+      const data = await response.json();
+      setCsrfToken(data.csrfToken ?? '');
+    } catch {
+      setError('Failed to load session. Please refresh the page.');
+    }
+  }, []);
+
   // ── Fetch CSRF token on mount ──────────────────────────────
   useEffect(() => {
-    fetch('/api/rcpanel7x/csrf', { credentials: 'same-origin' })
-      .then((r) => r.json())
-      .then((data) => setCsrfToken(data.csrfToken ?? ''))
-      .catch(() => setError('Failed to load session. Please refresh the page.'));
-  }, []);
+    loadCsrfToken();
+  }, [loadCsrfToken]);
 
   // ── Blocked countdown timer ─────────────────────────────
   useEffect(() => {
@@ -61,10 +68,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
           setBlockedFor(null);
           setError('');
           // Re-fetch CSRF token after block expires
-          fetch('/api/rcpanel7x/csrf', { credentials: 'same-origin' })
-            .then((r) => r.json())
-            .then((data) => setCsrfToken(data.csrfToken ?? ''))
-            .catch(() => {});
+          loadCsrfToken().catch(() => {});
           return null;
         }
         return prev - 1;
@@ -72,7 +76,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [blockedFor]);
+  }, [blockedFor, loadCsrfToken]);
 
   // ── Keyboard input ──────────────────────────────────────
   useEffect(() => {
@@ -134,7 +138,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
 
         const response = await fetch('/api/rcpanel7x/login', {
           method: 'POST',
-          credentials: 'same-origin',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             pin: pinValue,
@@ -157,7 +161,10 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
           if (data.blockedFor) {
             setBlockedFor(data.blockedFor);
           }
-            throw new Error(data.error || 'Login failed');
+          if (response.status === 403 || data.error?.includes('CSRF')) {
+            await loadCsrfToken();
+          }
+          throw new Error(data.error || 'Login failed');
         }
 
         setSuccess(true);
@@ -170,7 +177,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
         setLoading(false);
       }
     },
-    [csrfToken, redirectTo, searchParams, accessKey, router]
+    [csrfToken, redirectTo, searchParams, accessKey, router, loadCsrfToken]
   );
 
   const formatCountdown = (seconds: number): string => {

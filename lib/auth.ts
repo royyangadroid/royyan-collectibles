@@ -155,7 +155,7 @@ export const ADMIN_COOKIE_OPTIONS = {
 export const CSRF_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
+  sameSite: 'lax' as const,
   path: '/',
   maxAge: 60 * 60, // 1 hour
 };

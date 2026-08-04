@@ -78,7 +78,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
         return (
           <div key={index} className="my-10 p-8 border-l-4 border-gold bg-zinc-900/80">
             <blockquote className="font-serif text-xl md:text-2xl text-parchment-100 italic leading-snug m-0">
-              "{block.text}"
+              &quot;{block.text}&quot;
             </blockquote>
             {block.author && <footer className="font-sans text-xs uppercase tracking-widest text-gold/70 mt-4">— {block.author}</footer>}
           </div>
