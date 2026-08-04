@@ -45,9 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-import Script from 'next/script';
-import GoogleTranslate from '@/components/GoogleTranslate';
-
 // --- Root Layout ---
 export default async function RootLayout({
   children,
@@ -64,7 +61,6 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://as1.ftcdn.net" />
       </head>
       <body className="min-h-screen flex flex-col bg-zinc-950 text-parchment-100">
-        <GoogleTranslate />
         <SettingsProvider initialRates={rates} initialDate={date}>
           <Navbar />
           <main className="flex-1 pt-[var(--navbar-height)]">

@@ -32,7 +32,7 @@ export default function Navbar() {
 
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [scrolled, setScrolled]       = useState(false);
-  const [currentLang, setCurrentLang] = useState('id');
+  const [currentLang, setCurrentLang] = useState('fr');
   const [activeMega, setActiveMega]   = useState<MegaMenuId>(null);
 
   // Mobile accordion state
