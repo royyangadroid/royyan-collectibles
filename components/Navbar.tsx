@@ -52,7 +52,8 @@ export default function Navbar() {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    const match = document.cookie.match(/googtrans=\/id\/([a-z-]+)/);
+    // Fix: use [a-zA-Z-] to correctly match codes like zh-CN (uppercase letters)
+    const match = document.cookie.match(/googtrans=\/id\/([a-zA-Z-]+)/);
     if (match?.[1]) setCurrentLang(match[1]);
 
     const handleClickOutside = (e: MouseEvent) => {
@@ -96,8 +97,25 @@ export default function Navbar() {
 
   // ── Language ─────────────────────────────────────────────────────────────────
   const switchLanguage = (lang: string) => {
-    document.cookie = `googtrans=/id/${lang}; path=/;`;
-    document.cookie = `googtrans=/id/${lang}; path=/; domain=` + window.location.hostname;
+    // Step 1: Expire ALL existing googtrans cookies across every possible
+    // domain/path combination so none of the old values linger.
+    const expired = 'Thu, 01 Jan 1970 00:00:01 UTC';
+    const hostname = window.location.hostname;
+    [
+      `googtrans=; expires=${expired}; path=/`,
+      `googtrans=; expires=${expired}; path=/; domain=${hostname}`,
+      `googtrans=; expires=${expired}; path=/; domain=.${hostname}`,
+      // Also clear the /id sub-path Google Translate sometimes uses
+      `googtrans=; expires=${expired}; path=/id`,
+      `googtrans=; expires=${expired}; path=/id; domain=${hostname}`,
+    ].forEach((c) => { document.cookie = c; });
+
+    // Step 2: Set the new language (skip for the base language 'id')
+    if (lang !== 'id') {
+      document.cookie = `googtrans=/id/${lang}; path=/`;
+      document.cookie = `googtrans=/id/${lang}; path=/; domain=${hostname}`;
+    }
+
     window.location.reload();
   };
 
