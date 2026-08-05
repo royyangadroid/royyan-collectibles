@@ -480,8 +480,21 @@ export const collectibles: CollectibleItem[] = [
     "category": "Hot Wheels",
     "condition": "Mint",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-037/cover.jpg",
     "description": "Hot Wheels '55 Nomad dari seri Heat Fleet yang menghadirkan Chevrolet Nomad 1955 dengan balutan warna oranye dan grafis flame khas seri Heat Fleet. Masih dalam blister dan card original sehingga cocok untuk koleksi, display, maupun investasi diecast. Salah satu casting klasik yang semakin diminati oleh kolektor Hot Wheels."
+  },
+  {
+    "id": "ryc-5sgv2p0ax",
+    "slug": "RC-038",
+    "collectionNumber": "RC-038",
+    "title": "WOLFENSTEIN TESITNG 123",
+    "price": 500000,
+    "category": "PlayStation",
+    "condition": "Sealed",
+    "badge": "Best Seller",
+    "status": "Available",
+    "image": "/catalog/RC-038/cover.png",
+    "description": "THIS PRODUCT ISI BOOK AND VERY RARE THAT CAN NOT BE GET ON SECON CHANGE"
   }
 ];
