@@ -252,109 +252,111 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-zinc-800">
-          <table className="w-full text-left text-sm text-zinc-400">
-            <thead className="text-xs uppercase text-zinc-500 border-b border-zinc-800 bg-zinc-950/50">
+        <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/40 shadow-xl">
+          <table className="w-full text-left text-zinc-400">
+            <thead className="text-xs uppercase tracking-widest text-zinc-500 border-b border-zinc-800 bg-zinc-900/80">
               <tr>
-                <th className="px-5 py-4 font-medium">ID</th>
-                <th className="px-5 py-4 font-medium">Cover</th>
-                <th className="px-5 py-4 font-medium">Title</th>
-                <th className="px-5 py-4 font-medium hidden md:table-cell">Tags</th>
-                <th className="px-5 py-4 font-medium">Status</th>
-                <th className="px-5 py-4 font-medium text-right">Aksi</th>
+                <th className="px-6 py-5 font-semibold">ID</th>
+                <th className="px-6 py-5 font-semibold">Cover</th>
+                <th className="px-6 py-5 font-semibold">Title</th>
+                <th className="px-6 py-5 font-semibold hidden md:table-cell">Tags</th>
+                <th className="px-6 py-5 font-semibold">Status</th>
+                <th className="px-6 py-5 font-semibold text-right">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-800/60">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-zinc-600 text-sm">
+                  <td colSpan={6} className="py-20 text-center text-zinc-500 text-base">
                     Tidak ada item ditemukan
                   </td>
                 </tr>
               ) : (
                 filtered.map((item) => (
-                  <tr key={item.id} className="hover:bg-zinc-800/30 transition-colors">
-                    <td className="px-5 py-4 font-mono text-xs text-zinc-400 whitespace-nowrap">{item.collectionNumber}</td>
-                    <td className="px-5 py-4">
+                  <tr key={item.id} className="hover:bg-zinc-800/40 transition-colors group">
+                    <td className="px-6 py-5 font-mono text-sm font-medium text-gold whitespace-nowrap">{item.collectionNumber}</td>
+                    <td className="px-6 py-5">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-11 h-11 object-cover rounded-lg border border-zinc-700"
-                      />
+                      <div className="w-16 h-16 rounded-xl border border-zinc-700 bg-zinc-900 p-1 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-gold/50 transition-colors">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-contain drop-shadow-md"
+                        />
+                      </div>
                     </td>
-                    <td className="px-5 py-4 font-medium text-zinc-200 max-w-[180px]">
-                      <p className="line-clamp-2 leading-snug">{item.title}</p>
+                    <td className="px-6 py-5 font-medium text-zinc-100 max-w-[220px]">
+                      <p className="line-clamp-2 text-base leading-snug">{item.title}</p>
                     </td>
-                    <td className="px-5 py-4 hidden md:table-cell">
-                      <div className="flex flex-col items-start gap-1">
-                        <span className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider rounded-sm ${getCategoryColor(item.category)}`}>
+                    <td className="px-6 py-5 hidden md:table-cell">
+                      <div className="flex flex-col items-start gap-2">
+                        <span className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getCategoryColor(item.category)}`}>
                           {item.category}
                         </span>
-                        <span className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider rounded-sm ${getConditionColor(item.condition)}`}>
+                        <span className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getConditionColor(item.condition)}`}>
                           {item.condition}
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-5">
                       {item.status === 'Sold' ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-red-950/60 text-red-400 border border-red-900">
-                          <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold rounded-full bg-red-950/80 text-red-400 border border-red-900 shadow-sm">
+                          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                           Sold
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-900">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-900 shadow-sm">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                           Available
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-4 text-right">
-                      <div className="inline-flex items-center gap-1">
+                    <td className="px-6 py-5 text-right">
+                      <div className="inline-flex items-center gap-2">
                         {/* Mark/Undo Sold */}
                         {item.status === 'Available' ? (
                           <button
                             onClick={() => handleAction('mark-sold', item.collectionNumber)}
                             disabled={!!loadingAction}
-                            className="p-2 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-950/30 rounded-lg transition disabled:opacity-40"
+                            className="p-2.5 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-950/50 rounded-xl transition disabled:opacity-40 border border-transparent hover:border-emerald-900 shadow-sm"
                             title="Mark as Sold"
                           >
                             {loadingAction === `mark-sold-${item.collectionNumber}`
-                              ? <Loader2 className="w-4 h-4 animate-spin" />
-                              : <CheckCircle2 className="w-4 h-4" />}
+                              ? <Loader2 className="w-5 h-5 animate-spin" />
+                              : <CheckCircle2 className="w-5 h-5" />}
                           </button>
                         ) : (
                           <button
                             onClick={() => handleAction('undo-sold', item.collectionNumber)}
                             disabled={!!loadingAction}
-                            className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-950/30 rounded-lg transition disabled:opacity-40"
+                            className="p-2.5 text-zinc-400 hover:text-amber-400 hover:bg-amber-950/50 rounded-xl transition disabled:opacity-40 border border-transparent hover:border-amber-900 shadow-sm"
                             title="Undo Sold"
                           >
                             {loadingAction === `undo-sold-${item.collectionNumber}`
-                              ? <Loader2 className="w-4 h-4 animate-spin" />
-                              : <RotateCcw className="w-4 h-4" />}
+                              ? <Loader2 className="w-5 h-5 animate-spin" />
+                              : <RotateCcw className="w-5 h-5" />}
                           </button>
                         )}
 
                         {/* Preview */}
                         <button
                           onClick={() => setPreviewItem(item)}
-                          className="p-2 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-lg transition"
+                          className="p-2.5 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-xl transition border border-transparent hover:border-zinc-600 shadow-sm"
                           title="Preview"
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-5 h-5" />
                         </button>
 
                         {/* Delete */}
                         <button
                           onClick={() => setDeleteTarget(item)}
                           disabled={!!loadingAction}
-                          className="p-2 text-zinc-400 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition disabled:opacity-40"
+                          className="p-2.5 text-zinc-400 hover:text-red-400 hover:bg-red-950/50 rounded-xl transition disabled:opacity-40 border border-transparent hover:border-red-900 shadow-sm"
                           title="Hapus dari GitHub"
                         >
                           {loadingAction === `delete-${item.collectionNumber}`
-                            ? <Loader2 className="w-4 h-4 animate-spin" />
-                            : <Trash2 className="w-4 h-4" />}
+                            ? <Loader2 className="w-5 h-5 animate-spin" />
+                            : <Trash2 className="w-5 h-5" />}
                         </button>
                       </div>
                     </td>
