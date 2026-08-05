@@ -116,7 +116,7 @@ function PreviewModal({
         {/* Body */}
         <div className="p-6">
           <AdminPreview
-            data={{ ...item, coverUrl: item.image }}
+            data={{ ...item, coverUrl: item.image, tags: [], featured: false, badge: item.badge || '' }}
             mode={mode}
           />
         </div>
