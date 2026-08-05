@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { ArrowRight, Shield, Star, Award, Sparkles } from 'lucide-react';
 import { getAllCollectibles } from '@/lib/data';
 import ProductCard from '@/components/ProductCard';
-import { useTranslation } from '@/components/providers/TranslationProvider';
 
 // =============================================
 // Feature Card — "Mengapa Royyan Collectibles"
@@ -32,7 +31,6 @@ function FeatureCard({ icon: Icon, title, desc }: { icon: React.ElementType; tit
 // Collection Section
 // =============================================
 function CollectionSection() {
-  const { t } = useTranslation();
   // Mengambil semua item, dibalik (terbaru di atas), lalu ambil 3
   const items = [...getAllCollectibles()].reverse().slice(0, 3);
 
@@ -43,14 +41,14 @@ function CollectionSection() {
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-12 h-px bg-gradient-to-r from-transparent to-gold/60" aria-hidden="true" />
-            <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold">{t('collection.label')}</p>
+            <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold">Koleksi</p>
             <div className="w-12 h-px bg-gradient-to-l from-transparent to-gold/60" aria-hidden="true" />
           </div>
           <h2 className="font-serif font-bold text-4xl md:text-5xl text-parchment-100 mb-5">
-            {t('collection.title1')} <span className="italic text-gold">{t('collection.title2')}</span>
+            Koleksi <span className="italic text-gold">Terbaru</span>
           </h2>
           <p className="font-sans text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
-            {t('collection.desc')}
+            Jelajahi penambahan terbaru pada katalog kami. Setiap item dipilih dengan cermat berdasarkan kelangkaan, kondisi, dan nilai sejarahnya.
           </p>
           <div className="flex items-center justify-center gap-4 mt-8" aria-hidden="true">
             <div className="w-20 h-px bg-gradient-to-r from-transparent to-gold/30" />
@@ -61,7 +59,7 @@ function CollectionSection() {
 
         {/* Grid */}
         {items.length === 0 ? (
-          <p className="text-center font-sans text-sm text-zinc-500 py-16">{t('collection.empty')}</p>
+          <p className="text-center font-sans text-sm text-zinc-500 py-16">Belum ada koleksi yang tersedia.</p>
         ) : (
           <div className="grid grid-cols-3 gap-2 sm:gap-8">
             {items.map((item) => (
@@ -82,7 +80,7 @@ function CollectionSection() {
             className="inline-flex items-center gap-3 px-10 py-4 bg-gold text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.3)] transition-all duration-300 hover:-translate-y-0.5"
             id="homepage-view-all-btn"
           >
-            {t('collection.cta')}
+            Lihat Semua Koleksi
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -95,32 +93,31 @@ function CollectionSection() {
 // Why Us Section
 // =============================================
 function WhyUsSection() {
-  const { t } = useTranslation();
 
   return (
     <section className="py-28 bg-zinc-900" aria-label="Mengapa Royyan Collectibles">
       <div className="container-vintage">
         <div className="text-center mb-16">
-          <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">{t('whyus.label')}</p>
+          <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">Keunggulan Kami</p>
           <h2 className="font-serif font-bold text-3xl md:text-4xl text-parchment-100">
-            {t('whyus.title1')} <span className="italic text-gold">{t('whyus.title2')}</span>
+            Kenapa Memilih <span className="italic text-gold notranslate" translate="no">Royyan Collectibles</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <FeatureCard
             icon={Shield}
-            title={t('whyus.auth_title')}
-            desc={t('whyus.auth_desc')}
+            title="Otentik & Terkurasi"
+            desc="Setiap item di katalog kami telah melewati proses kurasi dan verifikasi keaslian yang ketat."
           />
           <FeatureCard
             icon={Star}
-            title={t('whyus.rare_title')}
-            desc={t('whyus.rare_desc')}
+            title="Koleksi Langka"
+            desc="Fokus pada barang-barang langka dan vintage yang sulit ditemukan di pasaran umum."
           />
           <FeatureCard
             icon={Award}
-            title={t('whyus.trusted_title')}
-            desc={t('whyus.trusted_desc')}
+            title="Terpercaya"
+            desc="Dibangun di atas dasar kepercayaan dengan rekam jejak panjang melayani kolektor serius."
           />
         </div>
       </div>
@@ -163,19 +160,17 @@ function TestimonialSection() {
     });
   };
 
-  const { t } = useTranslation();
-
   return (
     <section className="py-24 bg-zinc-950 border-t border-gold/10" aria-label="Testimonials">
       <div className="container-vintage">
         {/* Header Testimoni */}
         <div className="text-center mb-16">
-          <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">{t('testimonials.label')}</p>
+          <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">Testimoni</p>
           <h2 className="font-serif font-bold text-3xl md:text-4xl text-parchment-100">
-            {t('testimonials.title1')} <span className="italic text-gold">{t('testimonials.title2')}</span>
+            Apa Kata <span className="italic text-gold">Kolektor</span>
           </h2>
           <p className="font-sans text-sm text-zinc-400 mt-4">
-            {t('testimonials.subtitle')}
+            Pengalaman nyata dari mereka yang telah mempercayakan koleksinya kepada kami.
           </p>
         </div>
 
@@ -197,7 +192,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                &quot;Royyan Collectibles has become our trusted partner. Koleksi buku sejarah dan komik lawasnya sangat terawat, proses pengiriman juga sangat cepat dan aman.&quot;
+                &quot;<span className="notranslate" translate="no">Royyan Collectibles</span> has become our trusted partner. Koleksi buku sejarah dan komik lawasnya sangat terawat, proses pengiriman juga sangat cepat dan aman.&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -278,7 +273,7 @@ function TestimonialSection() {
                 <Star className="w-4 h-4 fill-current" />
               </div>
               <p className="font-sans text-sm text-zinc-300 italic mb-8 leading-relaxed">
-                &quot;Kualitas barangnya bener-bener di luar ekspektasi. Packing super tebal dan aman banget buat action figure vintage. Nggak nyesel langganan di Royyan Collectibles!&quot;
+                &quot;Kualitas barangnya bener-bener di luar ekspektasi. Packing super tebal dan aman banget buat action figure vintage. Nggak nyesel langganan di <span className="notranslate" translate="no">Royyan Collectibles</span>!&quot;
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -317,24 +312,23 @@ function TestimonialSection() {
 // CTA Section (before footer)
 // =============================================
 function CtaSection() {
-  const { t } = useTranslation();
 
   return (
     <section className="py-24 bg-zinc-900 border-t border-gold/10" aria-label="Call to action">
       <div className="container-vintage text-center">
         <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/70 mb-6">Mulai Koleksi Anda</p>
         <h2 className="font-serif font-bold text-3xl md:text-4xl text-parchment-100 mb-6 max-w-2xl mx-auto leading-tight">
-          Temukan Artefak <span className="italic text-gold">Langka</span> yang Anda Cari
+          Temukan <span className="italic text-gold">Artefak Langka</span> Yang Anda Cari
         </h2>
         <p className="font-sans text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed mb-10">
-          Jelajahi katalog koleksi kami atau hubungi langsung via WhatsApp untuk konsultasi personal tentang item yang Anda minati.
+          Jelajahi katalog koleksi kami atau hubungi kami langsung via WhatsApp untuk konsultasi personal mengenai item yang Anda minati.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/catalog"
             className="inline-flex items-center gap-3 px-10 py-4 bg-gold text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm hover:bg-gold-light transition-all duration-300 hover:-translate-y-0.5"
           >
-            {t('nav.browse')}
+            Telusuri
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a
@@ -355,7 +349,6 @@ function CtaSection() {
 // HOME PAGE
 // =============================================
 export default function HomePage() {
-  const { t } = useTranslation();
 
   return (
     <>
@@ -382,7 +375,7 @@ export default function HomePage() {
             {/* Label */}
             <div className="flex items-center gap-3 mb-8 animate-fade-up">
               <div className="w-10 h-px bg-gold/60" aria-hidden="true" />
-              <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/80">{t('hero.est')}</p>
+              <p className="font-sans text-xs font-semibold tracking-[0.3em] uppercase text-gold/80">Est. 2024</p>
             </div>
 
             {/* Headline */}
@@ -390,13 +383,13 @@ export default function HomePage() {
               className="font-serif font-black text-parchment-100 leading-[1.08] mb-8 animate-fade-up animate-delay-100"
               style={{ fontSize: 'clamp(2.8rem, 6vw, 5.5rem)' }}
             >
-              {t('hero.tagline1')}
-              <br /><span className="italic text-gold">{t('hero.tagline2')}</span>
+              Kurasi Eksklusif
+              <br /><span className="italic text-gold">Barang Antik & Langka</span>
             </h1>
 
             {/* Subtitle */}
             <p className="font-sans text-base md:text-lg text-zinc-400 max-w-xl leading-relaxed mb-10 animate-fade-up animate-delay-200">
-              {t('hero.desc')}
+              Temukan koleksi barang antik dan langka pilihan: Komik lawas, Hot Wheels, Diecast, Video Game klasik, dan lebih banyak lagi. Kurasi eksklusif untuk para kolektor sejati.
             </p>
 
             {/* CTA Buttons */}
@@ -405,14 +398,14 @@ export default function HomePage() {
                 href="/catalog"
                 className="inline-flex items-center justify-center gap-3 px-10 py-4 bg-gold text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.3)] transition-all duration-300 hover:-translate-y-0.5 group"
               >
-                {t('hero.cta_browse')}
+                Telusuri Koleksi
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/journal"
                 className="inline-flex items-center justify-center gap-3 px-10 py-4 bg-transparent text-parchment-200 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm border border-parchment-400/30 hover:border-gold hover:text-gold transition-all duration-300"
               >
-                {t('hero.cta_journal')}
+                Baca Jurnal
               </Link>
             </div>
           </div>

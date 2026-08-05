@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Article } from '@/lib/journal';
 
+
 export default function JournalCard({ article }: { article: Article }) {
   return (
     <Link
@@ -39,7 +40,7 @@ export default function JournalCard({ article }: { article: Article }) {
         {/* CTA */}
         <div className="mt-auto border-t border-gold/10 pt-4 flex justify-end">
            <span className="font-sans text-[10px] tracking-[0.15em] uppercase text-gold/60 group-hover:text-gold transition-colors duration-300 flex items-center gap-2">
-            Read Article <span className="text-lg leading-none transition-transform duration-300 group-hover:translate-x-1">→</span>
+            Baca Artikel <span className="text-lg leading-none transition-transform duration-300 group-hover:translate-x-1">→</span>
           </span>
         </div>
       </div>

@@ -330,7 +330,7 @@ export default function AdminLoginForm({ accessKey, redirectTo }: AdminLoginForm
 
         {/* Bottom label */}
         <p className="mt-6 text-center text-[11px] text-zinc-700">
-          Royyan Collectibles — Restricted Area
+          <span className="notranslate" translate="no">Royyan Collectibles</span> — Restricted Area
         </p>
       </div>
     </div>

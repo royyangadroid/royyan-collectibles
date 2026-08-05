@@ -492,7 +492,7 @@ export default function InvoiceGenerator() {
 
           <div className="inv-sidebar-logo">
             <div className="inv-logo-icon">RC</div>
-            <h1>Royyan Collectibles<span>Invoice Generator System</span></h1>
+            <h1><span className="notranslate" translate="no">Royyan Collectibles</span><span>Invoice Generator System</span></h1>
           </div>
 
           <div className="inv-sidebar-divider" />
@@ -893,12 +893,12 @@ export default function InvoiceGenerator() {
                       </g>
                     </svg>
                   </div>
-                  <div className="inv-sincerely">Sincerely,<br /><strong>Royyan Collectibles</strong></div>
+                  <div className="inv-sincerely">Sincerely,<br /><strong><span className="notranslate" translate="no">Royyan Collectibles</span></strong></div>
                 </div>
                 <div />
               </div>
 
-              <div className="inv-footer-line">Royyan Collectibles · Curug Street no 33, West Java, Indonesia · +62 813 1527 855</div>
+              <div className="inv-footer-line"><span className="notranslate" translate="no">Royyan Collectibles</span> · Curug Street no 33, West Java, Indonesia · +62 813 1527 855</div>
             </div>
           </div>
         </main>

@@ -2,6 +2,7 @@ import { getAllCollectibles } from '@/lib/data';
 import CatalogClient from '@/components/CatalogClient';
 import { Sparkles } from 'lucide-react';
 
+
 export default function CatalogPage() {
   const items = getAllCollectibles();
 
@@ -16,7 +17,7 @@ export default function CatalogPage() {
             <div className="w-12 h-px bg-gradient-to-l from-transparent to-gold/60" aria-hidden="true" />
           </div>
           <h1 className="font-serif font-bold text-4xl md:text-5xl text-parchment-100">
-            Seluruh <span className="italic text-gold">Koleksi</span>
+            Semua <span className="italic text-gold">Koleksi</span>
           </h1>
           <div className="flex items-center justify-center gap-4 mt-6" aria-hidden="true">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-gold/20" />

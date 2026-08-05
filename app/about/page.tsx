@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { MessageCircle, Instagram, BookOpen } from 'lucide-react';
 
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-zinc-950 py-16 md:py-24">
@@ -14,7 +15,7 @@ export default function AboutPage() {
             <div className="w-16 h-px bg-gold/40" aria-hidden="true" />
           </div>
           <h1 className="font-serif font-bold text-4xl md:text-5xl text-parchment-100 leading-tight mb-4">
-            Royyan Collectibles: <br className="hidden sm:block" />
+            <span className="notranslate" translate="no">Royyan Collectibles</span>: <br className="hidden sm:block" />
             <span className="italic text-gold">Rumah bagi Para Pencari</span>
           </h1>
           <div className="flex items-center justify-center gap-4 mt-8" aria-hidden="true">
@@ -32,7 +33,7 @@ export default function AboutPage() {
           <span className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold/40 z-10" aria-hidden="true" />
           <Image
             src="https://images.unsplash.com/photo-1681912818492-35c55f33fb25?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Koleksi Barang Antik"
+            alt="Tampilan koleksi antik"
             fill
             className="object-cover opacity-80"
             priority
@@ -44,11 +45,11 @@ export default function AboutPage() {
         <div className="space-y-12 md:space-y-16 px-4 sm:px-8">
           <section className="animate-fade-up animate-delay-200">
             <h2 className="font-serif font-bold text-2xl md:text-3xl text-parchment-100 mb-5 flex items-center gap-4">
-              <span className="text-gold">I.</span> Lebih dari Sekadar Barang Lama
+              <span className="text-gold">I.</span> Lebih Dari Sekadar Benda Tua
             </h2>
             <div className="font-sans text-base md:text-lg text-zinc-400 leading-relaxed space-y-4">
-              <p>Di Royyan Collectibles, kami tidak sekadar menjual barang; kami mengkurasi artefak yang punya jiwa. Bagi kami, Hot Wheels edisi pertama, komik era keemasan, atau lembaran uang kuno bukan sekadar objek koleksi—itu adalah potongan sejarah yang berhasil kita selamatkan dari waktu.</p>
-              <p>Kami hadir di sini karena kami adalah kolektor, sama seperti Anda. Kami memahami sensasi berburu yang mendebarkan dan kepuasan luar biasa saat menemukan <span className="font-serif italic text-parchment-200 font-medium">rare item</span> yang melengkapi rak koleksi Anda.</p>
+              <p>Di <span className="notranslate" translate="no">Royyan Collectibles</span>, kami lebih dari sekadar menjual barang; kami mengkurasi artefak yang memiliki jiwa. Bagi kami, Hot Wheels edisi pertama, komik era keemasan, dan uang kertas vintage adalah bagian dari sejarah yang kami selamatkan dari gerusan waktu.</p>
+              <p>Kami ada di sini karena kami adalah kolektor, sama seperti Anda. Kami memahami sensasi berburu dan kepuasan luar biasa saat menemukan barang langka yang melengkapi rak koleksi Anda.</p>
             </div>
           </section>
 
@@ -57,8 +58,8 @@ export default function AboutPage() {
               <span className="text-gold">II.</span> Integritas di Atas Segalanya
             </h2>
             <div className="font-sans text-base md:text-lg text-zinc-400 leading-relaxed space-y-4">
-              <p>Dunia koleksi penuh dengan spekulasi, dan itulah mengapa kami memegang teguh satu nilai utama: <strong className="text-parchment-200">Kejujuran</strong>. Kami melakukan kurasi super ketat pada setiap item yang masuk. Jika kami bilang kondisinya Mint, maka itulah yang akan Anda terima.</p>
-              <p>Jika ada goresan atau minus, kami akan menunjukkannya dengan gamblang. Tidak ada tebak-tebakan, tidak ada barang palsu. Kami membangun Royyan Collectibles dengan fondasi kepercayaan, karena kami tahu reputasi adalah mata uang tertinggi bagi komunitas kolektor.</p>
+              <p>Dunia koleksi penuh dengan spekulasi, itulah sebabnya kami memegang satu nilai di atas segalanya: kejujuran. Kami mengkurasi setiap barang dengan sangat hati-hati. Jika kami mengatakan barang itu Mint, itulah yang akan Anda terima.</p>
+              <p>Jika ada cacat atau kekurangan, kami akan menunjukkannya dengan jelas. Tidak ada tebakan, tidak ada barang palsu. Kami membangun <span className="notranslate" translate="no">Royyan Collectibles</span> di atas dasar kepercayaan, karena kami tahu reputasi adalah mata uang tertinggi dalam komunitas kolektor.</p>
             </div>
           </section>
 
@@ -67,15 +68,15 @@ export default function AboutPage() {
               <span className="text-gold">III.</span> Mari Berdiskusi, Bukan Sekadar Bertransaksi
             </h2>
             <div className="font-sans text-base md:text-lg text-zinc-400 leading-relaxed space-y-4">
-              <p>Kami percaya bahwa koleksi yang berharga berhak mendapatkan perhatian personal. Itulah alasan kami memilih untuk tidak menggunakan sistem e-mail yang kaku dan berjarak. Di Royyan Collectibles, kami lebih suka obrolan santai antar kolektor.</p>
-              <p>Punya pertanyaan soal detail barang? Ingin diskusi soal histori koleksi? Langsung saja sapa kami lewat WhatsApp. Kami lebih suka berbicara langsung dengan Anda.</p>
+              <p>Kami percaya koleksi berharga layak mendapat perhatian personal. Itulah sebabnya kami tidak bergantung pada sistem email yang kaku dan berjarak. Di <span className="notranslate" translate="no">Royyan Collectibles</span>, kami lebih suka percakapan santai antarkolektor.</p>
+              <p>Ada pertanyaan tentang detail barang? Ingin berdiskusi soal sejarah di balik sebuah koleksi? Hubungi kami di WhatsApp. Kami lebih suka berbicara langsung dengan Anda.</p>
             </div>
           </section>
         </div>
 
         {/* CTA */}
         <div className="mt-20 pt-16 border-t border-gold/15 text-center animate-fade-up animate-delay-500">
-          <p className="font-sans text-sm font-bold tracking-[0.2em] uppercase text-zinc-500 mb-6">Katakan Halo Kepada Kami</p>
+          <p className="font-sans text-sm font-bold tracking-[0.2em] uppercase text-zinc-500 mb-6">Sapa Kami</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <a
               href="https://wa.me/6281295173689"

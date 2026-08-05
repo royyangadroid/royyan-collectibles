@@ -184,7 +184,7 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
                     Need Help?
                   </p>
                   <p className="font-sans text-[11px] text-zinc-600 leading-relaxed mb-3">
-                    Explore all Journal categories and discover curated stories from Royyan Collectibles.
+                    Explore all Journal categories and discover curated stories from <span className="notranslate" translate="no">Royyan Collectibles</span>.
                   </p>
                   <Link
                     href="/journal"

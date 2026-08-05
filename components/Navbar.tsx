@@ -20,11 +20,11 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { href: '/',        label: 'Home'    },
-  { href: '/catalog', label: 'Catalog', megaMenu: 'catalog' },
-  { href: '/journal', label: 'Journal', megaMenu: 'journal' },
-  { href: '/about',   label: 'About'   },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'Beranda' },
+  { href: '/catalog', label: 'Katalog', megaMenu: 'catalog' },
+  { href: '/journal', label: 'Jurnal', megaMenu: 'journal' },
+  { href: '/about', label: 'Tentang Kami' },
+  { href: '/contact', label: 'Kontak' },
 ];
 
 export default function Navbar() {
@@ -32,13 +32,13 @@ export default function Navbar() {
 
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [scrolled, setScrolled]       = useState(false);
-  const [currentLang, setCurrentLang] = useState('id');
   const [activeMega, setActiveMega]   = useState<MegaMenuId>(null);
 
   // Mobile accordion state
   const [mobileAccordion, setMobileAccordion] = useState<MegaMenuId>(null);
 
   const { currency, setCurrency, ratesDate } = useSettings();
+  const [locale, setLocale] = useState('id');
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown]         = useState(false);
 
@@ -47,15 +47,16 @@ export default function Navbar() {
   const navRef              = useRef<HTMLElement>(null);
   const closeTimer          = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Scroll listener ─────────────────────────────────────────────────────────
+  // ── Scroll & Cookie listener ────────────────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Read current language from cookie (handles zh-CN with uppercase letters)
-    const match = document.cookie.match(/googtrans=\/id\/([a-zA-Z-]+)/);
-    const cookieLang = match?.[1];
-    if (cookieLang && cookieLang !== 'id') setCurrentLang(cookieLang);
+    // Cek bahasa dari cookie googtrans
+    const match = document.cookie.match(/googtrans=\/[^\/]+\/([a-zA-Z-]+)/);
+    if (match && match[1]) {
+      setLocale(match[1]);
+    }
 
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
@@ -97,45 +98,15 @@ export default function Navbar() {
   const closeMega = useCallback(() => setActiveMega(null), []);
 
   // ── Language ─────────────────────────────────────────────────────────────────
-  const switchLanguage = (lang: string) => {
-    const hostname = window.location.hostname;
-
-    // ─ 1. Update navbar display immediately (no waiting for reload) ───────────
-    setCurrentLang(lang);
-    setShowLangDropdown(false);
-
-    // ─ 2. Persist language via cookie (for full page reloads & navigation) ───
-    const expired = 'Thu, 01 Jan 1970 00:00:01 UTC';
-    // Expire every possible variant so no old cookie lingers
-    document.cookie = `googtrans=; expires=${expired}; path=/`;
-    document.cookie = `googtrans=; expires=${expired}; path=/; domain=${hostname}`;
-    document.cookie = `googtrans=; expires=${expired}; path=/; domain=.${hostname}`;
-
-    if (lang !== 'id') {
-      // Set the new language cookie
-      document.cookie = `googtrans=/id/${lang}; path=/`;
-      document.cookie = `googtrans=/id/${lang}; path=/; domain=${hostname}`;
-    }
-
-    // ─ 3. Apply translation via GT's native select element ──────────────────
-    // This is more reliable than cookie+reload because GT won't re-set the
-    // old cookie during widget initialization.
-    const selectEl = document.querySelector(
-      '#google_translate_element select'
-    ) as HTMLSelectElement | null;
-
-    if (selectEl) {
-      // '' restores the original (Indonesian); any other code triggers translation
-      selectEl.value = lang === 'id' ? '' : lang;
-      selectEl.dispatchEvent(new Event('change'));
+  const ubahBahasa = (kodeBahasa: string) => {
+    if (kodeBahasa === 'id') {
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     } else {
-      // GT widget not yet initialized — fall back to cookie + page reload
-      window.location.reload();
+      document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/; domain=" + window.location.hostname;
+      document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/;";
     }
-
-    // ─ 4. Notify TranslationProvider so dictionary-based strings update too ─
-    // Custom event: zero coupling, zero structural changes to other components
-    window.dispatchEvent(new CustomEvent('lang-change', { detail: lang }));
+    window.location.reload();
   };
 
   const flagCode = (lang: string) =>
@@ -173,9 +144,9 @@ export default function Navbar() {
               <BookOpen className="w-7 h-7 text-gold transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
               <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-gold rounded-full" />
             </div>
-            <div className="flex flex-col">
-              <span className="font-serif font-bold text-parchment-100 text-xl leading-none tracking-wide">Royyan</span>
-              <span className="font-serif font-normal text-gold text-xs tracking-[0.2em] uppercase">Collectibles</span>
+            <div className="flex flex-col hidden sm:flex">
+              <span className="font-serif font-bold text-parchment-100 text-xl leading-none tracking-wide notranslate" translate="no">Royyan</span>
+              <span className="font-serif font-normal text-gold text-xs tracking-[0.2em] uppercase notranslate" translate="no">Collectibles</span>
             </div>
           </Link>
 
@@ -249,7 +220,7 @@ export default function Navbar() {
           </nav>
 
           {/* ── CTA & Controls ───────────────────────────────────────────────── */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
 
             {/* Language Selector */}
             <div className="relative flex items-center" ref={langDropdownRef}>
@@ -260,12 +231,12 @@ export default function Navbar() {
               >
                 <div className="w-4 h-3 rounded-sm overflow-hidden flex items-center justify-center">
                   <img
-                    src={`https://flagcdn.com/${flagCode(currentLang)}.svg`}
-                    alt={currentLang}
+                    src={`https://flagcdn.com/${flagCode(locale)}.svg`}
+                    alt={locale}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="uppercase">{currentLang}</span>
+                <span className="uppercase hidden sm:inline">{locale}</span>
                 <ChevronDown className="w-3 h-3" />
               </button>
 
@@ -284,8 +255,8 @@ export default function Navbar() {
                   ].map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { switchLanguage(lang.code); setShowLangDropdown(false); }}
-                      className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-sans rounded-sm transition-colors ${currentLang === lang.code ? 'bg-gold/20 text-gold' : 'text-zinc-300 hover:bg-zinc-800'}`}
+                      onClick={() => { ubahBahasa(lang.code); setShowLangDropdown(false); }}
+                      className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-sans rounded-sm transition-colors ${locale === lang.code ? 'bg-gold/20 text-gold' : 'text-zinc-300 hover:bg-zinc-800'}`}
                     >
                       <div className="w-4 h-3 rounded-sm overflow-hidden flex items-center justify-center flex-shrink-0">
                         <img src={`https://flagcdn.com/${lang.flag}.svg`} alt={lang.code} className="w-full h-full object-cover" />
@@ -304,7 +275,8 @@ export default function Navbar() {
                 className="flex items-center gap-1.5 px-2 py-1 text-xs font-sans font-medium text-zinc-300 border border-gold/20 rounded-sm hover:border-gold/50 hover:text-gold transition-colors"
                 title="Select Currency"
               >
-                {currency}
+                <span className="hidden sm:inline">{currency}</span>
+                <span className="sm:hidden font-bold">$</span>
                 <ChevronDown className="w-3 h-3" />
               </button>
 
@@ -323,7 +295,7 @@ export default function Navbar() {
                     <div className="flex items-start gap-1.5 text-[10px] text-zinc-500">
                       <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gold/60" />
                       <p className="leading-tight">
-                        Kurs diperbarui otomatis setiap jam ({ratesDate}). Transaksi tetap IDR.
+                        Nilai tukar diperbarui otomatis setiap jam ({ratesDate}). Transaksi tetap dalam IDR.
                       </p>
                     </div>
                   </div>
@@ -337,7 +309,7 @@ export default function Navbar() {
               id="navbar-browse-btn"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
-              Browse
+              Telusuri
             </Link>
 
             {/* Mobile hamburger */}
@@ -480,7 +452,7 @@ export default function Navbar() {
                 id="mobile-browse-btn"
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
-                Browse Collection
+                Telusuri Koleksi
               </Link>
             </div>
           </div>

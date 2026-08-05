@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import type { CollectibleItem } from '@/lib/data';
 import ProductCard from './ProductCard';
 
+
 type SortOption = 'newest' | 'price-low' | 'price-high' | 'az';
 
 export default function CatalogClient({ items }: { items: CollectibleItem[] }) {

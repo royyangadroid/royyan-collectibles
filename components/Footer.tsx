@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookOpen, MapPin, Instagram } from 'lucide-react';
 
+
 export default function Footer() {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
@@ -22,13 +23,12 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <BookOpen className="w-6 h-6 text-gold" strokeWidth={1.5} />
               <div>
-                <p className="font-serif font-bold text-parchment-100 text-lg leading-none">Royyan</p>
-                <p className="font-serif text-gold text-xs tracking-[0.2em] uppercase">Collectibles</p>
+                <p className="font-serif font-bold text-parchment-100 text-lg leading-none notranslate" translate="no">Royyan</p>
+                <p className="font-serif text-gold text-xs tracking-[0.2em] uppercase notranslate" translate="no">Collectibles</p>
               </div>
             </div>
             <p className="font-sans text-sm text-zinc-500 leading-relaxed">
-              Kurator barang antik dan koleksi langka terpercaya.
-              Setiap item adalah sebuah cerita yang menunggu pemilik barunya.
+              Kami mengkurasi barang antik dan koleksi langka bagi para kolektor sejati.
             </p>
             <p className="font-serif italic text-gold/40 text-sm">
               &ldquo;Rare &amp; Vintage Collectibles&rdquo;
@@ -40,10 +40,10 @@ export default function Footer() {
             <h3 className="font-sans text-xs font-bold tracking-[0.2em] uppercase text-gold">Navigasi</h3>
             <nav className="flex flex-col gap-2" aria-label="Footer navigation">
               {[
-                { href: '/', label: 'Home' },
-                { href: '/catalog', label: 'Catalog' },
+                { href: '/', label: 'Beranda' },
+                { href: '/catalog', label: 'Katalog' },
                 { href: '/about', label: 'Tentang Kami' },
-                { href: '/contact', label: 'Hubungi Kami' },
+                { href: '/contact', label: 'Kontak' },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -87,10 +87,10 @@ export default function Footer() {
         {/* Copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-sans text-xs text-zinc-600 tracking-wide">
-            © {currentYear} Royyan Collectibles. All rights reserved.
+            © {currentYear} <span className="notranslate" translate="no">Royyan Collectibles</span>. Hak Cipta Dilindungi.
           </p>
           <p className="font-sans text-xs text-zinc-700 italic">
-            Curated with passion for collectors.
+            Dikurasi dengan penuh semangat untuk para kolektor.
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { ArrowLeft, MessageCircle, ShieldCheck } from 'lucide-react';
 import { getAllCollectibles, getCollectibleBySlug } from '@/lib/data';
 import { PriceDisplay } from '@/components/PriceDisplay';
 
+
 export function generateStaticParams() {
   return getAllCollectibles().map((item) => ({ id: item.slug }));
 }
@@ -96,7 +97,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             <div className="flex items-center gap-3 mb-8 p-4 border border-gold/10 bg-zinc-900/50 rounded-sm">
               <ShieldCheck className="w-5 h-5 text-gold flex-shrink-0" strokeWidth={1.5} />
               <p className="font-sans text-xs text-zinc-400">
-                <span className="text-parchment-200 font-semibold">Authenticity Guaranteed</span> — Item telah melalui proses verifikasi dan kurasi ketat.
+                <span className="text-parchment-200 font-semibold">Keaslian Terjamin</span> — Setiap item telah melewati proses verifikasi dan kurasi yang ketat.
               </p>
             </div>
 
@@ -116,7 +117,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
                   SOLD OUT
                 </span>
                 <span className="font-sans text-sm text-zinc-400 text-center leading-snug">
-                  Produk ini sudah telak tersedia.
+                  Produk ini sudah tidak tersedia.
                 </span>
               </div>
             ) : (
@@ -127,7 +128,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
                 className="inline-flex items-center justify-center gap-3 w-full px-8 py-4 bg-gold text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm hover:bg-gold-light hover:shadow-[0_0_30px_rgba(201,151,43,0.3)] transition-all duration-300"
               >
                 <MessageCircle className="w-5 h-5" />
-                Order via WhatsApp
+                Pesan via WhatsApp
               </a>
             )}
           </div>

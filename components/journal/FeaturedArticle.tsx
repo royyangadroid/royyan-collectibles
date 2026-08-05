@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { Article } from '@/lib/journal';
 
+
 export default function FeaturedArticle({ article }: { article: Article }) {
   return (
     <section className="py-12 md:py-20 border-b border-gold/5">
       <div className="container-vintage">
         <div className="mb-10 flex items-center gap-4">
-          <h2 className="font-serif text-2xl text-parchment-100 tracking-wider">Featured Story</h2>
+          <h2 className="font-serif text-2xl text-parchment-100 tracking-wider">Cerita Utama</h2>
           <div className="h-px bg-gold/20 flex-grow"></div>
         </div>
 
@@ -43,7 +44,7 @@ export default function FeaturedArticle({ article }: { article: Article }) {
                 href={`/journal/${article.slug}`}
                 className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase text-zinc-950 bg-gold hover:bg-gold-light px-6 py-3 rounded-sm transition-all duration-300 font-bold"
               >
-                Read Story
+                Baca Cerita
                 <span className="text-lg leading-none transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </div>
