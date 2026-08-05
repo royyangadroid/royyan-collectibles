@@ -8,6 +8,29 @@ import Link from 'next/link';
 import type { CollectibleItem } from '@/lib/data';
 import AdminPreview from '@/components/AdminPreview';
 
+const CATEGORY_COLORS: Record<string, string> = {
+  'Hot Wheels': 'bg-yellow-900/80 text-yellow-200',
+  'Komik': 'bg-amber-950/80 text-amber-200',
+  'Uang Kuno & Perangko': 'bg-red-900/80 text-red-200',
+  'PlayStation': 'bg-blue-900/80 text-blue-200',
+};
+
+const CONDITION_COLORS: Record<string, string> = {
+  'Mint': 'bg-emerald-900/80 text-emerald-200',
+  'Sealed': 'bg-emerald-900/80 text-emerald-200',
+  'Near Mint': 'bg-teal-900/80 text-teal-200',
+  'Excellent': 'bg-cyan-900/80 text-cyan-200',
+  'Good': 'bg-amber-800/80 text-amber-200',
+  'Fair': 'bg-zinc-700/80 text-zinc-200',
+  'Loose': 'bg-orange-900/80 text-orange-200',
+};
+
+const getCategoryColor = (cat: string) => CATEGORY_COLORS[cat] || 'bg-zinc-800 text-zinc-300';
+const getConditionColor = (cond: string) => {
+  const key = Object.keys(CONDITION_COLORS).find(k => cond.includes(k));
+  return key ? CONDITION_COLORS[key] : 'bg-zinc-800 text-zinc-300';
+};
+
 // ─── Confirm Delete Modal (Portal) ────────────────────────────────────────────
 function ConfirmDeleteModal({
   collectionNumber,
@@ -236,7 +259,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                 <th className="px-5 py-4 font-medium">ID</th>
                 <th className="px-5 py-4 font-medium">Cover</th>
                 <th className="px-5 py-4 font-medium">Title</th>
-                <th className="px-5 py-4 font-medium hidden md:table-cell">Category</th>
+                <th className="px-5 py-4 font-medium hidden md:table-cell">Tags</th>
                 <th className="px-5 py-4 font-medium">Status</th>
                 <th className="px-5 py-4 font-medium text-right">Aksi</th>
               </tr>
@@ -262,9 +285,17 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                     </td>
                     <td className="px-5 py-4 font-medium text-zinc-200 max-w-[180px]">
                       <p className="line-clamp-2 leading-snug">{item.title}</p>
-                      <p className="text-xs text-zinc-600 mt-0.5">{item.condition}</p>
                     </td>
-                    <td className="px-5 py-4 hidden md:table-cell text-zinc-500 text-xs">{item.category}</td>
+                    <td className="px-5 py-4 hidden md:table-cell">
+                      <div className="flex flex-col items-start gap-1">
+                        <span className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider rounded-sm ${getCategoryColor(item.category)}`}>
+                          {item.category}
+                        </span>
+                        <span className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider rounded-sm ${getConditionColor(item.condition)}`}>
+                          {item.condition}
+                        </span>
+                      </div>
+                    </td>
                     <td className="px-5 py-4">
                       {item.status === 'Sold' ? (
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-red-950/60 text-red-400 border border-red-900">
@@ -280,15 +311,6 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                     </td>
                     <td className="px-5 py-4 text-right">
                       <div className="inline-flex items-center gap-1">
-                        {/* Preview */}
-                        <button
-                          onClick={() => setPreviewItem(item)}
-                          className="p-2 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-lg transition"
-                          title="Preview"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-
                         {/* Mark/Undo Sold */}
                         {item.status === 'Available' ? (
                           <button
@@ -313,6 +335,15 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                               : <RotateCcw className="w-4 h-4" />}
                           </button>
                         )}
+
+                        {/* Preview */}
+                        <button
+                          onClick={() => setPreviewItem(item)}
+                          className="p-2 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-lg transition"
+                          title="Preview"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
 
                         {/* Delete */}
                         <button

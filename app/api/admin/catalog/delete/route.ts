@@ -54,8 +54,8 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
     const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
 
     if (!GITHUB_PAT || !GITHUB_OWNER || !GITHUB_REPO) {
-      console.error("Missing GitHub environment variables.");
-      return NextResponse.json({ ok: false, error: 'Server configuration error' }, { status: 500 });
+      console.error(`[Admin API] Missing GitHub env vars. PAT: ${!!GITHUB_PAT}, OWNER: ${!!GITHUB_OWNER}, REPO: ${!!GITHUB_REPO}`);
+      return NextResponse.json({ ok: false, error: 'Server configuration error: Missing GITHUB_PAT, GITHUB_OWNER, or GITHUB_REPO. Add them in Vercel Dashboard.' }, { status: 500 });
     }
 
     const octokit = new Octokit({ auth: GITHUB_PAT });

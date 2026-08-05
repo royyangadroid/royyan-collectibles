@@ -19,10 +19,36 @@ export type PreviewData = {
 export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 'card' | 'detail' }) {
   const isSold = data.status === 'Sold';
   const BADGE_COLORS: Record<string, string> = {
-    'Rare Find': 'bg-red-900/90 text-red-100',
-    'Featured': 'bg-amber-700/90 text-amber-100',
-    'Limited': 'bg-purple-900/90 text-purple-100',
-    'New Arrival': 'bg-emerald-900/90 text-emerald-100',
+    'Rare Find': 'bg-red-800 text-red-100',
+    'Featured': 'bg-amber-700 text-amber-100',
+    'Limited': 'bg-purple-800 text-purple-100',
+    'New Arrival': 'bg-emerald-800 text-emerald-100',
+    'Vintage': 'bg-stone-700 text-stone-100',
+    'Best Seller': 'bg-blue-800 text-blue-100',
+    'Restocked': 'bg-orange-700 text-orange-100',
+  };
+
+  const CATEGORY_COLORS: Record<string, string> = {
+    'Hot Wheels': 'bg-yellow-900/80 text-yellow-200',
+    'Komik': 'bg-amber-950/80 text-amber-200',
+    'Uang Kuno & Perangko': 'bg-red-900/80 text-red-200',
+    'PlayStation': 'bg-blue-900/80 text-blue-200',
+  };
+
+  const CONDITION_COLORS: Record<string, string> = {
+    'Mint': 'bg-emerald-900/80 text-emerald-200',
+    'Sealed': 'bg-emerald-900/80 text-emerald-200',
+    'Near Mint': 'bg-teal-900/80 text-teal-200',
+    'Excellent': 'bg-cyan-900/80 text-cyan-200',
+    'Good': 'bg-amber-800/80 text-amber-200',
+    'Fair': 'bg-zinc-700/80 text-zinc-200',
+    'Loose': 'bg-orange-900/80 text-orange-200',
+  };
+
+  const getCategoryColor = (cat: string) => CATEGORY_COLORS[cat] || 'bg-zinc-800 text-zinc-300';
+  const getConditionColor = (cond: string) => {
+    const key = Object.keys(CONDITION_COLORS).find(k => cond.includes(k));
+    return key ? CONDITION_COLORS[key] : 'bg-zinc-800 text-zinc-300';
   };
 
   const formattedPrice = new Intl.NumberFormat('id-ID', {
@@ -43,7 +69,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
               <img
                 src={data.coverUrl}
                 alt={data.title}
-                className={`object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 ${isSold ? 'brightness-[0.35]' : ''}`}
+                className={`object-contain w-full h-full transition-transform duration-700 group-hover:scale-105 ${isSold ? 'brightness-[0.35]' : ''}`}
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-zinc-600 text-sm">No Image</div>
@@ -90,9 +116,13 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
 
           {/* Content */}
           <div className="p-4 md:p-6">
-            <div className="flex items-center justify-between mb-2 md:mb-3">
-              <span className="font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-gold/70">{data.category || 'Category'}</span>
-              <span className="font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-zinc-500">{data.condition || 'Condition'}</span>
+            <div className="flex items-center justify-between mb-2 md:mb-3 gap-2">
+              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.1em] uppercase px-2 py-0.5 rounded-sm ${getCategoryColor(data.category)}`}>
+                {data.category || 'Category'}
+              </span>
+              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.1em] uppercase px-2 py-0.5 rounded-sm ${getConditionColor(data.condition)}`}>
+                {data.condition || 'Condition'}
+              </span>
             </div>
             <h3 className="font-serif font-semibold text-parchment-100 text-sm md:text-base mb-2 line-clamp-2 leading-snug group-hover:text-gold transition-colors duration-300">
               {data.title || 'Product Title'}
@@ -106,7 +136,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                     SOLD OUT
                   </span>
                   <span className="font-sans text-[9px] md:text-[10px] text-zinc-500 text-center leading-snug">
-                    Produk ini sudah telak tersedia.
+                    Produk ini sudah tidak tersedia.
                   </span>
                 </div>
               </div>
@@ -138,7 +168,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
             <img
               src={data.coverUrl}
               alt={data.title}
-              className={`object-cover w-full h-full ${isSold ? 'brightness-[0.35]' : ''}`}
+              className={`object-contain w-full h-full ${isSold ? 'brightness-[0.35]' : ''}`}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-zinc-600">No Image Selected</div>
@@ -174,13 +204,22 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
 
         {/* Details */}
         <div className="flex flex-col justify-center">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-gold/70 border border-gold/20 px-3 py-1 rounded-sm">{data.category || 'Category'}</span>
-            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-zinc-500">{data.condition || 'Condition'}</span>
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            <span className={`font-sans text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm ${getCategoryColor(data.category)}`}>
+              {data.category || 'Category'}
+            </span>
+            <span className={`font-sans text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm ${getConditionColor(data.condition)}`}>
+              {data.condition || 'Condition'}
+            </span>
+            {data.tags?.map((tag, idx) => (
+              <span key={idx} className="font-sans text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm bg-zinc-800 text-zinc-300">
+                {tag}
+              </span>
+            ))}
           </div>
 
           {data.badge && !isSold && (
-            <span className="inline-block w-fit px-3 py-1 text-[10px] font-sans font-bold tracking-[0.15em] uppercase bg-red-900/60 text-red-200 rounded-sm mb-4">
+            <span className={`inline-block w-fit px-3 py-1 text-[10px] font-sans font-bold tracking-[0.15em] uppercase rounded-sm mb-4 ${BADGE_COLORS[data.badge] ?? 'bg-zinc-800 text-zinc-200'}`}>
               {data.badge}
             </span>
           )}
