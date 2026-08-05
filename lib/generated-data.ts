@@ -470,5 +470,18 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-036/cover.png",
     "description": "Hot Wheels Dodge Charger SRT 8 dengan tampilan berwarna hitam dan grafis biru yang agresif, menghadirkan karakter khas muscle car Amerika. Salah satu collectible item yang semakin sulit ditemukan dan cocok untuk melengkapi koleksi, display, maupun investasi diecast."
+  },
+  {
+    "id": "ryc-037",
+    "slug": "RC-037",
+    "collectionNumber": "RC-037",
+    "title": "'55 Nomad - Heat Fleet",
+    "price": 125000,
+    "category": "Hot Wheels",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-037/cover.jpg",
+    "description": "Hot Wheels '55 Nomad dari seri Heat Fleet yang menghadirkan Chevrolet Nomad 1955 dengan balutan warna oranye dan grafis flame khas seri Heat Fleet. Masih dalam blister dan card original sehingga cocok untuk koleksi, display, maupun investasi diecast. Salah satu casting klasik yang semakin diminati oleh kolektor Hot Wheels."
   }
 ];
