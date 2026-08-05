@@ -37,9 +37,8 @@ const quickLinks = [
 ];
 
 const menuVariants = {
-  hidden: { opacity: 0, y: -12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.18, ease: 'easeIn' as const } },
+  hidden: { opacity: 0, y: -12, pointerEvents: 'none' as const },
+  visible: { opacity: 1, y: 0, pointerEvents: 'auto' as const, transition: { duration: 0.25, ease: 'easeOut' as const } },
 };
 
 const itemVariants = {
@@ -55,15 +54,13 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
   const latestArticles = DUMMY_ARTICLES.slice(0, 2);
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          variants={menuVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[calc(100vw-2rem)] z-40"
-        >
+    <motion.div
+      variants={menuVariants}
+      initial="hidden"
+      animate={isOpen ? "visible" : "hidden"}
+      className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[calc(100vw-2rem)] z-40"
+      aria-hidden={!isOpen}
+    >
           {/* Top connector line */}
           <div className="h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
@@ -198,7 +195,5 @@ export default function JournalMegaMenu({ isOpen }: JournalMegaMenuProps) {
             </div>
           </div>
         </motion.div>
-      )}
-    </AnimatePresence>
   );
 }

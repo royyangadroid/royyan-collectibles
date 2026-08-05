@@ -53,9 +53,8 @@ function getCategoryCount(name: string) {
 const featured = collectibles.find((c) => c.slug === 'RC-007') ?? collectibles[0];
 
 const menuVariants = {
-  hidden: { opacity: 0, y: -12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.18, ease: 'easeIn' as const } },
+  hidden: { opacity: 0, y: -12, pointerEvents: 'none' as const },
+  visible: { opacity: 1, y: 0, pointerEvents: 'auto' as const, transition: { duration: 0.25, ease: 'easeOut' as const } },
 };
 
 const itemVariants = {
@@ -69,15 +68,13 @@ const itemVariants = {
 
 export default function CatalogMegaMenu({ isOpen }: CatalogMegaMenuProps) {
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          variants={menuVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[calc(100vw-2rem)] z-40"
-        >
+    <motion.div
+      variants={menuVariants}
+      initial="hidden"
+      animate={isOpen ? "visible" : "hidden"}
+      className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[calc(100vw-2rem)] z-40"
+      aria-hidden={!isOpen}
+    >
           {/* Top connector line */}
           <div className="h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
@@ -179,7 +176,5 @@ export default function CatalogMegaMenu({ isOpen }: CatalogMegaMenuProps) {
             </div>
           </div>
         </motion.div>
-      )}
-    </AnimatePresence>
   );
 }

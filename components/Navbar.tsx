@@ -99,14 +99,26 @@ export default function Navbar() {
 
   // ── Language ─────────────────────────────────────────────────────────────────
   const ubahBahasa = (kodeBahasa: string) => {
+    // 1. Set cookie ke mode auto ke bahasa target
     if (kodeBahasa === 'id') {
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     } else {
-      document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/; domain=" + window.location.hostname;
-      document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/;";
+      document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/; domain=" + window.location.hostname;
+      document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/;";
     }
-    window.location.reload();
+
+    // 2. Trigger perpindahan instan via elemen asli Google Translate tanpa reload
+    const googleSelect = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+    if (googleSelect) {
+      googleSelect.value = kodeBahasa === 'id' ? '' : kodeBahasa;
+      googleSelect.dispatchEvent(new Event('change'));
+      // Update state bahasa agar icon bendera langsung berubah
+      setLocale(kodeBahasa);
+    } else {
+      // Fallback jika widget asli belum siap
+      window.location.reload();
+    }
   };
 
   const flagCode = (lang: string) =>

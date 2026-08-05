@@ -99,7 +99,7 @@ export default async function RootLayout({
           {`
             function googleTranslateElementInit() {
               new window.google.translate.TranslateElement({
-                  pageLanguage: 'en', // Biarkan auto-detect dengan base en
+                  pageLanguage: 'id', // Wajib diset 'id' agar frase/kata pendek bahasa Indonesia berhasil diterjemahkan
                   autoDisplay: false,
                   includedLanguages: 'id,en,zh-CN,ko,ar,fr,es,it,ja'
               }, 'google_translate_element');
