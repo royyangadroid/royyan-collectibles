@@ -101,23 +101,35 @@ export default function Navbar() {
   const ubahBahasa = (kodeBahasa: string) => {
     // 1. Set cookie ke mode auto ke bahasa target
     if (kodeBahasa === 'id') {
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+      // Hapus cookie di semua level domain secara agresif
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`;
     } else {
       document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/; domain=" + window.location.hostname;
       document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/;";
     }
 
+    setLocale(kodeBahasa);
+
     // 2. Trigger perpindahan instan via elemen asli Google Translate tanpa reload
     const googleSelect = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
     if (googleSelect) {
       googleSelect.value = kodeBahasa === 'id' ? '' : kodeBahasa;
-      googleSelect.dispatchEvent(new Event('change'));
-      // Update state bahasa agar icon bendera langsung berubah
-      setLocale(kodeBahasa);
-    } else {
-      // Fallback jika widget asli belum siap
-      window.location.reload();
+      googleSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    // 3. Fallback khusus untuk kembali ke bahasa asli (ID) tanpa reload
+    if (kodeBahasa === 'id') {
+      try {
+        const iframe = document.querySelector('iframe.goog-te-banner-frame') as HTMLIFrameElement;
+        if (iframe && iframe.contentDocument) {
+          const restoreBtn = iframe.contentDocument.getElementById('restore');
+          if (restoreBtn) restoreBtn.click();
+        }
+      } catch (e) {
+        // Abaikan error cross-origin jika ada
+      }
     }
   };
 

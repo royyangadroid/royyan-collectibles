@@ -92,7 +92,7 @@ export default async function RootLayout({
         </SettingsProvider>
 
         {/* 1. Elemen tersembunyi untuk inisialisasi Google Translate */}
-        <div id="google_translate_element" style={{ display: 'none' }}></div>
+        <div id="google_translate_element"></div>
 
         {/* 2. Script utama Google Translate */}
         <Script id="google-translate-init" strategy="afterInteractive">

@@ -370,7 +370,10 @@ body {
 
 /* 5. SEMBUNYIKAN WIDGET ASLI */
 #google_translate_element {
-    display: none !important;
+    position: absolute !important;
+    opacity: 0 !important;
+    z-index: -9999 !important;
+    pointer-events: none !important;
 }
 
 @media print {
