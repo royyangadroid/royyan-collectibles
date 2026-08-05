@@ -166,19 +166,49 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
     setTimeout(() => setToastMsg(null), 4000);
   };
 
-  const filtered = items.filter((item) => {
-    const q = searchQuery.toLowerCase();
-    return (
-      !q ||
-      item.collectionNumber.toLowerCase().includes(q) ||
-      item.title.toLowerCase().includes(q) ||
-      item.category.toLowerCase().includes(q)
-    );
-  });
+  const filtered = items
+    .filter((item) => {
+      const q = searchQuery.toLowerCase();
+      return (
+        !q ||
+        item.collectionNumber.toLowerCase().includes(q) ||
+        item.title.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q)
+      );
+    })
+    .sort((a, b) => {
+      // 1. Sort "Available" items above "Sold" items
+      if (a.status === 'Available' && b.status === 'Sold') return -1;
+      if (a.status === 'Sold' && b.status === 'Available') return 1;
+      
+      // 2. If same status, sort by collectionNumber (descending so newer items are top)
+      return b.collectionNumber.localeCompare(a.collectionNumber, undefined, { numeric: true });
+    });
 
   const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string) => {
     setLoadingAction(`${action}-${collectionNumber}`);
     setDeleteTarget(null);
+
+    // 1. TRUE OPTIMISTIC UI: Save previous state for rollback
+    const previousItems = [...items];
+
+    // 2. Apply optimistic updates immediately
+    if (action === 'delete') {
+      setItems((prev) => prev.filter((item) => item.collectionNumber !== collectionNumber));
+      setPreviewItem((p) => (p?.collectionNumber === collectionNumber ? null : p));
+    } else if (action === 'mark-sold') {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const } : item
+        )
+      );
+    } else if (action === 'undo-sold') {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.collectionNumber === collectionNumber ? { ...item, status: 'Available' as const } : item
+        )
+      );
+    }
 
     try {
       const method = action === 'delete' ? 'DELETE' : 'PUT';
@@ -191,29 +221,16 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');
 
-      // Optimistic UI update
-      if (action === 'delete') {
-        setItems((prev) => prev.filter((item) => item.collectionNumber !== collectionNumber));
-        // also close preview if this item was being previewed
-        setPreviewItem((p) => (p?.collectionNumber === collectionNumber ? null : p));
-      } else if (action === 'mark-sold') {
-        setItems((prev) =>
-          prev.map((item) =>
-            item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const } : item
-          )
-        );
-      } else if (action === 'undo-sold') {
-        setItems((prev) =>
-          prev.map((item) =>
-            item.collectionNumber === collectionNumber ? { ...item, status: 'Available' as const } : item
-          )
-        );
-      }
-
-      showToast(true, data.message || 'Berhasil!');
-      router.refresh();
+      // 3. Confirm success
+      showToast(true, 'Perubahan berhasil disinkronkan ke GitHub!');
+      
+      // Note: We intentionally DO NOT call router.refresh() here. 
+      // Vercel takes ~1 min to rebuild the static JSON data. 
+      // Calling refresh() now would fetch the OLD data and undo our optimistic UI.
     } catch (err: any) {
-      showToast(false, `Error: ${err.message}`);
+      // 4. ROLLBACK ON FAILURE
+      setItems(previousItems);
+      showToast(false, `Gagal: ${err.message}. Status dikembalikan.`);
     } finally {
       setLoadingAction(null);
     }

@@ -1,26 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { verifyAdminJWT, ADMIN_COOKIE_NAME } from '@/lib/auth';
 import { Octokit } from '@octokit/rest';
-import { exec } from 'child_process';
-import path from 'path';
-import { promisify } from 'util';
-
-export const runtime = 'nodejs';
-
-const execAsync = promisify(exec);
-
-async function runSync() {
-  try {
-    console.log('[sync] Pulling latest changes from GitHub...');
-    await execAsync('git pull', { cwd: process.cwd() });
-    
-    console.log('[sync] Running sync-data.js...');
-    const scriptPath = path.join(process.cwd(), 'scripts', 'sync-data.js');
-    await execAsync(`node "${scriptPath}"`, { cwd: process.cwd() });
-  } catch (e: any) {
-    console.error('[sync] Failed:', e.message);
-  }
-}
 
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
@@ -109,7 +89,6 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       sha: newCommit.data.sha,
     });
 
-    await runSync();
     return NextResponse.json({ ok: true, message: `Successfully deleted ${collectionNumber}` });
 
   } catch (error: any) {

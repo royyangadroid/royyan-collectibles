@@ -96,23 +96,13 @@ export default function UploadClient({
         throw new Error(data.error || 'Failed to upload catalog');
       }
 
-      setSuccess(`Katalog ${currentCollectionNumber} berhasil diunggah dan di-push ke GitHub!`);
+      setSuccess(`Katalog ${currentCollectionNumber} berhasil diunggah! Mengalihkan ke halaman Manage...`);
       form.reset();
-      setPreviewData({
-        collectionNumber: nextNumber, // Assume the next number doesn't immediately refresh on client, but the form resets
-        title: '',
-        price: 0,
-        category: 'Hot Wheels',
-        condition: 'Mint',
-        badge: '',
-        tags: [],
-        description: '',
-        featured: false,
-        coverUrl: null,
-        status: 'Available',
-      });
-      // Optionally refresh to get the new nextNumber
-      router.refresh();
+      
+      // Redirect to manage page after 2 seconds so they can see the item (after build)
+      setTimeout(() => {
+        router.push('/rcpanel7x/manage');
+      }, 2000);
     } catch (err: any) {
       setError(err.message);
     } finally {

@@ -1,27 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { verifyAdminJWT, ADMIN_COOKIE_NAME } from '@/lib/auth';
 import { Octokit } from '@octokit/rest';
-import { exec } from 'child_process';
-import path from 'path';
-import { promisify } from 'util';
-
-export const runtime = 'nodejs';
-
-const execAsync = promisify(exec);
-
-async function runSync() {
-  try {
-    console.log('[sync] Pulling latest changes from GitHub...');
-    await execAsync('git pull', { cwd: process.cwd() });
-    
-    console.log('[sync] Running sync-data.js...');
-    const scriptPath = path.join(process.cwd(), 'scripts', 'sync-data.js');
-    await execAsync(`node "${scriptPath}"`, { cwd: process.cwd() });
-    console.log('[sync] generated-data.ts regenerated.');
-  } catch (e: any) {
-    console.error('[sync] Failed to run sync-data.js:', e.message);
-  }
-}
 
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
@@ -101,14 +80,14 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     }
 
     // 5. Update data
-    if (!soldArray.includes(collectionNumber)) {
+    const alreadySoldInArray = soldArray.includes(collectionNumber);
+    if (!alreadySoldInArray) {
       soldArray.push(collectionNumber);
     }
     
     // Check if it's already sold to prevent unnecessary commits
-    if (dataObj.status === 'Sold' && soldArray.includes(collectionNumber)) {
-        // Technically it might have just been added to soldArray, but let's just proceed
-        // if both were already set, we could skip commit.
+    if (dataObj.status === 'Sold' && alreadySoldInArray) {
+        return NextResponse.json({ ok: true, message: `${collectionNumber} is already marked as Sold` });
     }
 
     dataObj.status = 'Sold';
@@ -185,8 +164,6 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       ref: `heads/${GITHUB_BRANCH}`,
       sha: newCommit.data.sha,
     });
-
-    await runSync();
 
     return NextResponse.json({ ok: true, message: `Successfully marked ${collectionNumber} as Sold` });
 
