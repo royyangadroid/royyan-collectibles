@@ -11,6 +11,10 @@ const execAsync = promisify(exec);
 
 async function runSync() {
   try {
+    console.log('[sync] Pulling latest changes from GitHub...');
+    await execAsync('git pull', { cwd: process.cwd() });
+    
+    console.log('[sync] Running sync-data.js...');
     const scriptPath = path.join(process.cwd(), 'scripts', 'sync-data.js');
     await execAsync(`node "${scriptPath}"`, { cwd: process.cwd() });
     console.log('[sync] generated-data.ts regenerated.');
