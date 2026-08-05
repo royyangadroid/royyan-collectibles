@@ -41,6 +41,7 @@ export default function Navbar() {
   const [locale, setLocale] = useState('id');
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown]         = useState(false);
+  const [isTranslating, setIsTranslating]               = useState(false);
 
   const currencyDropdownRef = useRef<HTMLDivElement>(null);
   const langDropdownRef     = useRef<HTMLDivElement>(null);
@@ -99,38 +100,41 @@ export default function Navbar() {
 
   // ── Language ─────────────────────────────────────────────────────────────────
   const ubahBahasa = (kodeBahasa: string) => {
-    // 1. Set cookie ke mode auto ke bahasa target
-    if (kodeBahasa === 'id') {
-      // Hapus cookie di semua level domain secara agresif
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`;
-    } else {
-      document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/; domain=" + window.location.hostname;
-      document.cookie = "googtrans=/id/" + kodeBahasa + "; path=/;";
-    }
-
-    setLocale(kodeBahasa);
-
-    // 2. Trigger perpindahan instan via elemen asli Google Translate tanpa reload
-    const googleSelect = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
-    if (googleSelect) {
-      googleSelect.value = kodeBahasa === 'id' ? '' : kodeBahasa;
-      googleSelect.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-
-    // 3. Fallback khusus untuk kembali ke bahasa asli (ID) tanpa reload
-    if (kodeBahasa === 'id') {
-      try {
-        const iframe = document.querySelector('iframe.goog-te-banner-frame') as HTMLIFrameElement;
-        if (iframe && iframe.contentDocument) {
-          const restoreBtn = iframe.contentDocument.getElementById('restore');
-          if (restoreBtn) restoreBtn.click();
+    setIsTranslating(true);
+    
+    // Beri waktu bagi React untuk merender UI loading terlebih dahulu
+    setTimeout(() => {
+      const domain = window.location.hostname;
+      
+      if (kodeBahasa === 'id') {
+        // HAPUS COOKIE DI SEMUA VARIASI DOMAIN UNTUK RESET TOTAL KE BAHASA ASLI
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + domain;
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + domain;
+        window.location.reload();
+      } else {
+        // TIMPA COOKIE DI SEMUA VARIASI DOMAIN UNTUK TRANSLATE INSTAN
+        document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/;";
+        document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/; domain=" + domain;
+        document.cookie = "googtrans=/auto/" + kodeBahasa + "; path=/; domain=." + domain;
+        
+        setLocale(kodeBahasa);
+        
+        // Trigger perpindahan instan via elemen asli Google Translate tanpa reload
+        const googleSelect = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+        if (googleSelect) {
+          googleSelect.value = kodeBahasa;
+          googleSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+          window.location.reload();
         }
-      } catch (e) {
-        // Abaikan error cross-origin jika ada
+        
+        // Sembunyikan loading setelah delay (memberikan waktu Google Translate untuk fetch & replace DOM)
+        setTimeout(() => {
+          setIsTranslating(false);
+        }, 1000);
       }
-    }
+    }, 50);
   };
 
   const flagCode = (lang: string) =>
@@ -142,6 +146,16 @@ export default function Navbar() {
     <>
       {/* ── Overlay ──────────────────────────────────────────────────────────── */}
       <MegaMenuOverlay isOpen={activeMega !== null} onClose={closeMega} />
+
+      {/* Language Transition Overlay */}
+      {isTranslating && (
+        <div className="fixed inset-0 z-[9999] bg-zinc-950 flex flex-col items-center justify-center transition-opacity duration-300">
+          <div className="w-10 h-10 border-2 border-gold/20 border-t-gold rounded-full animate-spin"></div>
+          <p className="mt-4 text-gold font-serif text-sm tracking-widest uppercase animate-pulse">
+            Mengganti Bahasa...
+          </p>
+        </div>
+      )}
 
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <header
