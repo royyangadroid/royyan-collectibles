@@ -115,6 +115,10 @@ export default function AdminPage() {
               <span>Upload New Catalog</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <Link href="/rcpanel7x/mark-sold" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
+              <span>Mark Item as Sold</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
             <Link href="/rcpanel7x/manage" className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-zinc-300 transition hover:border-gold/40 hover:text-gold">
               <span>Manage Inventory</span>
               <ArrowRight className="h-4 w-4" />

@@ -1,8 +1,22 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { verifyAdminJWT, ADMIN_COOKIE_NAME } from '@/lib/auth';
 import { Octokit } from '@octokit/rest';
+import { exec } from 'child_process';
+import path from 'path';
+import { promisify } from 'util';
 
 export const runtime = 'nodejs';
+
+const execAsync = promisify(exec);
+
+async function runSync() {
+  try {
+    const scriptPath = path.join(process.cwd(), 'scripts', 'sync-data.js');
+    await execAsync(`node "${scriptPath}"`, { cwd: process.cwd() });
+  } catch (e: any) {
+    console.error('[sync] Failed:', e.message);
+  }
+}
 
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
@@ -164,6 +178,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       sha: newCommit.data.sha,
     });
 
+    await runSync();
     return NextResponse.json({ ok: true, message: `Successfully reverted ${collectionNumber} to Available` });
 
   } catch (error: any) {

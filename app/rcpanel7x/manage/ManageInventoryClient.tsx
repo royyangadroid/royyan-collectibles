@@ -1,192 +1,366 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Trash2, RotateCcw, CheckCircle2, Eye, Loader2, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ArrowLeft, Trash2, RotateCcw, CheckCircle2, Eye, Loader2, X, AlertTriangle, Search } from 'lucide-react';
 import Link from 'next/link';
 import type { CollectibleItem } from '@/lib/data';
 import AdminPreview from '@/components/AdminPreview';
 
+// ─── Confirm Delete Modal (Portal) ────────────────────────────────────────────
+function ConfirmDeleteModal({
+  collectionNumber,
+  title,
+  onConfirm,
+  onCancel,
+}: {
+  collectionNumber: string;
+  title: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-2xl">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex-shrink-0 p-2.5 rounded-full bg-red-950/60 border border-red-900">
+            <AlertTriangle className="w-5 h-5 text-red-400" />
+          </div>
+          <h3 className="text-lg font-serif font-semibold text-parchment-100">Hapus Produk?</h3>
+        </div>
+        <p className="text-sm text-zinc-400 mb-2">
+          Anda akan menghapus folder produk berikut dari repositori GitHub secara <span className="text-red-400 font-semibold">permanen</span>:
+        </p>
+        <div className="my-4 p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-sm">
+          <span className="text-zinc-500 font-mono">{collectionNumber}</span>
+          <span className="mx-2 text-zinc-700">—</span>
+          <span className="text-zinc-300">{title}</span>
+        </div>
+        <p className="text-xs text-amber-500/80 mb-6">
+          Tindakan ini tidak dapat dibatalkan. File <code>data.json</code> dan <code>cover.jpg</code> akan dihapus dari Git tree.
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={onCancel}
+            className="flex-1 px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-300 hover:border-zinc-500 hover:text-white transition"
+          >
+            Batal
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 px-4 py-2.5 rounded-lg bg-red-700 hover:bg-red-600 text-sm font-semibold text-white transition"
+          >
+            Ya, Hapus Permanen
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+// ─── Preview Modal (Portal) ────────────────────────────────────────────────────
+function PreviewModal({
+  item,
+  onClose,
+}: {
+  item: CollectibleItem;
+  onClose: () => void;
+}) {
+  const [mode, setMode] = useState<'card' | 'detail'>('card');
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-start justify-center overflow-y-auto bg-black/80 backdrop-blur-sm py-8 px-4"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="relative w-full max-w-5xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl">
+        {/* Header */}
+        <div className="sticky top-0 z-10 flex items-center justify-between p-4 border-b border-zinc-800 bg-zinc-900 rounded-t-2xl">
+          <h2 className="text-base font-serif font-semibold text-parchment-100">
+            Preview: <span className="font-mono text-gold">{item.collectionNumber}</span>
+          </h2>
+          <div className="flex items-center gap-3">
+            <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
+              <button
+                onClick={() => setMode('card')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${mode === 'card' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
+              >
+                Card
+              </button>
+              <button
+                onClick={() => setMode('detail')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${mode === 'detail' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
+              >
+                Detail
+              </button>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-full transition"
+              title="Tutup (Esc)"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <AdminPreview
+            data={{ ...item, coverUrl: item.image }}
+            mode={mode}
+          />
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+// ─── Main Component ─────────────────────────────────────────────────────────────
 export default function ManageInventoryClient({ initialItems }: { initialItems: CollectibleItem[] }) {
   const router = useRouter();
   const [items, setItems] = useState(initialItems);
   const [loadingAction, setLoadingAction] = useState<string | null>(null);
-  
-  // Preview Modal State
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Modal states
   const [previewItem, setPreviewItem] = useState<CollectibleItem | null>(null);
-  const [previewMode, setPreviewMode] = useState<'card' | 'detail'>('card');
+  const [deleteTarget, setDeleteTarget] = useState<CollectibleItem | null>(null);
+  const [toastMsg, setToastMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const showToast = (ok: boolean, text: string) => {
+    setToastMsg({ ok, text });
+    setTimeout(() => setToastMsg(null), 4000);
+  };
+
+  const filtered = items.filter((item) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      !q ||
+      item.collectionNumber.toLowerCase().includes(q) ||
+      item.title.toLowerCase().includes(q) ||
+      item.category.toLowerCase().includes(q)
+    );
+  });
 
   const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string) => {
-    if (action === 'delete') {
-      const confirmDelete = window.confirm(`WARNING! Anda yakin ingin menghapus folder produk ${collectionNumber} secara permanen dari GitHub? Ini tidak bisa dibatalkan.`);
-      if (!confirmDelete) return;
-    } else {
-      const confirmAction = window.confirm(`Lanjutkan dengan aksi ${action} untuk ${collectionNumber}?`);
-      if (!confirmAction) return;
-    }
-
     setLoadingAction(`${action}-${collectionNumber}`);
-    
+    setDeleteTarget(null);
+
     try {
       const method = action === 'delete' ? 'DELETE' : 'PUT';
       const res = await fetch(`/api/admin/catalog/${action}`, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ collectionNumber })
+        body: JSON.stringify({ collectionNumber }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');
 
-      alert(data.message);
-
       // Optimistic UI update
       if (action === 'delete') {
-        setItems(items.filter(item => item.collectionNumber !== collectionNumber));
+        setItems((prev) => prev.filter((item) => item.collectionNumber !== collectionNumber));
+        // also close preview if this item was being previewed
+        setPreviewItem((p) => (p?.collectionNumber === collectionNumber ? null : p));
       } else if (action === 'mark-sold') {
-        setItems(items.map(item => item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' } : item));
+        setItems((prev) =>
+          prev.map((item) =>
+            item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const } : item
+          )
+        );
       } else if (action === 'undo-sold') {
-        setItems(items.map(item => item.collectionNumber === collectionNumber ? { ...item, status: 'Available' } : item));
+        setItems((prev) =>
+          prev.map((item) =>
+            item.collectionNumber === collectionNumber ? { ...item, status: 'Available' as const } : item
+          )
+        );
       }
-      
+
+      showToast(true, data.message || 'Berhasil!');
       router.refresh();
     } catch (err: any) {
-      alert(`Error: ${err.message}`);
+      showToast(false, `Error: ${err.message}`);
     } finally {
       setLoadingAction(null);
     }
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8 relative">
+    <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
         Kembali ke Dashboard
       </Link>
 
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 overflow-hidden">
-        <h1 className="font-serif text-2xl font-semibold text-parchment-100">Manage Inventory</h1>
-        <p className="mt-2 text-sm text-zinc-400 mb-8">
-          Daftar seluruh item yang tersimpan di repositori. 
-          <span className="block mt-1 text-xs text-amber-500/80">
-            Catatan: Perubahan status dan hapus item di sini akan langsung di-push ke GitHub. Lakukan 'git pull' di lokal Anda untuk sinkronisasi file.
-          </span>
-        </p>
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <h1 className="font-serif text-2xl font-semibold text-parchment-100">Manage Inventory</h1>
+            <p className="mt-1 text-sm text-zinc-400">
+              {items.length} item total · {items.filter(i => i.status === 'Available').length} tersedia · {items.filter(i => i.status === 'Sold').length} terjual
+            </p>
+          </div>
+          {/* Search */}
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <input
+              type="text"
+              placeholder="Cari item..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 pl-10 pr-4 py-2 text-sm text-parchment-100 placeholder:text-zinc-600 focus:border-gold focus:outline-none transition"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl border border-zinc-800">
           <table className="w-full text-left text-sm text-zinc-400">
             <thead className="text-xs uppercase text-zinc-500 border-b border-zinc-800 bg-zinc-950/50">
               <tr>
-                <th scope="col" className="px-6 py-4 font-medium">ID</th>
-                <th scope="col" className="px-6 py-4 font-medium">Image</th>
-                <th scope="col" className="px-6 py-4 font-medium">Title</th>
-                <th scope="col" className="px-6 py-4 font-medium">Category</th>
-                <th scope="col" className="px-6 py-4 font-medium">Status</th>
-                <th scope="col" className="px-6 py-4 font-medium text-right">Actions</th>
+                <th className="px-5 py-4 font-medium">ID</th>
+                <th className="px-5 py-4 font-medium">Cover</th>
+                <th className="px-5 py-4 font-medium">Title</th>
+                <th className="px-5 py-4 font-medium hidden md:table-cell">Category</th>
+                <th className="px-5 py-4 font-medium">Status</th>
+                <th className="px-5 py-4 font-medium text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id} className="border-b border-zinc-800 hover:bg-zinc-800/30 transition-colors">
-                  <td className="px-6 py-4 font-mono text-zinc-300">{item.collectionNumber}</td>
-                  <td className="px-6 py-4">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={item.image} alt={item.title} className="w-12 h-12 object-cover rounded-md border border-zinc-700" />
-                  </td>
-                  <td className="px-6 py-4 font-medium text-zinc-200 line-clamp-2 max-w-[200px]">{item.title}</td>
-                  <td className="px-6 py-4">{item.category}</td>
-                  <td className="px-6 py-4">
-                    {item.status === 'Sold' ? (
-                      <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-red-950/60 text-red-400 border border-red-900">Sold Out</span>
-                    ) : (
-                      <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-900">Available</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
-                    <button 
-                      onClick={() => setPreviewItem(item)}
-                      className="p-2 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-md transition"
-                      title="Live Preview"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </button>
-                    
-                    {item.status === 'Available' ? (
-                      <button 
-                        onClick={() => handleAction('mark-sold', item.collectionNumber)}
-                        disabled={loadingAction === `mark-sold-${item.collectionNumber}`}
-                        className="p-2 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-950/30 rounded-md transition disabled:opacity-50"
-                        title="Mark as Sold"
-                      >
-                        {loadingAction === `mark-sold-${item.collectionNumber}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-                      </button>
-                    ) : (
-                      <button 
-                        onClick={() => handleAction('undo-sold', item.collectionNumber)}
-                        disabled={loadingAction === `undo-sold-${item.collectionNumber}`}
-                        className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-950/30 rounded-md transition disabled:opacity-50"
-                        title="Undo Sold"
-                      >
-                        {loadingAction === `undo-sold-${item.collectionNumber}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <RotateCcw className="w-4 h-4" />}
-                      </button>
-                    )}
-
-                    <button 
-                      onClick={() => handleAction('delete', item.collectionNumber)}
-                      disabled={loadingAction === `delete-${item.collectionNumber}`}
-                      className="p-2 text-zinc-400 hover:text-red-400 hover:bg-red-950/30 rounded-md transition disabled:opacity-50"
-                      title="Delete from GitHub"
-                    >
-                      {loadingAction === `delete-${item.collectionNumber}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                    </button>
+            <tbody className="divide-y divide-zinc-800/60">
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center text-zinc-600 text-sm">
+                    Tidak ada item ditemukan
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filtered.map((item) => (
+                  <tr key={item.id} className="hover:bg-zinc-800/30 transition-colors">
+                    <td className="px-5 py-4 font-mono text-xs text-zinc-400 whitespace-nowrap">{item.collectionNumber}</td>
+                    <td className="px-5 py-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-11 h-11 object-cover rounded-lg border border-zinc-700"
+                      />
+                    </td>
+                    <td className="px-5 py-4 font-medium text-zinc-200 max-w-[180px]">
+                      <p className="line-clamp-2 leading-snug">{item.title}</p>
+                      <p className="text-xs text-zinc-600 mt-0.5">{item.condition}</p>
+                    </td>
+                    <td className="px-5 py-4 hidden md:table-cell text-zinc-500 text-xs">{item.category}</td>
+                    <td className="px-5 py-4">
+                      {item.status === 'Sold' ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-red-950/60 text-red-400 border border-red-900">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                          Sold
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-900">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                          Available
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="inline-flex items-center gap-1">
+                        {/* Preview */}
+                        <button
+                          onClick={() => setPreviewItem(item)}
+                          className="p-2 text-zinc-400 hover:text-gold hover:bg-zinc-800 rounded-lg transition"
+                          title="Preview"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+
+                        {/* Mark/Undo Sold */}
+                        {item.status === 'Available' ? (
+                          <button
+                            onClick={() => handleAction('mark-sold', item.collectionNumber)}
+                            disabled={!!loadingAction}
+                            className="p-2 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-950/30 rounded-lg transition disabled:opacity-40"
+                            title="Mark as Sold"
+                          >
+                            {loadingAction === `mark-sold-${item.collectionNumber}`
+                              ? <Loader2 className="w-4 h-4 animate-spin" />
+                              : <CheckCircle2 className="w-4 h-4" />}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleAction('undo-sold', item.collectionNumber)}
+                            disabled={!!loadingAction}
+                            className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-950/30 rounded-lg transition disabled:opacity-40"
+                            title="Undo Sold"
+                          >
+                            {loadingAction === `undo-sold-${item.collectionNumber}`
+                              ? <Loader2 className="w-4 h-4 animate-spin" />
+                              : <RotateCcw className="w-4 h-4" />}
+                          </button>
+                        )}
+
+                        {/* Delete */}
+                        <button
+                          onClick={() => setDeleteTarget(item)}
+                          disabled={!!loadingAction}
+                          className="p-2 text-zinc-400 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition disabled:opacity-40"
+                          title="Hapus dari GitHub"
+                        >
+                          {loadingAction === `delete-${item.collectionNumber}`
+                            ? <Loader2 className="w-4 h-4 animate-spin" />
+                            : <Trash2 className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Preview Modal */}
-      {previewItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-6xl max-h-[90vh] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-y-auto custom-scrollbar p-6 shadow-2xl flex flex-col">
-            
-            <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-800">
-              <h2 className="text-xl font-serif font-semibold text-parchment-100">Live Preview: {previewItem.collectionNumber}</h2>
-              <div className="flex items-center gap-4">
-                <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
-                  <button 
-                    onClick={() => setPreviewMode('card')}
-                    className={`px-4 py-2 text-xs font-medium rounded-md transition-colors ${previewMode === 'card' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
-                  >
-                    Card View
-                  </button>
-                  <button 
-                    onClick={() => setPreviewMode('detail')}
-                    className={`px-4 py-2 text-xs font-medium rounded-md transition-colors ${previewMode === 'detail' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
-                  >
-                    Detail View
-                  </button>
-                </div>
-                <button onClick={() => setPreviewItem(null)} className="p-2 text-zinc-400 hover:text-white bg-zinc-800 rounded-full">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto">
-              <AdminPreview 
-                data={{
-                  ...previewItem,
-                  coverUrl: previewItem.image,
-                }} 
-                mode={previewMode} 
-              />
-            </div>
-            
-          </div>
+      {/* ── Toast Notification ──────────────────────────── */}
+      {toastMsg && (
+        <div
+          className={`fixed bottom-6 right-6 z-[9999] max-w-sm px-4 py-3 rounded-xl border shadow-2xl text-sm font-medium transition-all ${
+            toastMsg.ok
+              ? 'bg-emerald-950 border-emerald-800 text-emerald-200'
+              : 'bg-red-950 border-red-800 text-red-200'
+          }`}
+        >
+          {toastMsg.text}
         </div>
+      )}
+
+      {/* ── Preview Modal (Portal) ──────────────────────── */}
+      {previewItem && (
+        <PreviewModal item={previewItem} onClose={() => setPreviewItem(null)} />
+      )}
+
+      {/* ── Confirm Delete Modal (Portal) ───────────────── */}
+      {deleteTarget && (
+        <ConfirmDeleteModal
+          collectionNumber={deleteTarget.collectionNumber}
+          title={deleteTarget.title}
+          onConfirm={() => handleAction('delete', deleteTarget.collectionNumber)}
+          onCancel={() => setDeleteTarget(null)}
+        />
       )}
     </div>
   );
