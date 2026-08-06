@@ -96,7 +96,7 @@ export default function UploadClient({
         throw new Error(data.error || 'Failed to upload catalog');
       }
 
-      setSuccess(`Katalog ${currentCollectionNumber} berhasil diunggah! Mengalihkan ke halaman Manage...`);
+      setSuccess(`Catalog ${currentCollectionNumber} successfully uploaded! Redirecting to Manage page...`);
       form.reset();
       
       // Redirect to manage page after 2 seconds so they can see the item (after build)
@@ -114,7 +114,7 @@ export default function UploadClient({
     <div className={`mx-auto px-4 py-6 lg:px-8 space-y-8 transition-all duration-300 ${previewMode === 'detail' ? 'max-w-[1600px]' : 'max-w-7xl'}`}>
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
-        Kembali ke Dashboard
+        Back to Dashboard
       </Link>
 
       <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${previewMode === 'detail' ? 'xl:grid-cols-[450px_1fr]' : 'xl:grid-cols-2'}`}>
@@ -122,7 +122,7 @@ export default function UploadClient({
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit">
           <h1 className="font-serif text-2xl font-semibold text-parchment-100">Upload New Catalog</h1>
           <p className="mt-2 text-sm text-zinc-400">
-            Tambahkan item koleksi baru ke dalam repositori secara langsung via GitHub API.
+            Add new collection items to the repository directly via GitHub API.
           </p>
 
           {error && (

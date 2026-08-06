@@ -50,10 +50,10 @@ function ConfirmDeleteModal({
           <div className="flex-shrink-0 p-2.5 rounded-full bg-red-950/60 border border-red-900">
             <AlertTriangle className="w-5 h-5 text-red-400" />
           </div>
-          <h3 className="text-lg font-serif font-semibold text-parchment-100">Hapus Produk?</h3>
+          <h3 className="text-lg font-serif font-semibold text-parchment-100">Delete Product?</h3>
         </div>
         <p className="text-sm text-zinc-400 mb-2">
-          Anda akan menghapus folder produk berikut dari repositori GitHub secara <span className="text-red-400 font-semibold">permanen</span>:
+          You are about to permanently delete the following product folder from the GitHub repository:
         </p>
         <div className="my-4 p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-sm">
           <span className="text-zinc-500 font-mono">{collectionNumber}</span>
@@ -61,20 +61,20 @@ function ConfirmDeleteModal({
           <span className="text-zinc-300">{title}</span>
         </div>
         <p className="text-xs text-amber-500/80 mb-6">
-          Tindakan ini tidak dapat dibatalkan. File <code>data.json</code> dan <code>cover.jpg</code> akan dihapus dari Git tree.
+          This action cannot be undone. The <code>data.json</code> and <code>cover.jpg</code> files will be removed from the Git tree.
         </p>
         <div className="flex gap-3">
           <button
             onClick={onCancel}
             className="flex-1 px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-300 hover:border-zinc-500 hover:text-white transition"
           >
-            Batal
+            Cancel
           </button>
           <button
             onClick={onConfirm}
             className="flex-1 px-4 py-2.5 rounded-lg bg-red-700 hover:bg-red-600 text-sm font-semibold text-white transition"
           >
-            Ya, Hapus Permanen
+            Yes, Delete Permanently
           </button>
         </div>
       </div>
@@ -129,7 +129,7 @@ function PreviewModal({
             <button
               onClick={onClose}
               className="p-2 text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-full transition"
-              title="Tutup (Esc)"
+              title="Close (Esc)"
             >
               <X className="w-4 h-4" />
             </button>
@@ -155,6 +155,9 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
   const [items, setItems] = useState(initialItems);
   const [loadingAction, setLoadingAction] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterCategory, setFilterCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('default');
 
   // Modal states
   const [previewItem, setPreviewItem] = useState<CollectibleItem | null>(null);
@@ -169,20 +172,29 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
   const filtered = items
     .filter((item) => {
       const q = searchQuery.toLowerCase();
-      return (
+      const matchSearch =
         !q ||
         item.collectionNumber.toLowerCase().includes(q) ||
         item.title.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q)
-      );
+        item.category.toLowerCase().includes(q);
+      const matchStatus = filterStatus === 'All' || item.status === filterStatus;
+      const matchCategory = filterCategory === 'All' || item.category === filterCategory;
+      
+      return matchSearch && matchStatus && matchCategory;
     })
     .sort((a, b) => {
-      // 1. Sort "Available" items above "Sold" items
-      if (a.status === 'Available' && b.status === 'Sold') return -1;
-      if (a.status === 'Sold' && b.status === 'Available') return 1;
-      
-      // 2. If same status, sort by collectionNumber (descending so newer items are top)
-      return b.collectionNumber.localeCompare(a.collectionNumber, undefined, { numeric: true });
+      if (sortBy === 'default') {
+        // 1. Sort "Available" items above "Sold" items
+        if (a.status === 'Available' && b.status === 'Sold') return -1;
+        if (a.status === 'Sold' && b.status === 'Available') return 1;
+        // 2. If same status, sort by collectionNumber (descending)
+        return b.collectionNumber.localeCompare(a.collectionNumber, undefined, { numeric: true });
+      } else if (sortBy === 'newest') {
+        return b.collectionNumber.localeCompare(a.collectionNumber, undefined, { numeric: true });
+      } else if (sortBy === 'oldest') {
+        return a.collectionNumber.localeCompare(b.collectionNumber, undefined, { numeric: true });
+      }
+      return 0;
     });
 
   const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string) => {
@@ -222,7 +234,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
       if (!res.ok) throw new Error(data.error || 'Request failed');
 
       // 3. Confirm success
-      showToast(true, 'Perubahan berhasil disinkronkan ke GitHub!');
+      showToast(true, 'Changes successfully synced to GitHub!');
       
       // Note: We intentionally DO NOT call router.refresh() here. 
       // Vercel takes ~1 min to rebuild the static JSON data. 
@@ -230,7 +242,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
     } catch (err: any) {
       // 4. ROLLBACK ON FAILURE
       setItems(previousItems);
-      showToast(false, `Gagal: ${err.message}. Status dikembalikan.`);
+      showToast(false, `Failed: ${err.message}. Status reverted.`);
     } finally {
       setLoadingAction(null);
     }
@@ -240,32 +252,70 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
     <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
-        Kembali ke Dashboard
+        Back to Dashboard
       </Link>
 
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div>
-            <h1 className="font-serif text-2xl font-semibold text-parchment-100">Manage Inventory</h1>
-            <p className="mt-1 text-sm text-zinc-400">
-              {items.length} item total · {items.filter(i => i.status === 'Available').length} tersedia · {items.filter(i => i.status === 'Sold').length} terjual
-            </p>
+        <div className="flex flex-col gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="font-serif text-2xl font-semibold text-parchment-100">Manage Inventory</h1>
+              <p className="mt-1 text-sm text-zinc-400">
+                {items.length} total items &middot; {items.filter(i => i.status === 'Available').length} available &middot; {items.filter(i => i.status === 'Sold').length} sold
+              </p>
+            </div>
           </div>
-          {/* Search */}
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-            <input
-              type="text"
-              placeholder="Cari item..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 pl-10 pr-4 py-2 text-sm text-parchment-100 placeholder:text-zinc-600 focus:border-gold focus:outline-none transition"
-            />
-            {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
+          
+          {/* Filters & Search */}
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <input
+                type="text"
+                placeholder="Search items..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-950 pl-10 pr-4 py-2.5 text-sm text-parchment-100 placeholder:text-zinc-600 focus:border-gold focus:outline-none transition"
+              />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white">
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+            <div className="flex flex-wrap sm:flex-nowrap gap-3">
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full sm:w-auto rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-300 focus:border-gold focus:outline-none transition appearance-none"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2371717a\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25rem', paddingRight: '2.25rem' }}
+              >
+                <option value="All">All Status</option>
+                <option value="Available">Available</option>
+                <option value="Sold">Sold</option>
+              </select>
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="w-full sm:w-auto rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-300 focus:border-gold focus:outline-none transition appearance-none"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2371717a\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25rem', paddingRight: '2.25rem' }}
+              >
+                <option value="All">All Categories</option>
+                {Object.keys(CATEGORY_COLORS).map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full sm:w-auto rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-300 focus:border-gold focus:outline-none transition appearance-none"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2371717a\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25rem', paddingRight: '2.25rem' }}
+              >
+                <option value="default">Default Sort</option>
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -276,16 +326,17 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                 <th className="px-6 py-5 font-semibold">ID</th>
                 <th className="px-6 py-5 font-semibold">Cover</th>
                 <th className="px-6 py-5 font-semibold">Title</th>
-                <th className="px-6 py-5 font-semibold hidden md:table-cell">Tags</th>
+                <th className="px-6 py-5 font-semibold hidden md:table-cell">Category</th>
+                <th className="px-6 py-5 font-semibold hidden md:table-cell">Condition</th>
                 <th className="px-6 py-5 font-semibold">Status</th>
-                <th className="px-6 py-5 font-semibold text-right">Aksi</th>
+                <th className="px-6 py-5 font-semibold text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-800/60">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-20 text-center text-zinc-500 text-base">
-                    Tidak ada item ditemukan
+                  <td colSpan={7} className="py-20 text-center text-zinc-500 text-base">
+                    No items found
                   </td>
                 </tr>
               ) : (
@@ -306,14 +357,14 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                       <p className="line-clamp-2 text-base leading-snug">{item.title}</p>
                     </td>
                     <td className="px-6 py-5 hidden md:table-cell">
-                      <div className="flex flex-col items-start gap-2">
-                        <span className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getCategoryColor(item.category)}`}>
-                          {item.category}
-                        </span>
-                        <span className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getConditionColor(item.condition)}`}>
-                          {item.condition}
-                        </span>
-                      </div>
+                      <span className={`inline-flex px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getCategoryColor(item.category)}`}>
+                        {item.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-5 hidden md:table-cell">
+                      <span className={`inline-flex px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getConditionColor(item.condition)}`}>
+                        {item.condition}
+                      </span>
                     </td>
                     <td className="px-6 py-5">
                       {item.status === 'Sold' ? (
@@ -369,7 +420,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                           onClick={() => setDeleteTarget(item)}
                           disabled={!!loadingAction}
                           className="p-2.5 text-zinc-400 hover:text-red-400 hover:bg-red-950/50 rounded-xl transition disabled:opacity-40 border border-transparent hover:border-red-900 shadow-sm"
-                          title="Hapus dari GitHub"
+                          title="Delete from GitHub"
                         >
                           {loadingAction === `delete-${item.collectionNumber}`
                             ? <Loader2 className="w-5 h-5 animate-spin" />
