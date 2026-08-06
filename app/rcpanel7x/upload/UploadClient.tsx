@@ -111,15 +111,15 @@ export default function UploadClient({
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
+    <div className={`mx-auto px-4 py-6 lg:px-8 space-y-8 transition-all duration-300 ${previewMode === 'detail' ? 'max-w-[1600px]' : 'max-w-7xl'}`}>
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
         Kembali ke Dashboard
       </Link>
 
-      <div className={`grid grid-cols-1 ${previewMode === 'card' ? 'xl:grid-cols-2' : ''} gap-8`}>
+      <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${previewMode === 'detail' ? 'xl:grid-cols-[450px_1fr]' : 'xl:grid-cols-2'}`}>
         {/* Form Section */}
-        <div className={`rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit ${previewMode === 'detail' ? 'max-w-3xl mx-auto w-full' : ''}`}>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit">
           <h1 className="font-serif text-2xl font-semibold text-parchment-100">Upload New Catalog</h1>
           <p className="mt-2 text-sm text-zinc-400">
             Tambahkan item koleksi baru ke dalam repositori secara langsung via GitHub API.
@@ -301,7 +301,7 @@ export default function UploadClient({
         </div>
 
         {/* Live Preview Section */}
-        <div className={`rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit ${previewMode === 'card' ? 'sticky top-6' : ''}`}>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit sticky top-6 overflow-hidden">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-xl font-semibold text-parchment-100">Live Preview</h2>
             <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
