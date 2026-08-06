@@ -480,8 +480,21 @@ export const collectibles: CollectibleItem[] = [
     "category": "Hot Wheels",
     "condition": "Mint",
     "badge": "Limited",
-    "status": "Sold",
+    "status": "Available",
     "image": "/catalog/RC-037/cover.jpg",
     "description": "Hot Wheels '55 Nomad dari seri Heat Fleet yang menghadirkan Chevrolet Nomad 1955 dengan balutan warna oranye dan grafis flame khas seri Heat Fleet. Masih dalam blister dan card original sehingga cocok untuk koleksi, display, maupun investasi diecast. Salah satu casting klasik yang semakin diminati oleh kolektor Hot Wheels."
+  },
+  {
+    "id": "ryc-b6r3l5qke",
+    "slug": "RC-038",
+    "collectionNumber": "RC-038",
+    "title": "100 Złotych Poland 1986",
+    "price": 100000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Mint",
+    "badge": "Limited",
+    "status": "Available",
+    "image": "/catalog/RC-038/cover.png",
+    "description": "Negara : Polandia (Poland)\r\nNominal : 100 Złotych\r\nTahun Emisi : 1986\r\nDiterbitkan oleh Narodowy Bank Polski (Bank Nasional Polandia). \r\n\r\nMenampilkan tokoh Ludwik Waryński pada bagian depan dan desain historis majalah Proletaryat pada bagian belakang. \r\n\r\nCocok untuk kolektor uang dunia, kolektor Eropa Timur, maupun penggemar sejarah Polandia.\r\nCollectible Item\r\nIstimewa dan unik, berasal dari era Republik Rakyat Polandia.\r\nMenjadi salah satu seri uang kertas yang sudah tidak beredar lagi."
   }
 ];

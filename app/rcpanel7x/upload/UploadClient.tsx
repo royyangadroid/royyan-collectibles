@@ -117,9 +117,9 @@ export default function UploadClient({
         Kembali ke Dashboard
       </Link>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div className={`grid grid-cols-1 ${previewMode === 'card' ? 'xl:grid-cols-2' : ''} gap-8`}>
         {/* Form Section */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit">
+        <div className={`rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit ${previewMode === 'detail' ? 'max-w-3xl mx-auto w-full' : ''}`}>
           <h1 className="font-serif text-2xl font-semibold text-parchment-100">Upload New Catalog</h1>
           <p className="mt-2 text-sm text-zinc-400">
             Tambahkan item koleksi baru ke dalam repositori secara langsung via GitHub API.
@@ -301,7 +301,7 @@ export default function UploadClient({
         </div>
 
         {/* Live Preview Section */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit sticky top-6">
+        <div className={`rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit ${previewMode === 'card' ? 'sticky top-6' : ''}`}>
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-xl font-semibold text-parchment-100">Live Preview</h2>
             <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">

@@ -123,25 +123,66 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const isWebp = buffer[0] === 0x52;
     const ext = isPng ? 'png' : (isWebp ? 'webp' : 'jpg');
 
+    // Fetch sold.json and remove the collectionNumber if it exists
+    let soldArray: string[] = [];
+    let wasSold = false;
+    let soldBlobSha: string | null = null;
+    
+    try {
+      const soldResp = await octokit.repos.getContent({
+        owner: GITHUB_OWNER,
+        repo: GITHUB_REPO,
+        path: 'public/sold.json',
+        ref: `heads/${GITHUB_BRANCH}`,
+      });
+      const soldBase64 = (soldResp.data as any).content;
+      soldArray = JSON.parse(Buffer.from(soldBase64, 'base64').toString('utf-8'));
+      
+      wasSold = soldArray.includes(collectionNumber);
+      if (wasSold) {
+        soldArray = soldArray.filter(id => id !== collectionNumber);
+        const soldBlob = await octokit.git.createBlob({
+          owner: GITHUB_OWNER,
+          repo: GITHUB_REPO,
+          content: JSON.stringify(soldArray, null, 2),
+          encoding: 'utf-8',
+        });
+        soldBlobSha = soldBlob.data.sha;
+      }
+    } catch (e: any) {
+      // Ignore if not found
+    }
+
     // Create New Tree
+    const treeItems: any[] = [
+      {
+        path: `public/catalog/${collectionNumber}/cover.${ext}`,
+        mode: '100644',
+        type: 'blob',
+        sha: imageBlob.data.sha,
+      },
+      {
+        path: `public/catalog/${collectionNumber}/data.json`,
+        mode: '100644',
+        type: 'blob',
+        sha: dataBlob.data.sha,
+      },
+    ];
+
+    if (wasSold && soldBlobSha) {
+      treeItems.push({
+        path: 'public/sold.json',
+        mode: '100644',
+        type: 'blob',
+        sha: soldBlobSha,
+      });
+    }
+
     const treeData = await octokit.git.createTree({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       base_tree: baseTreeSha,
-      tree: [
-        {
-          path: `public/catalog/${collectionNumber}/cover.${ext}`,
-          mode: '100644',
-          type: 'blob',
-          sha: imageBlob.data.sha,
-        },
-        {
-          path: `public/catalog/${collectionNumber}/data.json`,
-          mode: '100644',
-          type: 'blob',
-          sha: dataBlob.data.sha,
-        },
-      ],
+      tree: treeItems,
     });
 
     // Create Commit
