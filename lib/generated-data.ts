@@ -272,7 +272,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-021/cover.jpg",
     "description": "Komik klasik karya maestro Siauw Tik Kwie, cetakan asli sekitar tahun 1959. Terdiri dari 9 jilid tamat yang mengisahkan kepahlawanan Sie Djin Koei (Xue Rengui), jenderal legendaris Dinasti Tang. Menggunakan bahasa Indonesia ejaan lama dengan ilustrasi khas era komik Tionghoa-Indonesia, menjadikannya salah satu collectible yang semakin langka dan bernilai sejarah tinggi."
   },
