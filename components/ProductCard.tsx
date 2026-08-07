@@ -65,7 +65,7 @@ export default function ProductCard({ item }: { item: CollectibleItem }) {
                 SOLD OUT
               </span>
               <span className="font-sans text-[8px] sm:text-[10px] text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-0.5">
-                TERIMA KASIH
+                THANK YOU
               </span>
             </div>
           </div>
@@ -96,14 +96,14 @@ export default function ProductCard({ item }: { item: CollectibleItem }) {
                 SOLD OUT
               </span>
               <span className="font-sans text-[9px] md:text-[10px] text-zinc-500 text-center leading-snug">
-                Produk ini sudah telak tersedia.
+                This product is no longer available.
               </span>
             </div>
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 md:pt-4 border-t border-gold/10 mt-auto gap-3 sm:gap-0">
             <div>
-              <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Harga</p>
+              <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Price</p>
               <p className="font-serif font-bold text-sm sm:text-base md:text-lg text-gold whitespace-nowrap"><PriceDisplay price={item.price} /></p>
             </div>
 

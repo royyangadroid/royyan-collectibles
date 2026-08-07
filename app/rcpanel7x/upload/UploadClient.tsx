@@ -301,17 +301,17 @@ export default function UploadClient({
         </div>
 
         {/* Live Preview Section */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit sticky top-6 overflow-hidden">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit overflow-hidden">
           <h2 className="font-serif text-xl font-semibold text-parchment-100 mb-6">Live Preview</h2>
 
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Card View</h3>
-              <AdminPreview data={previewData} mode="card" />
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
             <div>
               <h3 className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Detail View</h3>
               <AdminPreview data={previewData} mode="detail" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Card View</h3>
+              <AdminPreview data={previewData} mode="card" />
             </div>
           </div>
         </div>

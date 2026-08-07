@@ -104,7 +104,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                     boxShadow: '0 4px 30px rgba(0,0,0,0.6), 0 0 20px rgba(153,27,27,0.3)',
                   }}
                 >
-                  <span className="font-serif font-black text-xl md:text-2xl text-white tracking-[0.25em] uppercase drop-shadow-lg leading-none">
+                  <span className="font-serif font-black text-base sm:text-xl md:text-2xl text-white tracking-[0.25em] uppercase drop-shadow-lg leading-none">
                     SOLD OUT
                   </span>
                   <span className="font-sans text-[10px] text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-0.5">
@@ -118,10 +118,10 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
           {/* Content */}
           <div className="p-4 md:p-6">
             <div className="flex items-center justify-between mb-2 md:mb-3 gap-2">
-              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.1em] uppercase px-2 py-0.5 rounded-sm ${getCategoryColor(data.category)}`}>
+              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-sm ${getCategoryColor(data.category)}`}>
                 {data.category || 'Category'}
               </span>
-              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.1em] uppercase px-2 py-0.5 rounded-sm ${getConditionColor(data.condition)}`}>
+              <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 rounded-sm ${getConditionColor(data.condition)}`}>
                 {data.condition || 'Condition'}
               </span>
             </div>
@@ -189,7 +189,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                   boxShadow: '0 4px 30px rgba(0,0,0,0.6), 0 0 20px rgba(153,27,27,0.3)',
                 }}
               >
-                <span className="font-serif font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-[0.25em] uppercase drop-shadow-lg leading-none">
+                <span className="font-serif font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-[0.25em] uppercase drop-shadow-lg leading-none">
                   SOLD OUT
                 </span>
                 <span className="font-sans text-xs sm:text-sm text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-1">
@@ -206,10 +206,10 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
         {/* Details */}
         <div className="flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-4 flex-wrap">
-            <span className={`font-sans text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm ${getCategoryColor(data.category)}`}>
+            <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-sm ${getCategoryColor(data.category)}`}>
               {data.category || 'Category'}
             </span>
-            <span className={`font-sans text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm ${getConditionColor(data.condition)}`}>
+            <span className={`font-sans text-[9px] md:text-[10px] tracking-[0.15em] uppercase px-3 py-1 rounded-sm ${getConditionColor(data.condition)}`}>
               {data.condition || 'Condition'}
             </span>
             {data.tags?.map((tag, idx) => (
