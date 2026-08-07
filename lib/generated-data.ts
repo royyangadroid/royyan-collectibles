@@ -415,7 +415,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Uang Kuno & Perangko",
     "condition": "Near Mint",
     "badge": "Limited",
-    "status": "Available",
+    "status": "Sold",
     "image": "/catalog/RC-032/cover.jpg",
     "description": "Uang kertas asli Trinidad & Tobago nominal 1 Dollar dengan desain khas negara kepulauan Karibia yang menampilkan ilustrasi burung eksotis serta lambang negara. Menjadi collectible menarik bagi kolektor uang kertas dunia, pecinta numismatik, maupun koleksi mata uang internasional."
   },
@@ -496,5 +496,18 @@ export const collectibles: CollectibleItem[] = [
     "status": "Available",
     "image": "/catalog/RC-038/cover.png",
     "description": "Negara : Polandia (Poland)\r\nNominal : 100 Złotych\r\nTahun Emisi : 1986\r\nDiterbitkan oleh Narodowy Bank Polski (Bank Nasional Polandia). \r\n\r\nMenampilkan tokoh Ludwik Waryński pada bagian depan dan desain historis majalah Proletaryat pada bagian belakang. \r\n\r\nCocok untuk kolektor uang dunia, kolektor Eropa Timur, maupun penggemar sejarah Polandia.\r\nCollectible Item\r\nIstimewa dan unik, berasal dari era Republik Rakyat Polandia.\r\nMenjadi salah satu seri uang kertas yang sudah tidak beredar lagi."
+  },
+  {
+    "id": "ryc-zfyezrkx7",
+    "slug": "RC-039",
+    "collectionNumber": "RC-039",
+    "title": "5 Veneuela Bolivares",
+    "price": 75000,
+    "category": "Uang Kuno & Perangko",
+    "condition": "Excellent",
+    "badge": "Rare Find",
+    "status": "Available",
+    "image": "/catalog/RC-039/cover.jpg",
+    "description": "Bagi para kolektor uang dunia dan pecinta numismatik, hadir uang kertas Venezuela nominal 5 Bolivar dengan desain yang unik dan artistik. Berdasarkan foto, uang kertas ini merupakan emisi República Bolivariana de Venezuela tanggal 03 September 2009, dengan dominasi warna oranye dan potret tokoh nasional Venezuela, Pedro Camejo (Negro Primero). \r\nKatalog Numismatik Venezuela \r\n🌍 Negara : Venezuela\r\n💰 Nominal : 5 Bolivar\r\n📅 Tahun Emisi : 2009\r\n📚 Kategori : Collectible Item / Uang Kertas Koleksi Dunia\r\n🎨 Desain Unik : Format potret vertikal yang menarik untuk koleksi album numismatik."
   }
 ];
