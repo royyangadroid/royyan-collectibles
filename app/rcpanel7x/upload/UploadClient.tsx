@@ -6,12 +6,12 @@ import { ArrowLeft, Upload, Loader2, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import AdminPreview, { type PreviewData } from '@/components/AdminPreview';
 
-export default function UploadClient({ 
-  nextNumber, 
-  previousNumber 
-}: { 
-  nextNumber: string; 
-  previousNumber: string | null; 
+export default function UploadClient({
+  nextNumber,
+  previousNumber
+}: {
+  nextNumber: string;
+  previousNumber: string | null;
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -36,14 +36,14 @@ export default function UploadClient({
     status: 'Available',
   });
 
-  const currentCollectionNumber = 
+  const currentCollectionNumber =
     selectedNumberOption === 'next' ? nextNumber :
-    selectedNumberOption === 'previous' && previousNumber ? previousNumber :
-    customNumber;
+      selectedNumberOption === 'previous' && previousNumber ? previousNumber :
+        customNumber;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    
+
     if (name === 'tags') {
       setPreviewData(prev => ({ ...prev, tags: value.split(',').map(t => t.trim()).filter(Boolean) }));
     } else if (name === 'price') {
@@ -98,7 +98,7 @@ export default function UploadClient({
 
       setSuccess(`Catalog ${currentCollectionNumber} successfully uploaded! Redirecting to Manage page...`);
       form.reset();
-      
+
       // Redirect to manage page after 2 seconds so they can see the item (after build)
       setTimeout(() => {
         router.push('/rcpanel7x/manage');
@@ -117,7 +117,7 @@ export default function UploadClient({
         Back to Dashboard
       </Link>
 
-      <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${previewMode === 'detail' ? 'xl:grid-cols-[450px_1fr]' : 'xl:grid-cols-2'}`}>
+      <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${previewMode === 'detail' ? 'xl:grid-cols-[380px_1fr]' : 'xl:grid-cols-[380px_1fr]'}`}>
         {/* Form Section */}
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit">
           <h1 className="font-serif text-2xl font-semibold text-parchment-100">Upload New Catalog</h1>
@@ -130,7 +130,7 @@ export default function UploadClient({
               {error}
             </div>
           )}
-          
+
           {success && (
             <div className="mt-6 p-4 rounded-lg bg-emerald-950/50 border border-emerald-900 text-emerald-200 text-sm flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-emerald-400" />
@@ -139,15 +139,15 @@ export default function UploadClient({
           )}
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-            
+
             {/* Auto Numbering Options */}
             <div className="space-y-3 p-4 rounded-lg bg-zinc-950 border border-zinc-800">
               <label className="text-sm font-medium text-zinc-300">Available Numbers</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${selectedNumberOption === 'next' ? 'border-gold bg-gold/10' : 'border-zinc-800 hover:border-zinc-600'}`}>
-                  <input 
-                    type="radio" 
-                    name="numberOption" 
+                  <input
+                    type="radio"
+                    name="numberOption"
                     checked={selectedNumberOption === 'next'}
                     onChange={() => {
                       setSelectedNumberOption('next');
@@ -160,12 +160,12 @@ export default function UploadClient({
                     <p className="text-xs text-zinc-500">Next Number</p>
                   </div>
                 </label>
-                
+
                 {previousNumber && (
                   <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${selectedNumberOption === 'previous' ? 'border-gold bg-gold/10' : 'border-zinc-800 hover:border-zinc-600'}`}>
-                    <input 
-                      type="radio" 
-                      name="numberOption" 
+                    <input
+                      type="radio"
+                      name="numberOption"
                       checked={selectedNumberOption === 'previous'}
                       onChange={() => {
                         setSelectedNumberOption('previous');
@@ -181,16 +181,16 @@ export default function UploadClient({
                 )}
 
                 <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${selectedNumberOption === 'custom' ? 'border-gold bg-gold/10' : 'border-zinc-800 hover:border-zinc-600'}`}>
-                  <input 
-                    type="radio" 
-                    name="numberOption" 
+                  <input
+                    type="radio"
+                    name="numberOption"
                     checked={selectedNumberOption === 'custom'}
                     onChange={() => setSelectedNumberOption('custom')}
                     className="accent-gold"
                   />
                   <div className="flex-1">
                     <p className="text-xs text-zinc-500 mb-1">Custom</p>
-                    <input 
+                    <input
                       type="text"
                       placeholder="e.g. RC-040"
                       value={customNumber}
@@ -226,6 +226,7 @@ export default function UploadClient({
                   <option value="Hot Wheels">Hot Wheels</option>
                   <option value="Komik">Komik</option>
                   <option value="Uang Kuno & Perangko">Uang Kuno & Perangko</option>
+                  <option value="Buku">Buku</option>
                   <option value="PlayStation">PlayStation</option>
                 </select>
               </div>
@@ -256,7 +257,7 @@ export default function UploadClient({
                   <option value="Best Seller">Best Seller</option>
                 </select>
               </div>
-              
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-zinc-300">Tags (Comma separated)</label>
                 <input name="tags" type="text" onChange={handleInputChange} placeholder="e.g. Vintage, Original" className="w-full rounded-md border border-zinc-800 bg-zinc-950 px-4 py-2 text-sm text-parchment-100 focus:border-gold focus:outline-none" />
@@ -305,13 +306,13 @@ export default function UploadClient({
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-xl font-semibold text-parchment-100">Live Preview</h2>
             <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
-              <button 
+              <button
                 onClick={() => setPreviewMode('card')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${previewMode === 'card' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
               >
                 Card View
               </button>
-              <button 
+              <button
                 onClick={() => setPreviewMode('detail')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${previewMode === 'detail' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
               >
@@ -319,7 +320,7 @@ export default function UploadClient({
               </button>
             </div>
           </div>
-          
+
           <div className="mt-8">
             <AdminPreview data={previewData} mode={previewMode} />
           </div>

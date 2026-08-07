@@ -12,6 +12,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Hot Wheels': 'bg-yellow-900/80 text-yellow-200',
   'Komik': 'bg-amber-950/80 text-amber-200',
   'Uang Kuno & Perangko': 'bg-red-900/80 text-red-200',
+  'Buku': 'bg-slate-800/80 text-slate-200',
   'PlayStation': 'bg-blue-900/80 text-blue-200',
 };
 
@@ -75,6 +76,84 @@ function ConfirmDeleteModal({
             className="flex-1 px-4 py-2.5 rounded-lg bg-red-700 hover:bg-red-600 text-sm font-semibold text-white transition"
           >
             Yes, Delete Permanently
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+// ─── Sold Modal (Portal) ────────────────────────────────────────────────────────
+function SoldModal({
+  collectionNumber,
+  onConfirm,
+  onCancel,
+}: {
+  collectionNumber: string;
+  onConfirm: (month: string, year: string) => void;
+  onCancel: () => void;
+}) {
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  const months = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ];
+
+  const years = Array.from({ length: 5 }, (_, i) => 2024 + i);
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-2xl">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-serif font-semibold text-parchment-100">Sold When?</h3>
+          <button
+            onClick={onCancel}
+            className="p-2 text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-full transition"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-300">Bulan</label>
+            <select
+              value={month}
+              onChange={(e) => setMonth(parseInt(e.target.value))}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
+            >
+              {months.map((m, i) => (
+                <option key={m} value={i + 1}>{m}</option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-300">Tahun</label>
+            <select
+              value={year}
+              onChange={(e) => setYear(parseInt(e.target.value))}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="flex gap-3 mt-6">
+          <button
+            onClick={onCancel}
+            className="flex-1 px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-300 hover:border-zinc-500 hover:text-white transition"
+          >
+            Batal
+          </button>
+          <button
+            onClick={() => onConfirm(month.toString(), year.toString())}
+            className="flex-1 px-4 py-2.5 rounded-lg bg-gold hover:bg-gold/90 text-sm font-semibold text-zinc-950 transition"
+          >
+            Konfirmasi
           </button>
         </div>
       </div>
@@ -162,6 +241,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
   // Modal states
   const [previewItem, setPreviewItem] = useState<CollectibleItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CollectibleItem | null>(null);
+  const [soldTarget, setSoldTarget] = useState<CollectibleItem | null>(null);
   const [toastMsg, setToastMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   const showToast = (ok: boolean, text: string) => {
@@ -197,9 +277,10 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
       return 0;
     });
 
-  const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string) => {
+  const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string, soldDate?: string) => {
     setLoadingAction(`${action}-${collectionNumber}`);
     setDeleteTarget(null);
+    setSoldTarget(null);
 
     // 1. TRUE OPTIMISTIC UI: Save previous state for rollback
     const previousItems = [...items];
@@ -211,23 +292,26 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
     } else if (action === 'mark-sold') {
       setItems((prev) =>
         prev.map((item) =>
-          item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const } : item
+          item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const, soldDate } : item
         )
       );
     } else if (action === 'undo-sold') {
       setItems((prev) =>
         prev.map((item) =>
-          item.collectionNumber === collectionNumber ? { ...item, status: 'Available' as const } : item
+          item.collectionNumber === collectionNumber ? { ...item, status: 'Available' as const, soldDate: undefined } : item
         )
       );
     }
 
     try {
       const method = action === 'delete' ? 'DELETE' : 'PUT';
+      const body = action === 'mark-sold' && soldDate 
+        ? JSON.stringify({ collectionNumber, soldDate })
+        : JSON.stringify({ collectionNumber });
       const res = await fetch(`/api/admin/catalog/${action}`, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ collectionNumber }),
+        body,
       });
 
       const data = await res.json();
@@ -249,7 +333,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8 space-y-8">
+    <div className="mx-auto px-4 py-6 lg:px-6 space-y-8">
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
         Back to Dashboard
@@ -284,16 +368,26 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
               )}
             </div>
             <div className="flex flex-wrap sm:flex-nowrap gap-3">
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full sm:w-auto rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-300 focus:border-gold focus:outline-none transition appearance-none"
-                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2371717a\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25rem', paddingRight: '2.25rem' }}
-              >
-                <option value="All">All Status</option>
-                <option value="Available">Available</option>
-                <option value="Sold">Sold</option>
-              </select>
+              <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
+                <button
+                  onClick={() => setFilterStatus('All')}
+                  className={`px-4 py-2 text-xs font-medium rounded-md transition-colors ${filterStatus === 'All' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => setFilterStatus('Available')}
+                  className={`px-4 py-2 text-xs font-medium rounded-md transition-colors ${filterStatus === 'Available' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
+                >
+                  Available
+                </button>
+                <button
+                  onClick={() => setFilterStatus('Sold')}
+                  className={`px-4 py-2 text-xs font-medium rounded-md transition-colors ${filterStatus === 'Sold' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
+                >
+                  Sold
+                </button>
+              </div>
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
@@ -326,6 +420,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                 <th className="px-6 py-5 font-semibold">ID</th>
                 <th className="px-6 py-5 font-semibold">Cover</th>
                 <th className="px-6 py-5 font-semibold">Title</th>
+                <th className="px-6 py-5 font-semibold">Price</th>
                 <th className="px-6 py-5 font-semibold hidden md:table-cell">Category</th>
                 <th className="px-6 py-5 font-semibold hidden md:table-cell">Condition</th>
                 <th className="px-6 py-5 font-semibold">Status</th>
@@ -335,7 +430,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
             <tbody className="divide-y divide-zinc-800/60">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-20 text-center text-zinc-500 text-base">
+                  <td colSpan={8} className="py-20 text-center text-zinc-500 text-base">
                     No items found
                   </td>
                 </tr>
@@ -355,6 +450,9 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                     </td>
                     <td className="px-6 py-5 font-medium text-zinc-100 max-w-[220px]">
                       <p className="line-clamp-2 text-base leading-snug">{item.title}</p>
+                    </td>
+                    <td className="px-6 py-5 font-mono text-sm font-medium text-gold">
+                      {item.price ? `Rp ${item.price.toLocaleString('id-ID')}` : 'Rp 0'}
                     </td>
                     <td className="px-6 py-5 hidden md:table-cell">
                       <span className={`inline-flex px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded-md shadow-sm ${getCategoryColor(item.category)}`}>
@@ -384,14 +482,12 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
                         {/* Mark/Undo Sold */}
                         {item.status === 'Available' ? (
                           <button
-                            onClick={() => handleAction('mark-sold', item.collectionNumber)}
+                            onClick={() => setSoldTarget(item)}
                             disabled={!!loadingAction}
                             className="p-2.5 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-950/50 rounded-xl transition disabled:opacity-40 border border-transparent hover:border-emerald-900 shadow-sm"
                             title="Mark as Sold"
                           >
-                            {loadingAction === `mark-sold-${item.collectionNumber}`
-                              ? <Loader2 className="w-5 h-5 animate-spin" />
-                              : <CheckCircle2 className="w-5 h-5" />}
+                            <CheckCircle2 className="w-5 h-5" />
                           </button>
                         ) : (
                           <button
@@ -461,6 +557,18 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
           title={deleteTarget.title}
           onConfirm={() => handleAction('delete', deleteTarget.collectionNumber)}
           onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
+      {/* ── Sold Modal (Portal) ──────────────────────────────── */}
+      {soldTarget && (
+        <SoldModal
+          collectionNumber={soldTarget.collectionNumber}
+          onConfirm={(month, year) => {
+            const soldDate = `${year}-${month.padStart(2, '0')}`;
+            handleAction('mark-sold', soldTarget.collectionNumber, soldDate);
+          }}
+          onCancel={() => setSoldTarget(null)}
         />
       )}
     </div>
