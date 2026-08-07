@@ -272,7 +272,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Komik",
     "condition": "Good",
     "badge": "Limited",
-    "status": "Sold",
+    "status": "Available",
     "image": "/catalog/RC-021/cover.jpg",
     "description": "Komik klasik karya maestro Siauw Tik Kwie, cetakan asli sekitar tahun 1959. Terdiri dari 9 jilid tamat yang mengisahkan kepahlawanan Sie Djin Koei (Xue Rengui), jenderal legendaris Dinasti Tang. Menggunakan bahasa Indonesia ejaan lama dengan ilustrasi khas era komik Tionghoa-Indonesia, menjadikannya salah satu collectible yang semakin langka dan bernilai sejarah tinggi."
   },
@@ -415,7 +415,7 @@ export const collectibles: CollectibleItem[] = [
     "category": "Uang Kuno & Perangko",
     "condition": "Near Mint",
     "badge": "Limited",
-    "status": "Sold",
+    "status": "Available",
     "image": "/catalog/RC-032/cover.jpg",
     "description": "Uang kertas asli Trinidad & Tobago nominal 1 Dollar dengan desain khas negara kepulauan Karibia yang menampilkan ilustrasi burung eksotis serta lambang negara. Menjadi collectible menarik bagi kolektor uang kertas dunia, pecinta numismatik, maupun koleksi mata uang internasional."
   },
