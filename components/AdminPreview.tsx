@@ -32,6 +32,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
     'Hot Wheels': 'bg-yellow-900/80 text-yellow-200',
     'Komik': 'bg-amber-950/80 text-amber-200',
     'Uang Kuno & Perangko': 'bg-red-900/80 text-red-200',
+    'Buku': 'bg-slate-800/80 text-slate-200',
     'PlayStation': 'bg-blue-900/80 text-blue-200',
   };
 
@@ -107,7 +108,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                     SOLD OUT
                   </span>
                   <span className="font-sans text-[10px] text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-0.5">
-                    TERIMA KASIH
+                    THANK YOU
                   </span>
                 </div>
               </div>
@@ -136,18 +137,18 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                     SOLD OUT
                   </span>
                   <span className="font-sans text-[9px] md:text-[10px] text-zinc-500 text-center leading-snug">
-                    Produk ini sudah tidak tersedia.
+                    This product is no longer available.
                   </span>
                 </div>
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 md:pt-4 border-t border-gold/10 mt-auto gap-3 sm:gap-0">
                 <div>
-                  <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Harga</p>
+                  <p className="font-sans text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-600 mb-0.5">Price</p>
                   <p className="font-serif font-bold text-sm sm:text-base md:text-lg text-gold whitespace-nowrap">{formattedPrice}</p>
                 </div>
                 <span className="font-sans w-full sm:w-auto text-center text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-gold/60 border border-gold/30 px-3 py-1.5 md:px-4 md:py-2 rounded-sm group-hover:bg-gold group-hover:text-zinc-950 transition-all duration-300">
-                  Detail
+                  Details
                 </span>
               </div>
             )}
@@ -192,7 +193,7 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                   SOLD OUT
                 </span>
                 <span className="font-sans text-xs sm:text-sm text-amber-300/90 tracking-[0.3em] uppercase leading-none mt-1">
-                  TERIMA KASIH
+                  THANK YOU
                 </span>
               </div>
             </div>
@@ -231,16 +232,16 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
           <div className="flex items-center gap-3 mb-8 p-4 border border-gold/10 bg-zinc-900/50 rounded-sm">
             <ShieldCheck className="w-5 h-5 text-gold flex-shrink-0" strokeWidth={1.5} />
             <p className="font-sans text-xs text-zinc-400">
-              <span className="text-parchment-200 font-semibold">Keaslian Terjamin</span> — Setiap item telah melewati proses verifikasi dan kurasi yang ketat.
+              <span className="text-parchment-200 font-semibold">Authenticity Guaranteed</span> — Each item has undergone strict verification and curation processes.
             </p>
           </div>
 
           <div className="mb-8 p-6 border border-gold/15 bg-zinc-900/50 rounded-sm">
-            <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-2">Harga</p>
+            <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-2">Price</p>
             <p className={`font-serif font-bold text-4xl ${isSold ? 'text-zinc-600 line-through decoration-red-500/60' : 'text-gold'}`}>
               {formattedPrice}
             </p>
-            <p className="font-sans text-xs text-zinc-600 mt-1">Belum termasuk ongkir</p>
+            <p className="font-sans text-xs text-zinc-600 mt-1">Shipping not included</p>
           </div>
 
           {isSold ? (
@@ -249,13 +250,13 @@ export default function AdminPreview({ data, mode }: { data: PreviewData; mode: 
                 SOLD OUT
               </span>
               <span className="font-sans text-sm text-zinc-400 text-center leading-snug">
-                Produk ini sudah tidak tersedia.
+                This product is no longer available.
               </span>
             </div>
           ) : (
             <div className="inline-flex items-center justify-center gap-3 w-full px-8 py-4 bg-gold/50 text-zinc-950 font-sans font-bold text-sm tracking-[0.15em] uppercase rounded-sm">
               <MessageCircle className="w-5 h-5" />
-              Pesan via WhatsApp (Preview)
+              Order via WhatsApp (Preview)
             </div>
           )}
         </div>

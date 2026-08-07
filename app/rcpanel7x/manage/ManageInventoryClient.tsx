@@ -91,24 +91,40 @@ function SoldModal({
   onCancel,
 }: {
   collectionNumber: string;
-  onConfirm: (month: string, year: string) => void;
+  onConfirm: (soldData: SoldData) => void;
   onCancel: () => void;
 }) {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
+  const [buyerName, setBuyerName] = useState('');
+  const [soldPrice, setSoldPrice] = useState('');
+  const [notes, setNotes] = useState('');
 
   const months = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
   const years = Array.from({ length: 5 }, (_, i) => 2024 + i);
 
+  const handleConfirm = () => {
+    onConfirm({
+      month: month.toString(),
+      year: year.toString(),
+      buyerName,
+      soldPrice: soldPrice ? parseFloat(soldPrice) : undefined,
+      notes,
+    });
+  };
+
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-2xl">
+      <div className="w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-serif font-semibold text-parchment-100">Sold When?</h3>
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-parchment-100">Mark as Sold</h3>
+            <p className="text-xs text-zinc-500 mt-1">Record sale details for reporting</p>
+          </div>
           <button
             onClick={onCancel}
             className="p-2 text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 rounded-full transition"
@@ -117,29 +133,61 @@ function SoldModal({
           </button>
         </div>
         <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-300">Bulan</label>
-            <select
-              value={month}
-              onChange={(e) => setMonth(parseInt(e.target.value))}
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
-            >
-              {months.map((m, i) => (
-                <option key={m} value={i + 1}>{m}</option>
-              ))}
-            </select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-300">Month</label>
+              <select
+                value={month}
+                onChange={(e) => setMonth(parseInt(e.target.value))}
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
+              >
+                {months.map((m, i) => (
+                  <option key={m} value={i + 1}>{m}</option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-300">Year</label>
+              <select
+                value={year}
+                onChange={(e) => setYear(parseInt(e.target.value))}
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
+              >
+                {years.map((y) => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-300">Tahun</label>
-            <select
-              value={year}
-              onChange={(e) => setYear(parseInt(e.target.value))}
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition appearance-none"
-            >
-              {years.map((y) => (
-                <option key={y} value={y}>{y}</option>
-              ))}
-            </select>
+            <label className="text-sm font-medium text-zinc-300">Buyer Name (Optional)</label>
+            <input
+              type="text"
+              value={buyerName}
+              onChange={(e) => setBuyerName(e.target.value)}
+              placeholder="Enter buyer name"
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-300">Sold Price (Optional)</label>
+            <input
+              type="number"
+              value={soldPrice}
+              onChange={(e) => setSoldPrice(e.target.value)}
+              placeholder="Enter final sold price"
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-300">Notes (Optional)</label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Add any additional notes about this sale"
+              rows={3}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 text-sm text-parchment-100 focus:border-gold focus:outline-none transition resize-none"
+            />
           </div>
         </div>
         <div className="flex gap-3 mt-6">
@@ -147,19 +195,27 @@ function SoldModal({
             onClick={onCancel}
             className="flex-1 px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-300 hover:border-zinc-500 hover:text-white transition"
           >
-            Batal
+            Cancel
           </button>
           <button
-            onClick={() => onConfirm(month.toString(), year.toString())}
+            onClick={handleConfirm}
             className="flex-1 px-4 py-2.5 rounded-lg bg-gold hover:bg-gold/90 text-sm font-semibold text-zinc-950 transition"
           >
-            Konfirmasi
+            Confirm Sale
           </button>
         </div>
       </div>
     </div>,
     document.body
   );
+}
+
+interface SoldData {
+  month: string;
+  year: string;
+  buyerName?: string;
+  soldPrice?: number;
+  notes?: string;
 }
 
 // ─── Preview Modal (Portal) ────────────────────────────────────────────────────
@@ -277,7 +333,7 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
       return 0;
     });
 
-  const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string, soldDate?: string) => {
+  const handleAction = async (action: 'mark-sold' | 'undo-sold' | 'delete', collectionNumber: string, soldData?: SoldData) => {
     setLoadingAction(`${action}-${collectionNumber}`);
     setDeleteTarget(null);
     setSoldTarget(null);
@@ -292,7 +348,14 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
     } else if (action === 'mark-sold') {
       setItems((prev) =>
         prev.map((item) =>
-          item.collectionNumber === collectionNumber ? { ...item, status: 'Sold' as const, soldDate } : item
+          item.collectionNumber === collectionNumber ? { 
+            ...item, 
+            status: 'Sold' as const, 
+            soldDate: soldData ? `${soldData.year}-${soldData.month.padStart(2, '0')}` : undefined,
+            buyerName: soldData?.buyerName,
+            soldPrice: soldData?.soldPrice,
+            saleNotes: soldData?.notes,
+          } : item
         )
       );
     } else if (action === 'undo-sold') {
@@ -305,8 +368,14 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
 
     try {
       const method = action === 'delete' ? 'DELETE' : 'PUT';
-      const body = action === 'mark-sold' && soldDate 
-        ? JSON.stringify({ collectionNumber, soldDate })
+      const body = action === 'mark-sold' && soldData 
+        ? JSON.stringify({ 
+            collectionNumber, 
+            soldDate: `${soldData.year}-${soldData.month.padStart(2, '0')}`,
+            buyerName: soldData.buyerName,
+            soldPrice: soldData.soldPrice,
+            saleNotes: soldData.notes,
+          })
         : JSON.stringify({ collectionNumber });
       const res = await fetch(`/api/admin/catalog/${action}`, {
         method,
@@ -564,9 +633,8 @@ export default function ManageInventoryClient({ initialItems }: { initialItems: 
       {soldTarget && (
         <SoldModal
           collectionNumber={soldTarget.collectionNumber}
-          onConfirm={(month, year) => {
-            const soldDate = `${year}-${month.padStart(2, '0')}`;
-            handleAction('mark-sold', soldTarget.collectionNumber, soldDate);
+          onConfirm={(soldData) => {
+            handleAction('mark-sold', soldTarget.collectionNumber, soldData);
           }}
           onCancel={() => setSoldTarget(null)}
         />

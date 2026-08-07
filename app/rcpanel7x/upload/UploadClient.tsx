@@ -21,7 +21,6 @@ export default function UploadClient({
   const [selectedNumberOption, setSelectedNumberOption] = useState<'next' | 'previous' | 'custom'>('next');
   const [customNumber, setCustomNumber] = useState('');
 
-  const [previewMode, setPreviewMode] = useState<'card' | 'detail'>('card');
   const [previewData, setPreviewData] = useState<PreviewData>({
     collectionNumber: nextNumber,
     title: '',
@@ -111,13 +110,13 @@ export default function UploadClient({
   };
 
   return (
-    <div className={`mx-auto px-4 py-6 lg:px-8 space-y-8 transition-all duration-300 ${previewMode === 'detail' ? 'max-w-[1600px]' : 'max-w-7xl'}`}>
+    <div className="mx-auto px-4 py-6 lg:px-8 space-y-8 transition-all duration-300 max-w-[1800px]">
       <Link href="/rcpanel7x" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-gold transition">
         <ArrowLeft className="w-4 h-4" />
         Back to Dashboard
       </Link>
 
-      <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${previewMode === 'detail' ? 'xl:grid-cols-[380px_1fr]' : 'xl:grid-cols-[380px_1fr]'}`}>
+      <div className="grid grid-cols-1 gap-8 transition-all duration-300 xl:grid-cols-[380px_1fr]">
         {/* Form Section */}
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 h-fit">
           <h1 className="font-serif text-2xl font-semibold text-parchment-100">Upload New Catalog</h1>
@@ -303,26 +302,17 @@ export default function UploadClient({
 
         {/* Live Preview Section */}
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 h-fit sticky top-6 overflow-hidden">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-serif text-xl font-semibold text-parchment-100">Live Preview</h2>
-            <div className="flex bg-zinc-950 rounded-lg p-1 border border-zinc-800">
-              <button
-                onClick={() => setPreviewMode('card')}
-                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${previewMode === 'card' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
-              >
-                Card View
-              </button>
-              <button
-                onClick={() => setPreviewMode('detail')}
-                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${previewMode === 'detail' ? 'bg-zinc-800 text-gold' : 'text-zinc-500 hover:text-zinc-300'}`}
-              >
-                Detail View
-              </button>
-            </div>
-          </div>
+          <h2 className="font-serif text-xl font-semibold text-parchment-100 mb-6">Live Preview</h2>
 
-          <div className="mt-8">
-            <AdminPreview data={previewData} mode={previewMode} />
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Card View</h3>
+              <AdminPreview data={previewData} mode="card" />
+            </div>
+            <div>
+              <h3 className="text-xs uppercase tracking-widest text-zinc-500 mb-3">Detail View</h3>
+              <AdminPreview data={previewData} mode="detail" />
+            </div>
           </div>
         </div>
       </div>
